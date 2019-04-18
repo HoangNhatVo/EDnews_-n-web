@@ -1,0 +1,125 @@
+/*Information User*/
+*{
+	margin:0;
+	padding:0;
+	box-sizing: border-box;
+}
+li{
+	list-style-type: none;
+}
+a{
+	text-decoration: none;
+	color: #000;
+}
+a:hover{
+	text-decoration: none;
+	color: #000;
+}
+p{
+	margin:0;
+}
+.row{
+	display: block;
+}
+.ava-user img{
+	object-fit: cover;
+	position: absolute;
+	top:0;
+	left: 0;
+}
+.inforUser{
+	margin-left: 20px;
+}
+.form-group{
+	padding:15px;
+	border-top:1px solid #ccc;
+	margin: 0;
+	display: flex;
+}
+.form-group.form-last{
+	border-bottom: 1px solid #ccc;
+}
+.form-group label{
+	width: 120px;
+	margin-right: 50px;
+	margin-bottom: 0;
+}
+.form-group span{
+	width: 200px;
+	margin-right: 50px;
+	display: block;
+}
+.inforUser .submit{
+	margin-top: 30px;
+	text-align: center;
+}
+.inforUser .submit button{
+	background-color: #007bff;
+	border:none;
+	padding:10px 15px;
+	color: #fff;
+}
+.fa-pen:hover{
+	color: #007bff;
+	cursor: pointer;
+}
+.infor{
+	display: flex;
+}
+/*Draft*/
+.wrapper{
+	border:1px solid #ccc;
+	border-radius: 5px;
+	padding:15px 15px;
+}
+.draft-na{
+	display: flex;
+	justify-content: space-between;
+	padding:5px 15px;	
+}
+.search input{
+	padding: 5px 10px;
+}
+.pagination-button{
+	border:1px solid #ccc;
+	padding: 5px 10px;
+
+}
+.pagination-button.active{
+	background-color: #007bff;
+}
+.pagination-button.active a,.pagination-button.active a:hover{
+	color: #fff;
+}
+.list-draft .draft{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.draft{
+	position: relative;
+	border:1px solid #ccc;
+	cursor: pointer;
+	transition: ease 0.5s all;
+	padding:10px 15px;
+}
+.draft:hover{
+	background-color: #ccc;
+}
+.draft .ava{
+	width: 70px;
+}
+.draft .ava img{
+	display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.draft .text-content{
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
