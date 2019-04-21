@@ -21,14 +21,19 @@ p{
 .row{
 	display: block;
 }
-.ava-user img{
-	object-fit: cover;
-	position: absolute;
+.col-6 img{
+ width: 250px;
+height: 200px;
+	
 	top:0;
 	left: 0;
+  object-fit: cover;
+  border-radius: 50%;
+  border:2px solid #000;
 }
 .inforUser{
-	margin-left: 20px;
+  margin-top: 20px;
+	
 }
 .form-group{
 	padding:15px;
@@ -123,7 +128,30 @@ p{
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-
+.action button{
+  padding:5px 7px;
+  border-radius:5px;
+  color: #fff;
+  border:none;
+  cursor: pointer;
+  background-color: #cc1f1f;
+  margin-top: 5px;
+}
+.action button:focus{
+  outline: none;
+}
+.action button:hover{
+  background-color: #b51f1f;
+}
+.action a{
+  background-color: #35b335;
+  padding:5px 7px;
+  color: #fff;
+  border-radius: 5px;
+}
+.action a:hover{
+  background-color: #36a036;
+}
 
 
 /*CreateNews.css*/
@@ -131,7 +159,6 @@ p{
 	background: #007BFF;
 	color: #fff;
 	padding: 12px 12px;
-	font-weight: bold;
 	cursor: pointer;
 	margin-bottom: 20px;
 }
@@ -152,12 +179,12 @@ p{
 }
 
 .text-input{
-	border-bottom: 1px solid #CCC;
+	border-bottom: 1px solid #676a6c;
 }
 .text-input label, .text{
-	color: #007BFF;
-	font-size: 1.5em;
-	font-weight: bold;
+	color: #676a6c;
+  font-weight: 700;
+	font-size: 19px;
 	font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
 }
 .text-input input{
@@ -181,10 +208,10 @@ p{
 }
 
 #title{
-  color: #007BFF;
+  color: #676a6c;
   margin-bottom: 5px;
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 19px;
   font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
 }
 
