@@ -106,6 +106,18 @@ $(document).ready(function(){
 });
 
 
+CKEDITOR.on('instanceReady', function (ev) {
+    $('iframe').contents().click(function (e) {
+        if (typeof e.target.href !== 'undefined') {
+            window.open(e.target.href, 'new' + e.screenX);
+        }
+        else if (typeof e.currentTarget.activeElement.href !== 'undefined') {
+            window.open(e.currentTarget.activeElement.href, 'new' + e.screenX);
+        }
+    });
+});
+
+
 function Send(){
 	alert("Click button 'Gửi bài'!");
 }
