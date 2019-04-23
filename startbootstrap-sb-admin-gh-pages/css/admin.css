@@ -18,6 +18,9 @@ a:hover{
 p{
 	margin:0;
 }
+.far{
+  font-weight: 900 !important;
+}
 .row{
 	display: block;
 }
@@ -29,7 +32,7 @@ height: 200px;
 	left: 0;
   object-fit: cover;
   border-radius: 50%;
-  border:2px solid #000;
+  border:3px solid #ccc;
 }
 .inforUser{
   margin-top: 20px;
