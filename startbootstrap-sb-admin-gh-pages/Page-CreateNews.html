@@ -159,7 +159,7 @@
 
           <div class="text-input">
             <label class="frmCreateNews">Tiêu đề:</label>
-            <input type="text" name="TieuDe" autofocus="true"/>
+            <input type="text" id="TieuDe" name="TieuDe" autofocus="true"/>
           </div>
 
           <p id="title" class="frmCreateNews">Category:</p>
@@ -270,16 +270,17 @@
             </div>
           </label>
 
-          <div class="text-input" id="text-input">
-              <label class="frmCreateNews">Tóm tắt:</label>
-              <input type="text" name="TomTat" />
+          <div class="text-input input-TomTat" id="text-input">
+              <label class="frmCreateNews">Tóm tắt:</label><br>
+              <!-- <input type="text" id="TomTat" name="TomTat" /> -->
+              <textarea rows="3" class="TomTat" id="TomTat" name="TomTat"></textarea>
           </div>
 
           <div class="text">
             <label>Nội dung bài báo:</label>
            </div>
           <div class="ckeditor">
-            <textarea name="editor1"></textarea>
+            <textarea id="editor1" name="editor1"></textarea>
           </div>
 
           <div class="input-video">
@@ -352,7 +353,6 @@
   <script src="js/sb-admin.min.js"></script>
 
   
-
 
   <!-- CreateNews -->
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>

@@ -1,4 +1,4 @@
-/*Information User*/
+Information User*/
 *{
 	margin:0;
 	padding:0;
@@ -522,4 +522,12 @@ margin-top: 20px;
 .sp{
   font-weight: bold;
 }
-/*End CreateNews*/
+
+.TomTat{
+  width: 100%;
+  border-radius: 4px;
+}
+.input-TomTat{
+  border-bottom: none;
+}
+/*End CreateNews

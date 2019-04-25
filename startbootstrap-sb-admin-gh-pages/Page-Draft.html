@@ -160,44 +160,44 @@
                 <tbody>
                   <tr>
                     <td>1</td>
-                    <td>Bạn có thể du lịch vong quanh thế giới với 5 triệu VNĐ ?</td>
+                    <td>Hòn đảo dệt bằng cỏ trôi nổi trên biển suốt 1000 năm</td>
                     <td>Du lịch thế giới</td>
                     <td>2/2/2019</td>
                     <td class="action">
-                      <a href="#" title="">Chỉnh sửa</a>
+                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
                       <button type="button">Duyệt</button>
                     <button type="button">Từ chối</button>
                     </td>
                   </tr>
                   <tr>
                     <td>1</td>
-                    <td>Bạn có thể du lịch vong quanh thế giới với 5 triệu VNĐ ?</td>
+                    <td>Hòn đảo dệt bằng cỏ trôi nổi trên biển suốt 1000 năm</td>
                     <td>Du lịch thế giới</td>
                     <td>2/2/2019</td>
                     <td class="action">
-                      <a href="#" title="">Chỉnh sửa</a>
+                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
                       <button type="button">Duyệt</button>
                       <button type="button">Từ chối</button>
                     </td>
                   </tr>
                   <tr>
                     <td>1</td>
-                    <td>Bạn có thể du lịch vong quanh thế giới với 5 triệu VNĐ ?</td>
+                    <td>Hòn đảo dệt bằng cỏ trôi nổi trên biển suốt 1000 năm</td>
                     <td>Du lịch thế giới</td>
                     <td>2/2/2019</td>
                     <td class="action">
-                      <a href="#" title="">Chỉnh sửa</a>
+                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
                       <button type="button">Duyệt</button>
                       <button type="button">Từ chối</button>
                     </td>
                   </tr>
                   <tr>
                     <td>1</td>
-                    <td>Bạn có thể du lịch vong quanh thế giới với 5 triệu VNĐ ?</td>
+                    <td>Hòn đảo dệt bằng cỏ trôi nổi trên biển suốt 1000 năm</td>
                     <td>Du lịch thế giới</td>
                     <td>2/2/2019</td>
                     <td class="action">
-                      <a href="#" title="">Chỉnh sửa</a>
+                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
                       <button type="button">Duyệt</button>
                       <button type="button">Từ chối</button>
                     </td>
@@ -267,6 +267,13 @@
   <!-- Demo scripts for this page-->
   <script src="js/demo/datatables-demo.js"></script>
   
+  <!-- Click button chỉnh sửa -->
+  <script type="text/javascript">
+    function OpenPageCreateNewshtml(idDraft){
+      localStorage.setItem('dataPageDraft',idDraft);
+      location.replace("Page-CreateNews.html");
+    }
+  </script>
 
 </body>
 
