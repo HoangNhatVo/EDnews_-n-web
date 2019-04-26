@@ -26,7 +26,7 @@
 
   <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="index.html">Start Bootstrap</a>
+    <a class="navbar-brand mr-1" href="index.html">Admin Adnews</a>
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
       <i class="fas fa-bars"></i>
@@ -70,15 +70,14 @@
           <a class="dropdown-item" href="#">Something else here</a>
         </div>
       </li>
-      <li class="nav-item dropdown no-arrow">
+       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-user-circle fa-fw"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="#">Settings</a>
-          <a class="dropdown-item" href="#">Activity Log</a>
+          <a class="dropdown-item" href="#">Cài đặt</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Đăng xuất</a>
         </div>
       </li>
     </ul>
@@ -180,7 +179,7 @@
                <div class="form-group">
                      <div class="infor">
                        <label >Họ tên:</label>
-                       <input type="text" name="">
+                       <input type="text" name="" placeholder="Vo Hoang Nhat">
                        
                      </div>
                      <!-- <div class="edit-infor">
@@ -190,16 +189,25 @@
                    </div>
                    <div class="form-group">
                      <label>Bút danh</label>
-                     <input type="text" name="">
+                     <input type="text" name="" placeholder="Cool">
                    </div>
                    <div class="form-group">
                      <label>Ngày sinh:</label>
-                     <input type="date" name="">
+                     <input type="date" name="" placeholder="2/2/1998">
                      
                    </div>
                    <div class="form-group">
                      <label>Email</label>
-                     <input type="text" name="">
+                     <input type="text" name="" placeholder="vonhathoang11@gmail.com">
+                     
+                   </div>
+                   <div class="form-group">
+                    <label>Ảnh đại diện</label>
+                     <label for="file" class="input-label"><i class="fa fa-upload mr-1 "></i>Thêm ảnh</label>
+          <input type="file" id="file" multiple="true" /><br>
+          <button type="button" class="close-image" id="close-image" aria-label="Close" hidden="true" data-toggle="tooltip" title="Close All Image">
+            <span aria-hidden="true">&times;</span>
+          </button>
                      
                    </div>
                    
@@ -238,15 +246,16 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Bạn chắc chứ ?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-body">
+chọn "Đăng xuất" bên dưới nếu bạn muốn đăng xuất khỏi hệ thống</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Đóng</button>
+          <a class="btn btn-primary" href="login.html">Đăng xuất</a>
         </div>
       </div>
     </div>
