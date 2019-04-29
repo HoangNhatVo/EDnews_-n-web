@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin - Danh sach bai viet</title>
+  <title>SB Admin - Dashboard</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -19,7 +19,8 @@
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
-<link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet"  href="css/admin.css">
+
 </head>
 
 <body id="page-top">
@@ -70,7 +71,7 @@
           <a class="dropdown-item" href="#">Something else here</a>
         </div>
       </li>
-        <li class="nav-item dropdown no-arrow">
+      <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-user-circle fa-fw"></i>
         </a>
@@ -94,6 +95,7 @@
           <span>Dashboard</span>
         </a>
       </li>
+
       <li class="nav-item">
         <a class="nav-link" href="Page-informationUser.html">
           <i class="fas fa-user-circle"></i>
@@ -101,7 +103,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="Page-CreateNews.html">
-          <i class="fas fa-fw fa-clipboard"></i>
+          <i class="far fa-fw fa-clipboard"></i>
           <span>Đăng bài</span></a>
       </li>
       
@@ -136,16 +138,15 @@
 
       <div class="container-fluid">
 
-       
-      <ol class="breadcrumb">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <a href="index.html">Dashboard</a>
           </li>
-          <li class="breadcrumb-item active">Bài viết đang chờ duyệt</li>
+          <li class="breadcrumb-item active">Quản lý tài khoản</li>
         </ol>
 
-        <!-- DataTables Example -->
-        <div class="card mb-3 List-Draft">
+       <div class="card mb-3 List-account">
           <div class="card-header">
             <i class="fas fa-table"></i>
             Danh sách bài viết</div>
@@ -154,58 +155,27 @@
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
-                    <th>STT</th>
-                    <th>Tiêu đề</th>
-                    <th>Chuyên mục</th>
-                    <th>Ngày viết</th>
+                    <th>Họ tên</th>
+                    <th>Bút danh</th>
+                    <th>Email</th>
+                    <th>Quyền</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>1</td>
-                    <td>Hòn đảo dệt bằng cỏ trôi nổi trên biển suốt 1000 năm</td>
-                    <td>Du lịch thế giới</td>
-                    <td>2/2/2019</td>
+                    <td>Nguyen Van Nhat</td>
+                    <td>Vn</td>
+                    <td>nguyenvannhat@gmail.com</td>
+                    <td >
+                      Phóng viên
+                    </td>
                     <td class="action">
-                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
-                      <button type="button">Duyệt</button>
-                    <button type="button">Từ chối</button>
+                      <button type="button" style="background-color:#35b335;">Chỉnh sửa quyền</button>
+                      <button type="button">Khóa tài khoản</button>
                     </td>
                   </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Hòn đảo dệt bằng cỏ trôi nổi trên biển suốt 1000 năm</td>
-                    <td>Du lịch thế giới</td>
-                    <td>2/2/2019</td>
-                    <td class="action">
-                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
-                      <button type="button">Duyệt</button>
-                      <button type="button">Từ chối</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Hòn đảo dệt bằng cỏ trôi nổi trên biển suốt 1000 năm</td>
-                    <td>Du lịch thế giới</td>
-                    <td>2/2/2019</td>
-                    <td class="action">
-                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
-                      <button type="button">Duyệt</button>
-                      <button type="button">Từ chối</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Hòn đảo dệt bằng cỏ trôi nổi trên biển suốt 1000 năm</td>
-                    <td>Du lịch thế giới</td>
-                    <td>2/2/2019</td>
-                    <td class="action">
-                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
-                      <button type="button">Duyệt</button>
-                      <button type="button">Từ chối</button>
-                    </td>
-                  </tr>
+                  
                   </tr>
                 </tbody>
               </table>
@@ -213,6 +183,12 @@
           </div>
           <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
+
+        
+
+        
+
+      </div>
       <!-- /.container-fluid -->
 
       <!-- Sticky Footer -->
@@ -236,7 +212,7 @@
   </a>
 
   <!-- Logout Modal-->
-   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -271,14 +247,6 @@ chọn "Đăng xuất" bên dưới nếu bạn muốn đăng xuất khỏi hệ
 
   <!-- Demo scripts for this page-->
   <script src="js/demo/datatables-demo.js"></script>
-  
-  <!-- Click button chỉnh sửa -->
-  <script type="text/javascript">
-    function OpenPageCreateNewshtml(idDraft){
-      localStorage.setItem('dataPageDraft',idDraft);
-      location.replace("Page-CreateNews.html");
-    }
-  </script>
 
 </body>
 

@@ -97,7 +97,7 @@
 
       <li class="nav-item">
         <a class="nav-link" href="Page-informationUser.html">
-          <i class="fas fa-fw fa-chart-area"></i>
+          <i class="fas fa-user-circle"></i>
           <span>Thông tin tài khoản</span></a>
       </li>
       <li class="nav-item">
@@ -126,6 +126,11 @@
           <i class="fas fa-fw fa-table"></i>
           <span>Bài viết bị từ chối</span></a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="Page-manager.html">
+          <i class="far fa-address-card"></i>
+          <span>Quản lý tài khoản</span></a>
+      </li>
     </ul>
 
     <div id="content-wrapper">
@@ -135,10 +140,10 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">Dashboard</a>
+            <a href="index.html">Dashboard</a>
           </li>
-          <li class="breadcrumb-item">
-            <a href="#">Thông tin tài khoản</a>
+          <li class="breadcrumb-item active">
+            Thông tin tài khoản
           </li>
         </ol>
 
@@ -147,8 +152,10 @@
          <div class="container" style="
          display: flex;">
           <div class="col-6">
-            
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQolkEsjH3w4lDf6m-tnP7BSCCzHS01PGF5ykSDicfLPR85g0ET">
+            <div class="ava">
+              <img src="https://topsao.vn/wp-content/uploads/2018/05/12/5a2a258f05c14-buianhtuan25-970x546.jpg">
+            </div>
+              
             
             <div class="inforUser">
                <div class="form-group">
@@ -171,11 +178,15 @@
                      <label>Email</label>
                      <span>vonhathoang11@gmail.com</span>
                    </div>
+                   <div class="form-group form-last">
+                     <label>Quyền</label>
+                     <span class="role">Admin</span>
+                   </div>
                    
              </div>
           </div>
            <div class="col-6">
-              <form class="inforUser">
+              <form class="editinforUser">
                <div class="form-group">
                      <div class="infor">
                        <label >Họ tên:</label>
@@ -201,7 +212,7 @@
                      <input type="text" name="" placeholder="vonhathoang11@gmail.com">
                      
                    </div>
-                   <div class="form-group">
+                   <div class="form-group form-last">
                     <label>Ảnh đại diện</label>
                      <label for="file" class="input-label"><i class="fa fa-upload mr-1 "></i>Thêm ảnh</label>
           <input type="file" id="file" multiple="true" /><br>

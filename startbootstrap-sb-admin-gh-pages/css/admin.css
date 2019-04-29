@@ -33,9 +33,9 @@ input{
 .row{
 	display: block;
 }
-.col-6 img{
- width: 250px;
-height: 200px;
+.ava img{
+ width: 200px;
+height: 180px;
 	
 	top:0;
 	left: 0;
@@ -43,12 +43,18 @@ height: 200px;
   border-radius: 50%;
   border:3px solid #ccc;
 }
+.ava{
+  text-align: center;
+}
 .inforUser{
   margin-top: 20px;
 	
 }
+.inforUser .form-group:nth-child(even){
+  background-color: #e9ecef;
+}
 .form-group{
-	padding:15px;
+	padding:10px;
 	border-top:1px solid #ccc;
 	margin: 0;
 	display: flex;
@@ -62,15 +68,15 @@ height: 200px;
 	margin-bottom: 0;
 }
 .form-group span{
-	width: 200px;
+	
 	margin-right: 50px;
 	display: block;
 }
-.inforUser .submit{
+.editinforUser .submit{
 	margin-top: 30px;
 	text-align: center;
 }
-.inforUser .submit button{
+.editinforUser .submit button{
 	background-color: #007bff;
 	border:none;
 	padding:10px 15px;
@@ -82,6 +88,12 @@ height: 200px;
 }
 .infor{
 	display: flex;
+}
+.role{
+  background-color: #007BFF;
+  padding:3px;
+  color: #fff;
+  border-radius: 5px;
 }
 /*Draft*/
 .wrapper{

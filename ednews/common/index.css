@@ -11,7 +11,13 @@
 	transition: ease 0.5s all;
 	margin-right: 22px !important;
 }
-
+.category a:hover{
+	color: #fff;
+}
+.category:hover{
+	background-color: #231f1f;
+	cursor: pointer;
+}
 /*footer*/
 .footer-nav li{
 margin:0 5px;
@@ -37,6 +43,9 @@ margin:0 5px;
 		transition: all .3s ease;
 		z-index: 1000;
 	}
+#back-to-top:hover{
+	background-color: #231f1f;
+}	
 #back-to-top.hidden {
 		opacity: 0;
 		pointer-events: none;
