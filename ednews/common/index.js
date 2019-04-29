@@ -26,7 +26,17 @@ Magazine.BackToTop=function(){
             }, 500);
         });
 }
-
+Magazine.Slick=function(){
+    $('.nav-slick').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+             infinite: true,
+            dots:false,
+            accessibility: true,
+            autoplay: true,
+            autoplaySpeed: 1600,
+        });
+}
 
 
 	/*======================================
@@ -36,6 +46,7 @@ Magazine.BackToTop=function(){
 	$(document).ready(function() {
         
         Magazine.BackToTop();
+        Magazine.Slick();
     });
 
     /*=====  End of INIT FUNCTIONS  ======*/
