@@ -11,7 +11,7 @@
 	transition: ease 0.5s all;
 	margin-right: 22px !important;
 }
-.category a:hover{
+.category a:hover,.btn-fill-red a:hover{
 	color: #fff;
 }
 .category:hover{
