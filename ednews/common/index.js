@@ -30,9 +30,9 @@ Magazine.Slick=function(){
     $('.nav-slick').slick({
             slidesToShow: 1,
             slidesToScroll: 1,
-             infinite: true,
+            infinite: true,
             dots:false,
-            accessibility: true,
+            
             autoplay: true,
             autoplaySpeed: 1600,
         });
