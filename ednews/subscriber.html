@@ -131,7 +131,7 @@
 				<label class="lbl">Họ</label>
 			</div>
 			<div class="col-input">
-				<input type="text" name="Ho">
+				<input type="text" id="Ho" name="Ho" autofocus>
 			</div>
 		</div>
 		<div class="row-info">
@@ -139,7 +139,7 @@
 				<label class="lbl">Tên</label>
 			</div>
 			<div class="col-input">
-				<input type="text" name="Ten">
+				<input type="text" id="Ten" name="Ten">
 			</div>
 		</div>
 
@@ -181,26 +181,26 @@
 				<label class="lbl">Email</label>
 			</div>
 			<div class="col-input">
-				<input class="Email" type="text" name="Email">
+				<input class="Email" id="Email" type="text" name="Email" readonly>
 			</div>
 		</div>
 		
-		<label class="lbl-ChangePassEmail">Đổi mật Khẩu</label><br>		
+		<label class="lbl-ChangePassEmail" onclick="ChangePassEmail()">Đổi mật khẩu</label><br>		
 
 		<div class="row-info row-hsd">
 			<div class="col-label">
 				<label class="lbl">Sử dụng đến</label>
 			</div>
 			<div class="col-input">
-				<input class="HSD" type="text" name="Sudungden">
+				<input class="HSD" id="HSD" type="text" name="Sudungden" readonly>
 			</div>
 		</div>
 
-		<label class="count-date">Còn 182 ngày</label><br>
-		<label class="acc">Gia hạn tài khoản</label><br>
+		<label class="count-date">Còn 55 ngày</label><br>
+		<label class="acc" onclick="ReNewedAcc()">Gia hạn tài khoản</label><br>
 
 		<div class="div-btn">
-			<button type="button" class="btnSave">Lưu</button>
+			<button type="button" class="btnSave" onclick="ClickButtonSave()">Lưu</button>
 		</div>   
   	</form>
 	
@@ -277,6 +277,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8Nkl4q13z00Fid3Vh8eOp4mqVlgfcXLA&callback=initMap">
 		</script>
-		<script src="common/index.js"></script>
+	<script src="common/index.js"></script>
+	<script type="text/javascript" src="common/subscriber.js"></script>
 </body>
 </html>

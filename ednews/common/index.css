@@ -1044,8 +1044,8 @@ iframe {
 .lbl label{
   font-size: 30px;
   font-weight: bold;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  color:  #0275d8;
+  /*font-family: "Comic Sans MS", cursive, sans-serif;*/
+  color:  #0C0E68;
 }
 .row-info div{
   display: inline-block;
@@ -1094,6 +1094,9 @@ iframe {
   color: #C62FF8;
   cursor:pointer;
 }
+.acc:active, .lbl-ChangePassEmail:active{
+  transform: translateY(1px);
+}
 .div-btn{
   margin-top: 40px;
   text-align: center;
@@ -1130,3 +1133,5 @@ iframe {
 .birthdate:hover{
   border: 1.5px solid #0C0E68;
 }
+
+        /* END SUBSCRIBER*/
