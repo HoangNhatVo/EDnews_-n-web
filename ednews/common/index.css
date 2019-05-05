@@ -748,7 +748,7 @@ iframe {
 
 .login100-form-title {
   display: block;
-  font-family: Poppins-Bold;
+  font-family: Roboto;
   font-size: 39px;
   color: #525252;
   line-height: 1.2;
@@ -1035,7 +1035,7 @@ iframe {
             /*SUBSCRIBER*/
 .frmSubs{
   margin: 40px 0px;
-  font-family:  -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family:  Roboto;
   font-size: 15px;
 }
 .lbl{
@@ -1069,9 +1069,7 @@ iframe {
   width: 30%;
   margin-left: 10px;
 }
-.Email, .HSD{
-  background-color: #E0E0E0;
-}
+
 .lbl-ChangePassEmail{
    color: #0275d8;
  }
