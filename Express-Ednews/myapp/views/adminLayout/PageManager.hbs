@@ -1,0 +1,65 @@
+ <link rel="stylesheet" href="/javascripts/datatable/dataTables.bootstrap4.css">
+ {{>AdminNav}}
+ <div id="wrapper">   
+   {{>AdminSlidebar}}
+    <div id="content-wrapper">
+
+      <div class="container-fluid">
+
+       <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">Quản lý tài khoản</li>
+        </ol>
+
+       <div class="card mb-3 List-account">
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            Danh sách bài viết</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Họ tên</th>
+                    <th>Bút danh</th>
+                    <th>Email</th>
+                    <th>Quyền</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Nguyen Van Nhat</td>
+                    <td>Vn</td>
+                    <td>nguyenvannhat@gmail.com</td>
+                    <td >
+                      Phóng viên
+                    </td>
+                    <td class="action">
+                      <button type="button" style="background-color:#35b335;">Chỉnh sửa quyền</button>
+                      <button type="button">Khóa tài khoản</button>
+                    </td>
+                  </tr>
+                  
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        </div>
+     
+
+        
+
+      </div>
+      <!-- /.container-fluid -->
+
+      <!-- Sticky Footer -->
+      {{>AdminFooter}}
+
+    </div>
+    </div>
+    {{>AdminLogoutmodal}}

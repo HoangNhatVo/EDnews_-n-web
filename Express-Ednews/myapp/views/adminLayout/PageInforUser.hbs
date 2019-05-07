@@ -1,0 +1,107 @@
+ {{>AdminNav}}
+ <div id="wrapper">   
+   {{>AdminSlidebar}}
+    <div id="content-wrapper">
+
+      <div class="container-fluid">
+
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="index.html">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">
+            Thông tin tài khoản
+          </li>
+        </ol>
+
+        <!-- Icon Cards-->
+        <div class="row">
+         <div class="container" style="
+         display: flex;">
+          <div class="col-6">
+            <div class="ava">
+              <img src="https://topsao.vn/wp-content/uploads/2018/05/12/5a2a258f05c14-buianhtuan25-970x546.jpg">
+            </div>
+              
+            
+            <div class="inforUser">
+               <div class="form-group">
+                     <div class="infor">
+                       <label >Họ tên:</label>
+                       <span>Vo Hoang Nhat</span>
+                       
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label>Bút danh:</label>
+                     <span>Cool</span>
+                     
+                   </div>
+                   <div class="form-group">
+                     <label>Ngày sinh:</label>
+                     <span>12/2/2019</span>
+                   </div>
+                   <div class="form-group form-last">
+                     <label>Email</label>
+                     <span>vonhathoang11@gmail.com</span>
+                   </div>
+                   <div class="form-group form-last">
+                     <label>Quyền</label>
+                     <span class="role">Admin</span>
+                   </div>
+                   
+             </div>
+          </div>
+           <div class="col-6">
+              <form class="editinforUser">
+               <div class="form-group">
+                     <div class="infor">
+                       <label >Họ tên:</label>
+                       <input type="text" name="" placeholder="Vo Hoang Nhat">
+                       
+                     </div>
+                  
+                   </div>
+                   <div class="form-group">
+                     <label>Bút danh</label>
+                     <input type="text" name="" placeholder="Cool">
+                   </div>
+                   <div class="form-group">
+                     <label>Ngày sinh:</label>
+                     <input type="date" name="" placeholder="2/2/1998">
+                     
+                   </div>
+                   <div class="form-group">
+                     <label>Email</label>
+                     <input type="text" name="" placeholder="vonhathoang11@gmail.com">
+                     
+                   </div>
+                   <div class="form-group form-last">
+                    <label>Ảnh đại diện</label>
+                     <label for="file" class="input-label"><i class="fa fa-upload mr-1 "></i>Thêm ảnh</label>
+          <input type="file" id="file" multiple="true" /><br>
+          <button type="button" class="close-image" id="close-image" aria-label="Close" hidden="true" data-toggle="tooltip" title="Close All Image">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                     
+                   </div>
+                   
+                   <div class="submit">
+                     <button type="submit" class="btn">Lưu</button>
+                   </div>
+             </form>
+           </div>
+         </div>
+        </div>       
+
+        
+
+      </div>
+      <!-- /.container-fluid -->
+
+      <!-- Sticky Footer -->
+      {{>AdminFooter}}
+
+    </div>
+    </div>
+    {{>AdminLogoutmodal}}

@@ -1,0 +1,97 @@
+ <link rel="stylesheet" href="/javascripts/datatable/dataTables.bootstrap4.css">
+ {{>AdminNav}}
+ <div id="wrapper">   
+   {{>AdminSlidebar}}
+    <div id="content-wrapper">
+
+      <div class="container-fluid">
+
+        <!-- Breadcrumbs-->
+       <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">Bài viết đang chờ duyệt</li>
+        </ol>
+
+        <!-- DataTables Example -->
+        <div class="card mb-3 List-Draft">
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            Danh sách bài viết</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>STT</th>
+                    <th>Tiêu đề</th>
+                    <th>Chuyên mục</th>
+                    <th>Ngày viết</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Hòn đảo dệt bằng cỏ trôi nổi trên biển suốt 1000 năm</td>
+                    <td>Du lịch thế giới</td>
+                    <td>2/2/2019</td>
+                    <td class="action">
+                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
+                      <button type="button">Duyệt</button>
+                    <button type="button">Từ chối</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Hòn đảo dệt bằng cỏ trôi nổi trên biển suốt 1000 năm</td>
+                    <td>Du lịch thế giới</td>
+                    <td>2/2/2019</td>
+                    <td class="action">
+                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
+                      <button type="button">Duyệt</button>
+                      <button type="button">Từ chối</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Hòn đảo dệt bằng cỏ trôi nổi trên biển suốt 1000 năm</td>
+                    <td>Du lịch thế giới</td>
+                    <td>2/2/2019</td>
+                    <td class="action">
+                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
+                      <button type="button">Duyệt</button>
+                      <button type="button">Từ chối</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Hòn đảo dệt bằng cỏ trôi nổi trên biển suốt 1000 năm</td>
+                    <td>Du lịch thế giới</td>
+                    <td>2/2/2019</td>
+                    <td class="action">
+                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
+                      <button type="button">Duyệt</button>
+                      <button type="button">Từ chối</button>
+                    </td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        </div>   
+
+        
+
+      </div>
+      <!-- /.container-fluid -->
+
+      <!-- Sticky Footer -->
+      {{>AdminFooter}}
+
+    </div>
+    </div>
+    {{>AdminLogoutmodal}}
