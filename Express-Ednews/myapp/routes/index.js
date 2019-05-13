@@ -1,6 +1,16 @@
 var express = require('express');
 var router = express.Router();
+const categoriesModel = require('../Model/categories.model')
+router.get('/all', (req, res) => {
+  categoriesModel.all()
+  .then(row=>{
+    console.log(row);
+    res.render('test',{result:row});
+  }).catch(err=>{
+    console.log(err);
+  });
 
+  });
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index',
