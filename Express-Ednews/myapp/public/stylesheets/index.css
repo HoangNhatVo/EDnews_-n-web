@@ -18,6 +18,14 @@
 	background-color: #231f1f;
 	cursor: pointer;
 }
+.img-bg img{
+  height: 100%;
+  object-fit: cover;
+}
+.heightTitle{
+  height: 47px;
+  overflow: hidden;
+}
 /*footer*/
 .footer-nav li{
 margin:0 5px;

@@ -13,7 +13,5 @@ else {
     });
 }
 
-connection.connect();
-
 module.exports = connection;
 
