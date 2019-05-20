@@ -564,13 +564,13 @@ header .main-menu li.drop-down a.mouseover + ul.drop-down-menu{ display: block;
 .bg-10{ background: url(../images/slider-7-400x400.jpg) no-repeat center; background-size: cover; }
 
 
-.bg-grad-layer-6:after{ content:''; position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: -1;
+.bg-grad-layer-6:after{ content:''; position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: 2;
 	opacity: .8; background: linear-gradient(to top,  #000 0%,  rgba(0,0,0,.4) 60%); }
 	
-.bg-layer-4:after{ content:''; position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: -1;
+.bg-layer-4:after{ content:''; position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: 2;
 	opacity: .4; background: #111; }
 
-.bg-layer-7:after{ content:''; position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: -1;
+.bg-layer-7:after{ content:''; position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: 2;
 	opacity: .7; background: #111; }
 
 .bg-layer-8:after{ content:''; position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: -1;

@@ -15,15 +15,9 @@
 					<div class="col-sm-6">
 						<ul class="footer-nav">
 							<li><a href="/" title="">Trang chủ</a></li>
-							<li><a href="/thethao" title="">Kinh doanh</a></li>
-							<li><a href="/thethao" title="">Công nghệ</a></li>
-							<li><a href="/thethao" title="">Thể thao</a></li>
-							<li><a href="/thethao" title="">Du lịch</a></li>
-							<li><a href="/thethao" title="">Đời sống</a></li>
-							<li><a href="/thethao" title="">Xã Hội</a></li>
-							<li><a href="/thethao" title="">Giải trí</a></li>
-							<li><a href="/thethao" title="">Thời sự</a></li>
-							<li><a href="/thethao" title="">Pháp Luật</a></li>
+							{{#each lcCategories}}
+							<li><a href="/{{mainCat.TenChuyenMuc_KhongDau}}" title="">{{mainCat.TenChuyenMuc}}</a></li>
+							{{/each}}
 						</ul>
 					</div><!-- col-sm-3 -->
 					
