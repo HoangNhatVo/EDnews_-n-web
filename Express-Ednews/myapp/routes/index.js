@@ -3,7 +3,8 @@ var router = express.Router();
 const singlepostModel = require('../Model/single_post.model');
 const CategoriesModel = require('../Model/categories.model');
 /* GET home page. */
-router.get('/', async (req, res) => {
+router.get('/', async (req, res,next) => {
+  
   try {
     var Feature = await singlepostModel.getFeaturePost();
     var New = await singlepostModel.getNewPost();
@@ -14,34 +15,6 @@ router.get('/', async (req, res) => {
     var TaiChinh = await singlepostModel.getPostfromCategories('taichinh');
     var Showbiz = await singlepostModel.getPostfromCategories('showbiz');
     var Smartphone = await singlepostModel.getPostfromCategories('smartphone');
-    await New.forEach(element => {
-      element.NgayDang  = element.NgayDang.toString().substring(0,15);
-      
-    });
-    await Feature.forEach(element => {
-      element.NgayDang  = element.NgayDang.toString().substring(0,15);
-    });
-    await Today.forEach(element => {
-      element.NgayDang  = element.NgayDang.toString().substring(0,15);
-    });
-    await ChinhTriCat.forEach(element => {
-      element.NgayDang  = element.NgayDang.toString().substring(0,15);
-    });
-    await BongdaCat.forEach(element => {
-      element.NgayDang  = element.NgayDang.toString().substring(0,15);
-    });
-    await ThoiTrang.forEach(element => {
-      element.NgayDang  = element.NgayDang.toString().substring(0,15);
-    });
-    await TaiChinh.forEach(element => {
-      element.NgayDang  = element.NgayDang.toString().substring(0,15);
-    });
-    await Showbiz.forEach(element => {
-      element.NgayDang  = element.NgayDang.toString().substring(0,15);
-    });
-    await Smartphone.forEach(element => {
-      element.NgayDang  = element.NgayDang.toString().substring(0,15);
-    });
     res.render('index',
       {
         slick: '/javascripts/js/slick/slick.css',
@@ -59,9 +32,9 @@ router.get('/', async (req, res) => {
         Showbiz:Showbiz,
         Smartphone:Smartphone
       });
-  } catch (e) {
-    console.log(e);
-  }
+  } catch(err){
+    next();
+  };
 });
 router.get('/lien-he', function (req, res, next) {
   res.render('Contact', { css: '/stylesheets/index.css', style: '/stylesheets/style.css' });
@@ -77,14 +50,8 @@ router.get('/:TenCM',async (req, res)=> {
   try{
     var Feature = await singlepostModel.getFeaturePost();
     var NameCat= await CategoriesModel.getNameCategory(NameCats);
+    if(NameCat.length >0){
     var Post= await singlepostModel.getPostfromMainCategories(NameCats);
-
-    await Feature.forEach(element => {
-      element.NgayDang  = element.NgayDang.toString().substring(0,15);
-    });
-    await Post.forEach(element => {
-      element.NgayDang  = element.NgayDang.toString().substring(0,15);
-    });
     res.render('Category', {
       css: '/stylesheets/index.css',
       style: '/stylesheets/style.css',
@@ -92,8 +59,12 @@ router.get('/:TenCM',async (req, res)=> {
       NameCat:NameCat,
       Post:Post
     });
-  }catch(err){
-    console.log(err);
+    }
+    else{
+      res.render('404',{layout:false});
+    }
+  }catch(next){
+    
   }
 });
 router.get('/:TenCm/:TensubCm',async(req,res)=>{
@@ -102,13 +73,8 @@ router.get('/:TenCm/:TensubCm',async(req,res)=>{
   try{
     var Feature = await singlepostModel.getFeaturePost();
     var NameCat= await CategoriesModel.getNameCategory(TensubCm);
-    var Post= await singlepostModel.getPostfromCategories(TensubCm);
-    await Feature.forEach(element => {
-      element.NgayDang  = element.NgayDang.toString().substring(0,15);
-    });
-    await Post.forEach(element => {
-      element.NgayDang  = element.NgayDang.toString().substring(0,15);
-    });
+    if(NameCat.length >0){
+      var Post= await singlepostModel.getPostfromCategories(TensubCm);
     res.render('Single_Category', {
       css: '/stylesheets/index.css',
       style: '/stylesheets/style.css',
@@ -116,8 +82,12 @@ router.get('/:TenCm/:TensubCm',async(req,res)=>{
       NameCat:NameCat,
       Post:Post
     });
-  }catch(err){
-    console.log(err);
+    }
+    else{
+      res.render('404',{layout:false});
+    }
+  }catch(next){
+    
   }
 });
 
@@ -125,15 +95,10 @@ router.get('/:TenCm/:TensubCm/:id/:Tenbaiviet',async(req,res)=>{
     var Id=req.params.id;
     try{
       var DetailPost= await singlepostModel.getDetailPost(Id);
-      var TagPost=await singlepostModel.getTagPost(Id);
+      if(DetailPost.length >0){
+        var TagPost=await singlepostModel.getTagPost(Id);
       var CommentPost= await singlepostModel.getCommentPost(Id);
-      await DetailPost.forEach(element => {
-        element.NgayDang  = element.NgayDang.toString().substring(0,15);
-      });
-      await CommentPost.forEach(element => {
-        element.NgayBinhLuan  = element.NgayBinhLuan.toString().substring(0,15);
-      });
-      console.log(CommentPost);
+      // console.log(CommentPost);
       res.render('Single_Post',{
       css: '/stylesheets/index.css',
       style: '/stylesheets/style.css',
@@ -141,21 +106,15 @@ router.get('/:TenCm/:TensubCm/:id/:Tenbaiviet',async(req,res)=>{
       TagPost:TagPost,
       CommentPost:CommentPost
       })
-    }catch(err){
-      console.log(err);
+      }
+      else{
+        res.render('404',{layout:false});
+      }
+    }catch(next){
+     
     }
 });
-// router.get('/thethao/bong-da', function (req, res, next) {
-//   res.render('Single_Category', { category: 'Thể thao', singleCategory: 'Bóng đá', css: '/stylesheets/index.css', style: '/stylesheets/style.css' });
-// });
-// router.get('/thethao/the-thao-the-gioi', function (req, res, next) {
-//   res.render('Single_Category', { category: 'Thể thao', singleCategory: 'Thể thao thế giới', css: '/stylesheets/index.css', style: '/stylesheets/style.css' });
-// });
 
-
-// router.get('/thethao/the-thao-the-gioi/toc-do-lam-chu-cuoc-dua', function (req, res, next) {
-//   res.render('Single_Post', { category: 'Thể thao', singleCategory: 'Thể thao thế giới', css: '/stylesheets/index.css', style: '/stylesheets/style.css' });
-// });
 
 
 module.exports = router;

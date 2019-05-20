@@ -8,7 +8,7 @@ var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
 var app = express();
 var moment = require('moment');
-moment().format();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -16,7 +16,13 @@ app.engine('.hbs',exphbs({
   defaultLayout:'main',
   layoutsDir: path.join(__dirname,'views/layout'),
   partialsDir:path.join(__dirname,'views/partial'),
-  extname:'.hbs'
+  extname:'.hbs',
+  helpers: {
+    format: val => {
+      return moment(val).format('L');
+    }
+  }
+
 }));
 app.set('view engine', '.hbs');
 
@@ -29,10 +35,16 @@ app.use(require('./MiddleWares/locals.mdw'));
 app.use('/admin', adminRouter);
 app.use('/', indexRouter);
 
+app.use((req, res, next) => {
+  res.render('404', { layout: false });
+});
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+app.use((error, req, res, next) => {
+  res.render('error', {
+    layout: false,
+    message: error.message,
+    error:error
+  })
 });
 
 // error handler
@@ -45,9 +57,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-var DateFormats = {
-  short: "DD MMMM - YYYY",
-  long: "dddd DD.MM.YYYY HH:mm"
-};
 
 module.exports = app;
