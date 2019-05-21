@@ -13,12 +13,20 @@ module.exports ={
         return orm.selectAll('call GetTodayPost');
     },
     // lay bai viet subcategories
-    getPostfromCategories: NameSubCategories =>{
-        return orm.selectAll(`call GetNewPostsWithCategory('${NameSubCategories}')`);
+    getPostfromCategories: (NameSubCategories,limit,offset) =>{
+        return orm.selectAll(`call GetNewPostsWithCategory('${NameSubCategories}',${limit},${offset})`);
     },
     //lay bai viet tu mainCategories
-    getPostfromMainCategories: NameCategories=>{
-        return orm.selectAll(`call GetNewPostsWithMainCategory('${NameCategories}')`);
+    getPostfromMainCategories: (NameCategories,limit,offset)=>{
+        return orm.selectAll(`call GetNewPostsWithMainCategory('${NameCategories}',${limit},${offset})`);
+    },
+    //Lay so bai viet cua chuyen muc cha
+    getCountPostfromMainCat:NameCat=>{
+        return orm.selectAll(`call CountPostwithMainCat('${NameCat}')`);
+    },
+    //lay so bai viet cua chuyen muc con
+    getCountPostCat:NameCat=>{
+        return orm.selectAll(`call CountPostwithCat('${NameCat}')`);
     },
     //lay bai viet doc nhiều nhất
     getPostReadMost: ()=>{
@@ -28,9 +36,11 @@ module.exports ={
     getDetailPost:idPost=>{
         return orm.selectAll(`call GetDetailsPost('${idPost}')`);
     },
+    //lay the bai viet
     getTagPost:idPost=>{
         return orm.selectAll(`call GetTagsPost('${idPost}')`);
     },
+    //lay comment bai viet
     getCommentPost:idPost=>{
         return orm.selectAll(`call getcommentspost('${idPost}')`);
     }

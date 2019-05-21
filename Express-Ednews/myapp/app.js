@@ -20,7 +20,7 @@ app.engine('.hbs',exphbs({
   helpers: {
     format: val => {
       return moment(val).format('L');
-    }
+    },
   }
 
 }));

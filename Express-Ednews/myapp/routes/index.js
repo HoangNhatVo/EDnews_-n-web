@@ -3,18 +3,19 @@ var router = express.Router();
 const singlepostModel = require('../Model/single_post.model');
 const CategoriesModel = require('../Model/categories.model');
 /* GET home page. */
-router.get('/', async (req, res,next) => {
-  
+router.get('/', async (req, res, next) => {
+  let limit = 1;
+  let offset = 0;
   try {
     var Feature = await singlepostModel.getFeaturePost();
     var New = await singlepostModel.getNewPost();
     var Today = await singlepostModel.getToDayPost();
-    var ChinhTriCat = await singlepostModel.getPostfromCategories('chinhtri');
-    var BongdaCat = await singlepostModel.getPostfromCategories('bongda');
-    var ThoiTrang= await singlepostModel.getPostfromCategories('fashion');
-    var TaiChinh = await singlepostModel.getPostfromCategories('taichinh');
-    var Showbiz = await singlepostModel.getPostfromCategories('showbiz');
-    var Smartphone = await singlepostModel.getPostfromCategories('smartphone');
+    var ChinhTriCat = await singlepostModel.getPostfromCategories('chinhtri', 3, offset);
+    var BongdaCat = await singlepostModel.getPostfromCategories('bongda', 3, offset);
+    var ThoiTrang = await singlepostModel.getPostfromCategories('fashion', limit, offset);
+    var TaiChinh = await singlepostModel.getPostfromCategories('taichinh', limit, offset);
+    var Showbiz = await singlepostModel.getPostfromCategories('showbiz', limit, offset);
+    var Smartphone = await singlepostModel.getPostfromCategories('smartphone', limit, offset);
     res.render('index',
       {
         slick: '/javascripts/js/slick/slick.css',
@@ -22,17 +23,17 @@ router.get('/', async (req, res,next) => {
         srcslick: '/javascripts/js/slick/slick.min.js',
         css: '/stylesheets/index.css',
         style: '/stylesheets/style.css',
-        Featurepost: Feature.slice(0,2),
-        Newpost: New.slice(0,6),
+        Featurepost: Feature.slice(0, 2),
+        Newpost: New.slice(0, 6),
         ToDaypost: Today,
-        ChinhTriCat:ChinhTriCat,
-        BongdaCat:BongdaCat,
-        ThoiTrang:ThoiTrang,
-        TaiChinh:TaiChinh,
-        Showbiz:Showbiz,
-        Smartphone:Smartphone
+        ChinhTriCat: ChinhTriCat,
+        BongdaCat: BongdaCat,
+        ThoiTrang: ThoiTrang,
+        TaiChinh: TaiChinh,
+        Showbiz: Showbiz,
+        Smartphone: Smartphone
       });
-  } catch(err){
+  } catch (err) {
     next();
   };
 });
@@ -45,74 +46,184 @@ router.get('/dangnhap', function (req, res, next) {
 router.get('/dangky', function (req, res, next) {
   res.render('Register', { layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css' });
 });
-router.get('/:TenCM',async (req, res)=> {
-  var NameCats=req.params.TenCM;
-  try{
+router.get('/:TenCM', async (req, res) => {
+  var NameCats = req.params.TenCM;
+  try {
     var Feature = await singlepostModel.getFeaturePost();
-    var NameCat= await CategoriesModel.getNameCategory(NameCats);
-    if(NameCat.length >0){
-    var Post= await singlepostModel.getPostfromMainCategories(NameCats);
-    res.render('Category', {
-      css: '/stylesheets/index.css',
-      style: '/stylesheets/style.css',
-      Featurepost: Feature.slice(0,3),
-      NameCat:NameCat,
-      Post:Post
-    });
+    var NameCat = await CategoriesModel.getNameCategory(NameCats);
+    if (NameCat.length > 0) {
+      var page = req.query.page || 1;
+      if (page < 1) page = 1;
+
+      var limit = 2;
+      var offset = (page - 1) * limit;
+
+
+      Promise.all([
+        singlepostModel.getPostfromMainCategories(NameCats, limit, offset),
+        singlepostModel.getCountPostfromMainCat(NameCats),
+      ]).then(([rows, count_rows]) => {
+
+        var total = count_rows[0].total;
+        var nPages = Math.floor(total / limit);
+        if (total % limit > 0) nPages++;
+        var pages = [];
+        for (i = 1; i <= nPages; i++) {
+          var obj = { value: i, active: i === +page };
+          pages.push(obj);
+        }
+        var checkPre;
+        var checkNext;
+        //kiem tra neu la page dau tien
+        if (page == pages[0].value && pages[0].active == true) {
+          checkPre = {
+            check: true,
+            value: 0
+          },
+            checkNext = {
+              check: false,
+              value: pages[page - 1].value + 1
+            }
+        }
+        //kiem tra la page cuoi cung
+        if (page == pages[nPages - 1].value && pages[nPages - 1].active == true) {
+          checkNext = {
+            check: true,
+            value: 0
+          },
+            checkPre = {
+              check: false,
+              value: pages[page - 1].value - 1
+            }
+        }
+        res.render('Category', {
+          css: '/stylesheets/index.css',
+          style: '/stylesheets/style.css',
+          Featurepost: Feature.slice(0, 3),
+          NameCat: NameCat,
+          Post: rows,
+          pages: pages,
+          checkPre: checkPre,
+          checkNext: checkNext
+        });
+      }).catch(err => {
+        console.log(err);
+      })
     }
-    else{
-      res.render('404',{layout:false});
+    else {
+      res.render('404', { layout: false });
     }
-  }catch(next){
-    
+  } catch (err) {
+    console.log(err);
   }
 });
-router.get('/:TenCm/:TensubCm',async(req,res)=>{
+router.get('/:TenCm/:TensubCm', async (req, res) => {
   // var TenCm=req.params.TenCm;
-  var TensubCm=req.params.TensubCm;
-  try{
+  var TensubCm = req.params.TensubCm;
+  try {
     var Feature = await singlepostModel.getFeaturePost();
-    var NameCat= await CategoriesModel.getNameCategory(TensubCm);
-    if(NameCat.length >0){
-      var Post= await singlepostModel.getPostfromCategories(TensubCm);
-    res.render('Single_Category', {
-      css: '/stylesheets/index.css',
-      style: '/stylesheets/style.css',
-      Featurepost: Feature.slice(0,3),
-      NameCat:NameCat,
-      Post:Post
-    });
+    var NameCat = await CategoriesModel.getNameCategory(TensubCm);
+    if (NameCat.length > 0) {
+      // var Post= await singlepostModel.getPostfromCategories(TensubCm);
+      var page = req.query.page || 1;
+      if (page < 1) page = 1;
+
+      var limit = 2;
+      var offset = (page - 1) * limit;
+
+
+      Promise.all([
+        singlepostModel.getPostfromCategories(TensubCm, limit, offset),
+        singlepostModel.getCountPostCat(TensubCm),
+      ]).then(([rows, count_rows]) => {
+
+        var total = count_rows[0].total;
+        var nPages = Math.floor(total / limit);
+        if (total % limit > 0) nPages++;
+        var pages = [];
+        for (i = 1; i <= nPages; i++) {
+          var obj = { value: i, active: i === +page };
+          pages.push(obj);
+        }
+        var checkPre;
+        var checkNext;
+        if (nPages == 1) {
+          checkPre = {
+            check: true,
+            value: 1
+          },
+            checkNext = {
+              check: true,
+              value: 1
+            }
+        } else {
+          //kiem tra neu la page dau tien
+          if (page == pages[0].value && pages[0].active == true) {
+            checkPre = {
+              check: true,
+              value: 0
+            },
+              checkNext = {
+                check: false,
+                value: pages[page - 1].value + 1
+              }
+          } else {
+            //kiem tra la page cuoi cung
+            if (page == pages[nPages - 1].value && pages[nPages - 1].active == true) {
+              checkNext = {
+                check: true,
+                value: 0
+              },
+                checkPre = {
+                  check: false,
+                  value: pages[page - 1].value - 1
+                }
+            }
+          }
+        }
+        res.render('Single_Category', {
+          css: '/stylesheets/index.css',
+          style: '/stylesheets/style.css',
+          Featurepost: Feature.slice(0, 3),
+          NameCat: NameCat,
+          Post: rows,
+          checkPre,
+          checkNext
+        });
+      }).catch(err => {
+        console.log(err);
+      })
     }
-    else{
-      res.render('404',{layout:false});
+    else {
+      res.render('404', { layout: false });
     }
-  }catch(next){
-    
+  } catch (err) {
+    console.log(err);
   }
 });
 
-router.get('/:TenCm/:TensubCm/:id/:Tenbaiviet',async(req,res)=>{
-    var Id=req.params.id;
-    try{
-      var DetailPost= await singlepostModel.getDetailPost(Id);
-      if(DetailPost.length >0){
-        var TagPost=await singlepostModel.getTagPost(Id);
-      var CommentPost= await singlepostModel.getCommentPost(Id);
+router.get('/:TenCm/:TensubCm/:id/:Tenbaiviet', async (req, res) => {
+  var Id = req.params.id;
+  try {
+    var DetailPost = await singlepostModel.getDetailPost(Id);
+    if (DetailPost.length > 0) {
+      var TagPost = await singlepostModel.getTagPost(Id);
+      var CommentPost = await singlepostModel.getCommentPost(Id);
       // console.log(CommentPost);
-      res.render('Single_Post',{
-      css: '/stylesheets/index.css',
-      style: '/stylesheets/style.css',
-      DetailPost:DetailPost,
-      TagPost:TagPost,
-      CommentPost:CommentPost
+      res.render('Single_Post', {
+        css: '/stylesheets/index.css',
+        style: '/stylesheets/style.css',
+        DetailPost: DetailPost,
+        TagPost: TagPost,
+        CommentPost: CommentPost
       })
-      }
-      else{
-        res.render('404',{layout:false});
-      }
-    }catch(next){
-     
     }
+    else {
+      res.render('404', { layout: false });
+    }
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 

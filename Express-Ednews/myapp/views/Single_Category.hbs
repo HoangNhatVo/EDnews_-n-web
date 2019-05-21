@@ -105,10 +105,20 @@
 					{{/each}}
 					
 					<ul class="pagination mb-30">
-						<li class="active"><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#"><i class="ion-chevron-right"></i></a></li>
+						{{!-- kiem tra neu khong phai la page cuoi cung --}}
+						{{#unless checkPre.check}}
+						<li><a href="?page={{ checkPre.value }}"><i class="ion-chevron-left"></i></a></li>
+						{{/unless}}
+						{{#each this.pages}}
+						{{#if active}}
+						<li class="active"><a href="javascript:;">{{value}}</a></li>
+						{{else}}
+						<li ><a href="?page={{value}}">{{value}}</a></li>
+						{{/if}}
+						{{/each}}
+						{{#unless checkNext.check}}
+						<li><a href="?page={{ checkNext.value }}"><i class="ion-chevron-right"></i></a></li>
+						{{/unless}}
 					</ul>
 					
 				</div><!-- col-sm-8 -->
