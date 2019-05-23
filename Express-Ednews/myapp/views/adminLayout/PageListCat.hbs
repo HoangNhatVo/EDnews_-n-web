@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="/javascripts/datatable/dataTables.bootstrap4.css">
+{{>AdminNav}}
+<div id="wrapper">
+    {{>AdminSlidebar}}
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+            <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="/admin">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">Danh sách chuyên mục</li>
+        </ol>
+<div class="card mb-3 List-account">
+          <div class="card-header">
+            <button class="btn btn-outline-success"><a href="/admin/danh-sach-chuyen-muc/them-chuyen-muc"><i class="fas fa-plus">Thêm chuyên mục</i></a></button>
+            </div>
+            
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Tên chuyên mục</th>
+                    <th>Action</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Kinh Doanh</td>
+                    <td class="action">
+                      <a href="/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc" title="">Chỉnh sửa</a>
+                      <button type="button">Xóa</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+        </div>
+        <!-- /.container-fluid -->
+
+        <!-- Sticky Footer -->
+        {{>AdminFooter}}
+
+    </div>
+</div>
+{{>AdminLogoutmodal}}

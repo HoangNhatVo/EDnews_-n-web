@@ -3293,7 +3293,12 @@ input[type="button"].btn-block {
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.25rem;
 }
-
+.nav-item .dropdown-menu{
+  background-color: #333435;
+}
+.nav-item .dropdown-item{
+  color: rgba(255, 255, 255, 0.5);
+}
 .dropdown-menu-right {
   right: 0;
   left: auto;

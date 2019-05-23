@@ -24,6 +24,24 @@ router.get('/bai-viet-bi-tu-choi',(rep,res,next)=>{
   res.render('adminLayout/PageDecline',{css:'/stylesheets/admin.css',style:'/stylesheets/sb-admin.css'});
 });
 router.get('/quan-ly-tai-khoan',(rep,res,next)=>{
-  res.render('adminLayout/PageManager',{css:'/stylesheets/admin.css',style:'/stylesheets/sb-admin.css'});
+  res.render('adminLayout/PageManagerUser',{css:'/stylesheets/admin.css',style:'/stylesheets/sb-admin.css'});
+});
+router.get('/danh-sach-chuyen-muc',(rep,res,next)=>{
+  res.render('adminLayout/PageListCat',{css:'/stylesheets/admin.css',style:'/stylesheets/sb-admin.css'});
+});
+router.get('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc',(rep,res,next)=>{
+  res.render('adminLayout/PageEditCat',{css:'/stylesheets/admin.css',style:'/stylesheets/sb-admin.css'});
+});
+router.get('/danh-sach-chuyen-muc/them-chuyen-muc',(rep,res,next)=>{
+  res.render('adminLayout/PageAddcat',{css:'/stylesheets/admin.css',style:'/stylesheets/sb-admin.css'});
+});
+router.get('/danh-sach-tag',(rep,res,next)=>{
+  res.render('adminLayout/PageListTag',{css:'/stylesheets/admin.css',style:'/stylesheets/sb-admin.css'});
+});
+router.get('/danh-sach-tag/chinh-sua-tag',(rep,res,next)=>{
+  res.render('adminLayout/PageEditTag',{css:'/stylesheets/admin.css',style:'/stylesheets/sb-admin.css'});
+});
+router.get('/danh-sach-tag/them-tag',(rep,res,next)=>{
+  res.render('adminLayout/PageAddTag',{css:'/stylesheets/admin.css',style:'/stylesheets/sb-admin.css'});
 });
 module.exports = router;
