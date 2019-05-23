@@ -101,3 +101,54 @@ insert into nhan_baiviet values('BV25','tag3');
 insert into nhan_baiviet values('BV26','tag3');
 insert into nhan_baiviet values('BV27','tag3');
 
+#-------------------23/5
+alter table BaiViet
+drop foreign key Fk_BV_CM;
+
+#--------------
+update chuyenmuc set Idchuyenmuc= 'CM1_1' where IDChuyenMuc='CM11';
+update chuyenmuc set Idchuyenmuc= 'CM1_2' where IDChuyenMuc='CM12';
+update chuyenmuc set Idchuyenmuc= 'CM2_1' where IDChuyenMuc='CM21';
+update chuyenmuc set Idchuyenmuc= 'CM2_2' where IDChuyenMuc='CM22';
+update chuyenmuc set Idchuyenmuc= 'CM3_1' where IDChuyenMuc='CM31';
+update chuyenmuc set Idchuyenmuc= 'CM3_2' where IDChuyenMuc='CM32';
+update chuyenmuc set Idchuyenmuc= 'CM4_1' where IDChuyenMuc='CM41';
+update chuyenmuc set Idchuyenmuc= 'CM4_2' where IDChuyenMuc='CM42';
+update chuyenmuc set Idchuyenmuc= 'CM5_1' where IDChuyenMuc='CM51';
+update chuyenmuc set Idchuyenmuc= 'CM5_2' where IDChuyenMuc='CM52';
+update chuyenmuc set Idchuyenmuc= 'CM6_1' where IDChuyenMuc='CM61';
+update chuyenmuc set Idchuyenmuc= 'CM6_2' where IDChuyenMuc='CM62';
+update chuyenmuc set Idchuyenmuc= 'CM7_1' where IDChuyenMuc='CM71';
+update chuyenmuc set Idchuyenmuc= 'CM7_2' where IDChuyenMuc='CM72';
+update chuyenmuc set Idchuyenmuc= 'CM8_1' where IDChuyenMuc='CM81';
+update chuyenmuc set Idchuyenmuc= 'CM8_2' where IDChuyenMuc='CM82';
+update chuyenmuc set Idchuyenmuc= 'CM9_1' where IDChuyenMuc='CM91';
+update chuyenmuc set Idchuyenmuc= 'CM9_2' where IDChuyenMuc='CM92';
+#------------------
+update baiviet set chuyenmuc= 'CM1_1' where ChuyenMuc='CM11';
+update baiviet set chuyenmuc= 'CM1_2' where ChuyenMuc='CM12';
+update baiviet set chuyenmuc= 'CM2_1' where ChuyenMuc='CM21';
+update baiviet set chuyenmuc= 'CM2_2' where ChuyenMuc='CM22';
+update baiviet set chuyenmuc= 'CM3_1' where ChuyenMuc='CM31';
+update baiviet set chuyenmuc= 'CM3_2' where ChuyenMuc='CM32';
+update baiviet set chuyenmuc= 'CM4_1' where ChuyenMuc='CM41';
+update baiviet set chuyenmuc= 'CM4_2' where ChuyenMuc='CM42';
+update baiviet set chuyenmuc= 'CM5_1' where ChuyenMuc='CM51';
+update baiviet set chuyenmuc= 'CM5_2' where ChuyenMuc='CM52';
+update baiviet set chuyenmuc= 'CM6_1' where ChuyenMuc='CM61';
+update baiviet set chuyenmuc= 'CM6_2' where ChuyenMuc='CM62';
+update baiviet set chuyenmuc= 'CM7_1' where ChuyenMuc='CM71';
+update baiviet set chuyenmuc= 'CM7_2' where ChuyenMuc='CM72';
+update baiviet set chuyenmuc= 'CM8_1' where ChuyenMuc='CM81';
+update baiviet set chuyenmuc= 'CM8_2' where ChuyenMuc='CM82';
+update baiviet set chuyenmuc= 'CM9_1' where ChuyenMuc='CM91';
+update baiviet set chuyenmuc= 'CM9_2' where ChuyenMuc='CM92';
+
+alter table BaiViet
+add constraint Fk_BV_CM
+foreign key (ChuyenMuc)
+references ChuyenMuc(IDChuyenMuc);
+
+
+
+
