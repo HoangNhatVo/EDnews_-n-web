@@ -83,6 +83,7 @@ begin
 	where BV.TinhTrang=2 and CM.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau and CM.Chuyenmuccha is null;
 end;$$
 DELIMITER ; 
+
 #-----------------------------------------Lay danh sach bai viet theo chuyen muc con
 DELIMITER $$
 USE `baodientu3n`$$
@@ -96,11 +97,11 @@ begin
 	where BV.TinhTrang=2 and CM.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau and CM.Chuyenmuccha is not null;
 end;$$
 DELIMITER ; 
-call GetCategory
+
 #-----------------------------------------Lay danh sach bai viet moi nhat theo chuyen muc cha
 DELIMITER $$
 USE `baodientu3n`$$
-create procedure GetNewPostsWithMainCategory(in TenChuyenMuc_KhongDau varchar(50))
+create procedure GetNewPostsWithMainCategory(in TenChuyenMuc_KhongDau varchar(50),in limi int,in offse int)
 begin
 	select BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,nd.ButDanh,BV.ChuyenMuc,CMCon.TenChuyenMuc,CMCon.TenChuyenMuc,CMCon.TenChuyenMuc_KhongDau as KhongDauCon,CMCha.TenChuyenMuc_KhongDau as KhongDauCha,url.urllinkHinh,BV.NoiDungTomTat
     from baiviet as BV join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
@@ -109,14 +110,30 @@ begin
 								join urlhinhanh as url on url.IDHinh=HA.IDHinh
                                 join nguoidung as nd on nd.ID=BV.PhongVien
 	where BV.TinhTrang=2 and CMCha.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau  and  datediff(date(now()),date(BV.NgayDang)) <=10
-    order by BV.NgayDang desc;
+    order by BV.NgayDang desc limit limi offset offse;
 end;$$
 DELIMITER ; 
-call GetNewPostsWithMainCategory('kinhdoanh')
+call GetNewPostsWithMainCategory('xahoi',3,0)
+#-----------------------------dem bai viet hien co cua chuyen muc cha
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure CountPostwithMainCat(in TenChuyenMuc_KhongDau varchar(50))
+begin
+	select count(*) as total
+    from baiviet as BV join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+								join chuyenmuc as CMCon on CMCon.IDChuyenMuc= BV.ChuyenMuc
+                                join chuyenmuc as CMCha on CMCha.IDCHuyenMuc=CMCon.ChuyenMucCha
+								join urlhinhanh as url on url.IDHinh=HA.IDHinh
+                                join nguoidung as nd on nd.ID=BV.PhongVien
+	where BV.TinhTrang=2 and CMCha.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau  and  datediff(date(now()),date(BV.NgayDang)) <=10;
+  
+end;$$
+DELIMITER ;
+call CountPostwithMainCat('kinhdoanh')
 #-----------------------------------------Lay danh sach bai viet moi nhat theo chuyen muc con
 DELIMITER $$
 USE `baodientu3n`$$
-create procedure GetNewPostsWithCategory(in TenChuyenMuc_KhongDau varchar(50))
+create procedure GetNewPostsWithCategory(in TenChuyenMuc_KhongDau varchar(50),in limi int,in offse int)
 begin
 	select BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,nd.ButDanh,BV.ChuyenMuc,CMCon.TenChuyenMuc,CMCon.TenChuyenMuc,CMCon.TenChuyenMuc_KhongDau as KhongDauCon,CMCha.TenChuyenMuc_KhongDau as KhongDauCha,url.urllinkHinh,BV.NoiDungTomTat
     from baiviet as BV join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
@@ -124,10 +141,25 @@ begin
                                 join chuyenmuc as CMCha on CMCha.IDCHuyenMuc=CMCon.ChuyenMucCha
 								join urlhinhanh as url on url.IDHinh=HA.IDHinh
                                 join nguoidung as nd on nd.ID=BV.PhongVien
-	where BV.TinhTrang=2 and CMcon.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau and  datediff(date(now()),date(BV.NgayDang)) <=10
-    order by BV.NgayDang desc;
+	where BV.TinhTrang=2 and CMcon.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau and  datediff(date(now()),date(BV.NgayDang)) <=10 
+    order by BV.NgayDang desc limit limi offset offse;
 end;$$
 DELIMITER ;
+#-----------------------------dem bai viet hien co cua chuyen muc con
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure CountPostwithCat(in TenChuyenMuc_KhongDau varchar(50))
+begin
+	select count(*) as total
+    from baiviet as BV join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+								join chuyenmuc as CMCon on CMCon.IDChuyenMuc= BV.ChuyenMuc
+                                join chuyenmuc as CMCha on CMCha.IDCHuyenMuc=CMCon.ChuyenMucCha
+								join urlhinhanh as url on url.IDHinh=HA.IDHinh
+                                join nguoidung as nd on nd.ID=BV.PhongVien
+	where BV.TinhTrang=2 and CMcon.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau and  datediff(date(now()),date(BV.NgayDang)) <=10 ;
+end;$$
+DELIMITER ;
+
 #-----------------------------------------Lay ten chuhyen muc
 DELIMITER $$
 USE `baodientu3n`$$
@@ -137,16 +169,16 @@ begin
     set temp=(select CM.ChuyenMucCha from chuyenmuc as CM where CM.TenChuyenMuc_KhongDau = TenChuyenMuc_KhongDau);
     if(temp is not null)
     then
-	select CMCon.TenChuyenMuc,CMCon.TenChuyenMuc_KhongDau,CMCha.TenChuyenMuc as TenCha,CMCha.TenChuyenMuc_KhongDau  as TenKhongDau_Cha from chuyenmuc as CMCon join chuyenmuc as CMCha on CMCon.ChuyenMucCha=CMCha.IDCHuyenMuc
+	select CMCon.IDChuyenMuc,CMCon.TenChuyenMuc,CMCon.TenChuyenMuc_KhongDau,CMCha.TenChuyenMuc as TenCha,CMCha.TenChuyenMuc_KhongDau  as TenKhongDau_Cha from chuyenmuc as CMCon join chuyenmuc as CMCha on CMCon.ChuyenMucCha=CMCha.IDCHuyenMuc
     where CMCon.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau;
     end if;
 	if(temp is null)
     then
-    select CM.TenChuyenMuc,CM.TenChuyenMuc_KhongDau  from chuyenmuc as CM where CM.tenchuyenmuc_khongdau=TenChuyenMuc_KhongDau;
+    select CM.IDChuyenMuc,CM.TenChuyenMuc,CM.TenChuyenMuc_KhongDau  from chuyenmuc as CM where CM.tenchuyenmuc_khongdau=TenChuyenMuc_KhongDau;
     end if;
 end;$$
 DELIMITER ;
-call GetNewPostsWithCategory('taichinh')
+
 #----------------------------Lay details bai viet
 DELIMITER $$
 USE `baodientu3n`$$
