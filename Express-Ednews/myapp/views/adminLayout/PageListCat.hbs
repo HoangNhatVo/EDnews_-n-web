@@ -1,54 +1,72 @@
 <link rel="stylesheet" href="/javascripts/datatable/dataTables.bootstrap4.css">
 {{>AdminNav}}
 <div id="wrapper">
-    {{>AdminSlidebar}}
-    <div id="content-wrapper">
+  {{>AdminSlidebar}}
+  <div id="content-wrapper">
 
-        <div class="container-fluid">
-            <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="/admin">Dashboard</a>
-          </li>
-          <li class="breadcrumb-item active">Danh sách chuyên mục</li>
-        </ol>
-<div class="card mb-3 List-account">
-          <div class="card-header">
-            <button class="btn btn-outline-success"><a href="/admin/danh-sach-chuyen-muc/them-chuyen-muc"><i class="fas fa-plus">Thêm chuyên mục</i></a></button>
-            </div>
-            
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Tên chuyên mục</th>
-                    <th>Action</th>
-                    
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Kinh Doanh</td>
-                    <td class="action">
-                      <a href="/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc" title="">Chỉnh sửa</a>
-                      <button type="button">Xóa</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+    <div class="container-fluid">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Danh sách chuyên mục</li>
+      </ol>
+      <div class="card mb-3 List-account">
+        <div class="card-header">
+          <button class="btn btn-outline-success"><a href="/admin/danh-sach-chuyen-muc/them-chuyen-muc"><i
+                class="fas fa-plus">Thêm chuyên mục</i></a></button>
+        </div>
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Tên chuyên mục</th>
+                  <th>Action</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                {{#each ListCat}}
+                <tr>
+                  <td>{{IDChuyenMuc}}</td>
+                  <td>{{TenChuyenMuc}}</td>
+                  <td class="action">
+                    <a href="/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/{{TenChuyenMuc_KhongDau}}" title="">Chỉnh
+                      sửa</a>
+                    <button type="button" data-toggle="modal" data-target="#exampleModal">Xóa</button>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                      aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-body">
+                            Bạn có muốn xóa chuyên mục này ?
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" style="background-color: #212529" data-dismiss="modal">Hủy</button>
+                            <button type="button" class="btn btn-primary">Xóa</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
           </div>
         </div>
+      </div>
 
-
-        </div>
-        <!-- /.container-fluid -->
-
-        <!-- Sticky Footer -->
-        {{>AdminFooter}}
 
     </div>
+    <!-- /.container-fluid -->
+
+    <!-- Sticky Footer -->
+    {{>AdminFooter}}
+
+  </div>
 </div>
 {{>AdminLogoutmodal}}
