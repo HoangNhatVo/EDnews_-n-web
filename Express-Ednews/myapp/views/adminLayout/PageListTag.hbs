@@ -28,14 +28,16 @@
                   </tr>
                 </thead>
                 <tbody>
+                  {{#each ListTag}}
                   <tr>
-                    <td>1</td>
-                    <td>#NhaTrang</td>
+                    <td>{{IDTag}}</td>
+                    <td>{{TenTag}}</td>
                     <td class="action">
-                      <a href="/admin/danh-sach-tag/chinh-sua-tag" title="">Chỉnh sửa</a>
+                      <a href="/admin/danh-sach-tag/chinh-sua-tag/{{TenTag}}" title="">Chỉnh sửa</a>
                       <button type="button">Xóa</button>
                     </td>
                   </tr>
+                  {{/each}}
                 </tbody>
               </table>
             </div>
