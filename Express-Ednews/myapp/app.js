@@ -10,6 +10,15 @@ var app = express();
 var moment = require('moment');
 
 
+var bodyParser = require('body-parser');
+var Passport = require('passport');
+var flash = require('connect-flash');
+var localStrategy = require('passport-local').Strategy;
+var session = require('express-session');
+var bCrypt = require('bcrypt');
+require('./config/passport')(Passport);
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs',exphbs({
@@ -25,6 +34,17 @@ app.engine('.hbs',exphbs({
 
 }));
 app.set('view engine', '.hbs');
+
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(session({secret: "mysecret", resave: true, saveUninitialized: true, 
+    cookie:{
+      maxAge: 1000*60*3
+    }}));
+app.use(Passport.initialize());
+app.use(Passport.session());
+app.use(flash());
+
 
 app.use(logger('dev'));
 app.use(express.json());

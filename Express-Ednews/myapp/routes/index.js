@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 const singlepostModel = require('../Model/single_post.model');
 const CategoriesModel = require('../Model/categories.model');
+
+const loginModel = require('../Model/login.model');
+var passport = require('passport');
+
 /* GET home page. */
 router.get('/', async (req, res, next) => {
   let limit = 1;
@@ -16,6 +20,7 @@ router.get('/', async (req, res, next) => {
     var TaiChinh = await singlepostModel.getPostfromCategories('taichinh', limit, offset);
     var Showbiz = await singlepostModel.getPostfromCategories('showbiz', limit, offset);
     var Smartphone = await singlepostModel.getPostfromCategories('smartphone', limit, offset);
+	console.log(req.user);
     res.render('index',
       {
         slick: '/javascripts/js/slick/slick.css',
@@ -31,21 +36,74 @@ router.get('/', async (req, res, next) => {
         ThoiTrang: ThoiTrang,
         TaiChinh: TaiChinh,
         Showbiz: Showbiz,
-        Smartphone: Smartphone
+        Smartphone: Smartphone,
+        user: req.user
       });
   } catch (err) {
     next();
   };
 });
+
 router.get('/lien-he', function (req, res, next) {
-  res.render('Contact', { css: '/stylesheets/index.css', style: '/stylesheets/style.css' });
+  res.render('Contact', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user });
 });
+
 router.get('/dangnhap', function (req, res, next) {
-  res.render('Login', { layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css' });
+  if(!req.isAuthenticated()){
+   res.render('Login', { layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
+                        message:req.flash('loginMessage'),
+                        message_register: req.flash('signupMessage')});
+  }
+  else{
+    res.redirect('/');
+  }
 });
+router.post('/dangnhap', passport.authenticate('local-login', {
+      failureRedirect: '/dangnhap',
+      successRedirect: '/',
+      failureFlash: true
+  }),
+    function(req, res){
+      if(req.body.remember){
+        req.session.cookie.maxAge = 1000 * 60 *3;
+      }
+      else{
+        req.session.cookie.expires = false;
+      }
+      res.redirect('/');
+    }
+);
+router.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}));
+router.get('/auth/facebook/callback', passport.authenticate('facebook',{
+  failureRedirect:'/',
+  successRedirect:'/',
+  failureFlash: true
+}));
+router.get('/logout', function(req, res){
+  req.logout();
+  req.session.cookie.expires = false;
+  res.redirect('/');
+});
+
 router.get('/dangky', function (req, res, next) {
-  res.render('Register', { layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css' });
+  if(!req.isAuthenticated()){
+  res.render('Register', { layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
+                          message:req.flash('signupMessage') });
+  }
+  else{
+    res.redirect('/');
+  }
 });
+router.post('/dangky', passport.authenticate('local-signup',{
+  failureRedirect: '/dangky',
+  successRedirect: '/dangnhap',
+  failureFlash: true
+}),
+  function(req,res){
+    
+  }
+);
+
 router.get('/:TenCM', async (req, res) => {
   var NameCats = req.params.TenCM;
   try {
@@ -104,7 +162,8 @@ router.get('/:TenCM', async (req, res) => {
           Post: rows,
           pages: pages,
           checkPre: checkPre,
-          checkNext: checkNext
+          checkNext: checkNext,
+          user: req.user
         });
       }).catch(err => {
         console.log(err);
@@ -188,7 +247,8 @@ router.get('/:TenCm/:TensubCm', async (req, res) => {
           NameCat: NameCat,
           Post: rows,
           checkPre,
-          checkNext
+          checkNext,
+          user: req.user
         });
       }).catch(err => {
         console.log(err);
@@ -215,7 +275,8 @@ router.get('/:TenCm/:TensubCm/:id/:Tenbaiviet', async (req, res) => {
         style: '/stylesheets/style.css',
         DetailPost: DetailPost,
         TagPost: TagPost,
-        CommentPost: CommentPost
+        CommentPost: CommentPost,
+        user: req.user
       })
     }
     else {

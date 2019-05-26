@@ -356,6 +356,7 @@ input {
   text-transform: capitalize;
   display: block;
   margin-bottom: 5px;
+  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
 }
 
 .radio-container {
@@ -550,10 +551,11 @@ input {
    #TITLE
    ========================================================================== */
 .title {
-  font-size: 24px;
+  font-size: 39px;
   color: #525252;
   font-weight: 400;
-  margin-bottom: 40px;
+ margin-bottom: 20px;
+  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
 }
 
 /* ==========================================================================
@@ -688,14 +690,16 @@ iframe {
 /*//////////////////////////////////////////////////////////////////
 [ Utility ]*/
 .txt1 {
-  font-family: Poppins-Regular;
+  /* font-family: Poppins-Regular; */
+  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
   font-size: 14px;
   line-height: 1.5;
   color: #666666;
 }
 
 .txt2 {
-  font-family: Poppins-Regular;
+  /* font-family: Poppins-Regular; */
+  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
   font-size: 14px;
   line-height: 1.5;
   color: #333333;
@@ -761,6 +765,7 @@ iframe {
   color: #525252;
   line-height: 1.2;
   text-align: center;
+  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
 }
 
 
@@ -775,7 +780,8 @@ iframe {
 }
 
 .label-input100 {
-  font-family: Poppins-Regular;
+  /* font-family: Poppins-Regular; */
+  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
   font-size: 20px;
   color: #525252;
   line-height: 1.5;
@@ -1036,4 +1042,22 @@ iframe {
 .flex{
  display: flex;
  justify-content:center;
+}
+
+/* CSS Dang Ky */
+.alert-danger{
+  background-color: #f2dede;
+  border-color: #ebcccc;
+  color: #a94442;
+}
+.alert {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ebcccc;
+  border-radius: 0.25rem;
+}
+
+.back{
+  text-decoration: none;
+  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
 }
