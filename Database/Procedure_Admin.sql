@@ -61,6 +61,10 @@ BEGIN
      then
      set lastCat =(select max(convert(substring(IDChuyenMuc,length(ChuyenMucCha)+2),unsigned))
 				   from chuyenmuc where ChuyenMucCha =IDMainCat);
+	if(lastCat is null)
+    then
+    set lastCat =0;
+    end if;
 	 set nextCat = lastCat +1;
      set IDSubCat = (select concat(IDMainCat,'_',convert(nextCat,char)));
      insert into ChuyenMuc values( IDSubCat,Ten,Ten_KhongDau,IDMainCat);
