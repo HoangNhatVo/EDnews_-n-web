@@ -5,7 +5,7 @@ module.exports ={
         return orm.selectAll(`call GetUser('${email}')`);
     },
 
-    addUser:(fullname, phonenumber, birthday, gender, email, pass) =>{
-        return orm.selectAll(`call GetUser(N'${fullname}','${phonenumber}','${birthday}',N'${gender}','${email}','${pass}')`);
+    addUser:(HoTen, SDT, NgaySinh, GioiTinh, Email, Password) =>{
+        return orm.selectAll(`call AddUser('${HoTen}','${SDT}','${NgaySinh}','${GioiTinh}','${Email}','${Password}')`);
     }
 };

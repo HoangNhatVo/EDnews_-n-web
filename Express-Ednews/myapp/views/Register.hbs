@@ -36,13 +36,7 @@
 							{{message}}</a>.
 						</div>
 					{{/if}} --}}
-                    {{#if errors}}
-                    {{#each errors}}
-                    <div class="alert alert-danger" role="alert">
-							lỗi</a>.
-						</div>
-                    {{/each}}
-                    {{/if}}
+                    
                     <form novalidate method="POST" action="/dangky" id="registerForm">
                     {{#if message.length}}
 						<div class="alert alert-danger" role="alert">

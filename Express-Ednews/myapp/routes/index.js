@@ -49,8 +49,11 @@ router.get('/lien-he', function (req, res, next) {
 });
 
 router.get('/dangnhap', function (req, res, next) {
-  if(!req.isAuthenticated()){
-   res.render('Login', { layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
+  console.log(req.user);
+  if(!req.isAuthenticated() || req.user==true){
+    req.logout();
+    req.session.cookie.expires = false;
+    res.render('Login', { layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
                         message:req.flash('loginMessage'),
                         message_register: req.flash('signupMessage')});
   }
@@ -87,7 +90,7 @@ router.get('/logout', function(req, res){
 
 router.get('/dangky', function (req, res, next) {
   if(!req.isAuthenticated()){
-  res.render('Register', { layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
+    res.render('Register', { layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
                           message:req.flash('signupMessage') });
   }
   else{
@@ -99,8 +102,8 @@ router.post('/dangky', passport.authenticate('local-signup',{
   successRedirect: '/dangnhap',
   failureFlash: true
 }),
-  function(req,res){
-    
+  function(req,res){    
+
   }
 );
 
