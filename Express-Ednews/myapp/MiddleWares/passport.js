@@ -42,7 +42,7 @@ module.exports = function(passport) {
                 return done(null, false, req.flash('loginMessage', 'Tài khoản không tồn tại'));
             }
             if(user[0].Password != pass){
-                return done(null, false, req.flash('loginMessage', 'Wrong Password'));
+                return done(null, false, req.flash('loginMessage', 'Mật khẩu không đúng'));
             }
            
             // if(!bCrypt.compareSync(pass, '$2b$10$rgkFDsD5ZGW0/FBI8pLzTOseNx6Rv0uCkEnmlX1e2vdO3sMJE2326')){

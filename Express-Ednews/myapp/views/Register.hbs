@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="/stylesheets/index.css">
 
    {{!-- <link rel="stylesheet" href="/plugin-frameworks/bootstrap.css"> --}}
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+
     
 </head>
 
@@ -41,7 +43,7 @@
 						</div>
                     {{/each}}
                     {{/if}}
-                    <form method="POST" action="/dangky">
+                    <form novalidate method="POST" action="/dangky" id="registerForm">
                     {{#if message.length}}
 						<div class="alert alert-danger" role="alert">
 							{{message}}</a>.
@@ -51,13 +53,13 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Họ và tên*</label>
-                                    <input class="input--style-4" type="text" name="fullname" required>
+                                    <input class="input--style-4" type="text" name="fullname">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">SĐT*</label>
-                                    <input class="input--style-4" type="text" name="phonenumber" required>
+                                    <input class="input--style-4" type="text" name="phonenumber">
                                 </div>
                             </div>
                         </div>
@@ -66,7 +68,7 @@
                                 <div class="input-group">
                                     <label class="label">Ngày sinh*</label>
                                     <div class="input-group-icon">
-                                        <input class="input--style-4 js-datepicker" type="date" name="birthday" required>
+                                        <input class="input--style-4 js-datepicker" type="text" name="birthday" id="txtBirthday">
                                         <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
                                     </div>
                                 </div>
@@ -91,13 +93,13 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Email*</label>
-                                    <input class="input--style-4" type="email" name="email" required>
+                                    <input class="input--style-4" type="text" name="email">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Mật khẩu*</label>
-                                    <input class="input--style-4" type="password" name="pass" required>
+                                    <input class="input--style-4" type="password" name="pass">
                                 </div>
                             </div>
                         </div>
@@ -114,9 +116,67 @@
         </div>
     </div>
 
-    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script>
+    $(function () {
+        $('#txtBirthday').datetimepicker({
+        format: 'd/m/Y',
+        timepicker: false,
+        mask: false,
+        });
 
-   
+        $('#registerForm').validate({
+        rules: {
+            fullname: {
+                required: true,
+            },
+            phonenumber:{
+                required: true,
+            },
+            birthday:{
+                required: true,
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            pass: {
+                required: true,
+                minlength: 6
+            },
+        },
+        messages: {
+            fullname: {
+                required: 'Phải nhập đầy đủ họ tên.',
+            },
+            phonenumber:{
+                required: 'Phải nhập số điện thoại.',
+            },
+            birthday:{
+                required: 'Phải nhập ngày sinh.',
+            },
+            email: {
+                required: 'Phải nhập email.',
+                email: 'Chưa đúng định dạng email.'
+            },
+            pass: {
+                required: 'Phải nhập password.',
+                minlength: 'Password từ 6 kí tự trở lên.'
+            },
+        },
+        errorElement: 'small',
+        errorClass: 'help-block text-danger',
+        highlight: function (e) {
+            $(e).removeClass('is-valid').addClass('is-invalid');
+        },
+        unhighlight: function (e) {
+            $(e).removeClass('is-invalid').addClass('is-valid');
+        }
+        });
+    })
+    </script>
 </body>
 </html>
 <!-- end document-->

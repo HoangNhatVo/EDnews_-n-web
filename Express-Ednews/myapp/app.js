@@ -16,7 +16,7 @@ var flash = require('connect-flash');
 var localStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 var bCrypt = require('bcrypt');
-require('./config/passport')(Passport);
+require('./MiddleWares/passport')(Passport);
 
 
 // view engine setup
