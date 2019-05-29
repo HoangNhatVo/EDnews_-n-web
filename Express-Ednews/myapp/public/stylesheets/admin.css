@@ -552,3 +552,32 @@ margin-top: 20px;
   border-bottom: none;
 }
 /*End CreateNews
+/* BAck to top */
+/*backtotop*/
+#back-to-top {
+  width: 45px;
+  height: 45px;
+  color: #fff;
+  line-height: 45px;
+  text-align: center;
+  font-size: 16px;
+  background-color: #212529;
+  position: fixed;
+  opacity: 1;
+  pointer-events: auto;
+  right: 40px;
+  bottom: 50px;
+  cursor: pointer;
+  box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.5);
+  -webkit-transition: all .3s ease;
+  -o-transition: all .3s ease;
+  transition: all .3s ease;
+  z-index: 1000;
+}
+#back-to-top:hover{
+background-color: #231f1f;
+}	
+#back-to-top.hidden {
+  opacity: 0;
+  pointer-events: none;
+}

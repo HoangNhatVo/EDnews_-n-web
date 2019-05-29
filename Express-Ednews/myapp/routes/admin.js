@@ -60,91 +60,164 @@ router.get('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/:TenCM', async (req, res,
   var NameCats = req.params.TenCM;
   try {
     var MainCat = await CategoriesModel.getNameCategory(NameCats);
-    if(MainCat.length>0){
-    var ListSubCat = await CategoriesModel.getListSubcatOfMainCat(NameCats);
-      var Cat=[];
+    if (MainCat.length > 0) {
+      var ListSubCat = await CategoriesModel.getListSubcatOfMainCat(NameCats);
+      var Cat = [];
       MainCat.forEach(element => {
         Cat.push({
-          MainCat:element,
-          ListSubCat:ListSubCat
+          MainCat: element,
+          ListSubCat: ListSubCat
         })
       });
-      
-    res.render('adminLayout/PageEditCat',
-      {
-        css: '/stylesheets/admin.css',
-        style: '/stylesheets/sb-admin.css',
-        Cat:Cat,
-        error: false,
-      });
-    }else{
+
       res.render('adminLayout/PageEditCat',
-      {
-        css: '/stylesheets/admin.css',
-        style: '/stylesheets/sb-admin.css',
-        error: true,
-      });
+        {
+          css: '/stylesheets/admin.css',
+          style: '/stylesheets/sb-admin.css',
+          Cat: Cat,
+          error: false,
+        });
+    } else {
+      res.render('adminLayout/PageEditCat',
+        {
+          css: '/stylesheets/admin.css',
+          style: '/stylesheets/sb-admin.css',
+          error: true,
+        });
     }
   }
-   catch (err) {
+  catch (err) {
     console.log(err);
   }
 
 });
 // route xoa chuyen muc cha
-router.post('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/xoa',(req,res,next)=>{
-  var CatID=req.body.CatID1;
+router.post('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/xoa', (req, res, next) => {
+  var CatID = req.body.CatID1;
   CategoriesModel.deleteCategories(CatID)
-  .then(c=>{
-    res.redirect('/admin/danh-sach-chuyen-muc');
-  })
-  .catch(next);
+    .then(c => {
+      res.redirect('/admin/danh-sach-chuyen-muc');
+    })
+    .catch(next);
   console.log(CatID);
-  
+
 });
 // router xoa chuyen muc con
-router.post('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/xoa-cmcon/:IdSub',(req,res,next)=>{
-  var SubCatID=req.params.IdSub;
-  var NameCat=req.body.NameNo;
+router.post('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/xoa-cmcon/:IdSub', (req, res, next) => {
+  var SubCatID = req.params.IdSub;
+  var NameCat = req.body.NameNo;
   CategoriesModel.deleteSubCat(SubCatID)
-  .then(r=>{
-    res.redirect(`/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/${NameCat}`);
-  })
-  .catch(next);
+    .then(r => {
+      res.redirect(`/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/${NameCat}`);
+    })
+    .catch(next);
 });
 // router them chuyen muc con
-router.post('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/:TenCM/them-chuyen-muc-con',(req,res,next)=>{
-  var NameCat=req.params.TenCM;
-  var NewName=req.body.CatSubName;
-  var NewNoName=NewName.normalize('NFD')
-                        .replace(/[\u0300-\u036f]/g, '')
-                        .replace(/đ/g, 'd').replace(/Đ/g, 'D')
-                        .replace(/\s/g,"")
-                        .toLowerCase();
-  var IDMain=req.body.CatID1;
-  console.log(IDMain,NewName,NewNoName);
-  CategoriesModel.addSubCategories(IDMain,NewName,NewNoName)
-  .then(r=>{
-    res.redirect(`/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/${NameCat}`);
-  })
-  .catch(next);
+router.post('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/:TenCM/them-chuyen-muc-con', (req, res, next) => {
+  var NameCat = req.params.TenCM;
+  var NewName = req.body.CatSubName;
+  var NewNoName = NewName.normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+    .replace(/\s/g, "")
+    .toLowerCase();
+  var IDMain = req.body.CatID1;
+  console.log(IDMain, NewName, NewNoName);
+  CategoriesModel.addSubCategories(IDMain, NewName, NewNoName)
+    .then(r => {
+      res.redirect(`/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/${NameCat}`);
+    })
+    .catch(next);
 });
 
 //router them chuyen muc cha
-router.post('/danh-sach-chuyen-muc/them-chuyen-muc', (req, res, next) =>{
-  var NewName=req.body.NewCatName;
-  var NewNoName=NewName.normalize('NFD')
-                        .replace(/[\u0300-\u036f]/g, '')
-                        .replace(/đ/g, 'd').replace(/Đ/g, 'D')
-                        .replace(/\s/g,"")
-                        .toLowerCase();
+router.post('/danh-sach-chuyen-muc/them-chuyen-muc', (req, res, next) => {
+  var NewName = req.body.NewCatName;
+  var NewNoName = NewName.normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+    .replace(/\s/g, "")
+    .toLowerCase();
   // console.log(NewName,NewNoName);
-  CategoriesModel.addMainCategoris(NewName,NewNoName)
-  .then(c=>{
-    console.log(c);
-    res.redirect('/admin/danh-sach-chuyen-muc');
-  })
-  .catch(next)
+  CategoriesModel.addMainCategoris(NewName, NewNoName)
+    .then(c => {
+      console.log(c);
+      res.redirect('/admin/danh-sach-chuyen-muc');
+    })
+    .catch(next)
+});
+
+// router chinh sua chuyen muc
+router.post('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/:TenCM', async (req, res, next) => {
+  var NameCat = req.params.TenCM;
+  var IDMain = req.body.CatID1;
+  var NewNameMain = req.body.CatName1;
+  var NewNameMainNo = NewNameMain.normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+    .replace(/\s/g, "")
+    .toLowerCase();
+  // console.log(IDMain,NewNameMain,NewNameMainNo);
+  var count = 0;
+  try {
+    var result = await CategoriesModel.getListSubcatOfMainCat(NameCat);
+    for (var k in result) {
+      if (result.hasOwnProperty(k))
+        count++;
+    }
+    if(count==1){
+    for (var i = 0; i < count; i++) {
+      var IDSubcat = req.body.IDSubCat;
+      var NameSubCat = req.body.CatName;
+      var NameNoSubCat = NameSubCat.normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+        .replace(/\s/g, "")
+        .toLowerCase();
+      await CategoriesModel.updateSubCat(IDSubcat,NameSubCat,NameNoSubCat);
+    }
+  }
+  if(count>1){
+    for (var i = 0; i < count; i++) {
+      var IDSubcat = req.body.IDSubCat[i];
+      var NameSubCat = req.body.CatName[i];
+      var NameNoSubCat = NameSubCat.normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+        .replace(/\s/g, "")
+        .toLowerCase();
+        await CategoriesModel.updateSubCat(IDSubcat,NameSubCat,NameNoSubCat);
+    }
+  }
+    await CategoriesModel.updateMainCat(IDMain, NewNameMain, NewNameMainNo);
+
+    res.redirect(`/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/${NewNameMainNo}`);
+  }
+  catch (err) {
+    console.log(err);
+  }
+  // CategoriesModel.updateMainCat(IDMain)
+  // console.log('main',IDMain,NewNameMain,NewNameMainNo);
+  // CategoriesModel.getListSubcatOfMainCat(NameCat)
+  //   .then(r => {
+  //     var count = 0;
+  //     for (var k in r) {
+  //       if (r.hasOwnProperty(k))
+  //         count++;
+  //     }
+  //     for(var i=0;i<count;i++){
+  //       var IDSubcat=req.body.IDSubCat[i];
+  //       var NameSubCat=req.body.CatName[i];
+  //       var NameNoSubCat=NameSubCat.normalize('NFD')
+  //       .replace(/[\u0300-\u036f]/g, '')
+  //       .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+  //       .replace(/\s/g, "")
+  //       .toLowerCase();
+  //       console.log('sub',IDSubcat,NameSubCat,NameNoSubCat);
+  //     }
+
+  //   })
+  //   .catch(next);
 });
 
 //Page danh sach cac tag
@@ -161,13 +234,13 @@ router.get('/danh-sach-tag', (req, res, next) => {
 
 });
 //Xoa tag
-router.post('/danh-sach-tag/xoa-tag',(req,res,next)=>{
+router.post('/danh-sach-tag/xoa-tag', (req, res, next) => {
   console.log(req.body.abc);
   res.send(req.body.abc);
 })
 //Page chỉnh sửa tag
 router.get('/danh-sach-tag/chinh-sua-tag/:TenTag', (req, res, next) => {
-  var name =req.params.TenTag;
+  var name = req.params.TenTag;
   console.log(name);
   res.render('adminLayout/PageEditTag',
     {

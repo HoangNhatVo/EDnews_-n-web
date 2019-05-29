@@ -17,7 +17,7 @@
           <form method="POST" class="update"
             action="/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/{{MainCat.TenChuyenMuc_KhongDau}}">
             <div class="form-group">
-              <label for="txtCatID" style="width:200px">ID chuyên mục</label>
+              <label for="txtCatID" name ="IDMain"style="width:200px">ID chuyên mục</label>
               <input readonly type="text" class="form-control" id="txtCatID" name="CatID1"
                 value="{{MainCat.IDChuyenMuc}}">
             </div>
@@ -30,6 +30,7 @@
             {{#each ListSubCat}}
             <div class="form-group">
               <label for="txtCatName" style="width:411px">Tên chuyên mục con</label>
+              <input type="text" name="IDSubCat" value="{{IDChuyenMuc}}" class="d-none">
               <input type="text" class="form-control CatName" name="CatName" autofocus placeholder="Enter category name"
                 value="{{TenChuyenMuc}}">
               <button class="btn btn-danger"
