@@ -9,6 +9,16 @@ begin
 end;$$
 DELIMITER ;
 
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure AddUser2(in HoTen varchar(50), in SDT varchar(15),
+ in NgaySinh varchar(50), in GioiTinh varchar(10), in Email varchar(50), in Password varchar(255),
+ in NgayDangKy varchar(50), in NgayHetHan varchar(50), in TinhTrang varchar(20))
+begin
+	insert into nguoidung 
+    values(null,Email,Password,HoTen,GioiTinh,NgaySinh,Email,SDT,'PH1',NgayDangKy,NgayHetHan,TinhTrang,null,null);
+end;$$
+DELIMITER ;
 	#------ PROCEDURE GetUser
 DELIMITER $$
 USE `baodientu3n`$$
