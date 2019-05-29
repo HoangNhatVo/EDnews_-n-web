@@ -1,0 +1,90 @@
+{{>header}}
+<section class="bg-primary p-0 pb-xs-20">
+	<div class="container">
+		{{>botnav}}
+	</div><!-- container -->
+</section>
+<form class="frmSubs">
+	<div class="lbl">
+		<label>Cập nhật thông tin</label>
+	</div>
+	<div class="row-info">
+		<div class="col-label">
+			<label class="lbl">Họ</label>
+		</div>
+		<div class="col-input">
+			<input type="text" id="Ho" name="Ho" autofocus>
+		</div>
+	</div>
+	<div class="row-info">
+		<div class="col-label">
+			<label class="lbl">Tên</label>
+		</div>
+		<div class="col-input">
+			<input type="text" id="Ten" name="Ten">
+		</div>
+	</div>
+
+
+	<div class="row-info row-birthdate">
+		<div class="col-label">
+			<label class="lbl">Ngày sinh</label>
+		</div>
+		<div class="col-input col-birthdate">
+			<select class="birthdate" id="date">
+				<script type="text/javascript">
+					for (var i = 1; i <= 31; i++) {
+						var html = '<option value="' + i + '">' + i + '</option>';
+						document.writeln(html);
+					}
+				</script>
+			</select>
+			<select class="birthdate" id="month">
+				<script type="text/javascript">
+					for (var i = 1; i <= 12; i++) {
+						var html = '<option value="' + i + '">' + i + '</option>';
+						document.writeln(html);
+					}
+				</script>
+			</select>
+			<select class="birthdate" id="year">
+				<script type="text/javascript">
+					for (var i = 1900; i <= 2019; i++) {
+						var html = '<option value="' + i + '">' + i + '</option>';
+						document.writeln(html);
+					}
+				</script>
+			</select>
+		</div>
+	</div>
+
+	<div class="row-info">
+		<div class="col-label">
+			<label class="lbl">Email</label>
+		</div>
+		<div class="col-input">
+			<input class="Email" id="Email" type="text" name="Email">
+		</div>
+	</div>
+
+	<label class="lbl-ChangePassEmail">Đổi mật khẩu</label><br>
+
+	<div class="row-info row-hsd">
+		<div class="col-label">
+			<label class="lbl">Sử dụng đến</label>
+		</div>
+		<div class="col-input">
+			<input class="HSD" id="HSD" type="text" name="Sudungden" readonly style="background-color: #ccc">
+
+			</style>
+		</div>
+	</div>
+
+	<label class="count-date">Còn 55 ngày</label><br>
+	<label class="acc" onclick="ReNewedAcc()">Gia hạn tài khoản</label><br>
+
+	<div class="div-btn">
+		<button type="button" class="btnSave" onclick="ClickButtonSave()">Lưu</button>
+	</div>
+</form>
+{{>footer}}

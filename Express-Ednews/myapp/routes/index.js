@@ -48,6 +48,9 @@ router.get('/lien-he', function (req, res, next) {
   res.render('Contact', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user });
 });
 
+router.get('/thong-tin-ca-nhan',function(req,res,next){
+ res.render('subcriber', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user });
+});
 router.get('/dangnhap', function (req, res, next) {
   console.log(req.user);
   if(!req.isAuthenticated() || req.user==true){

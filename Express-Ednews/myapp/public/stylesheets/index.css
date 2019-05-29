@@ -1061,3 +1061,102 @@ iframe {
   text-decoration: none;
   font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
 }
+/*SUBSCRIBER*/
+.frmSubs{
+  margin: 40px 0px;
+  font-family:  Roboto;
+  font-size: 15px;
+}
+.lbl{
+  text-align: center;
+}
+.lbl label{
+  font-size: 30px;
+  font-weight: bold;
+  /*font-family: "Comic Sans MS", cursive, sans-serif;*/
+  color:  #0C0E68;
+}
+.row-info div{
+  display: inline-block;
+}
+.row-info{
+  margin-top: 20px;
+}
+.row-hsd{
+  margin-top: 30px;
+}
+.col-label{
+  width: 35%;
+  text-align: right;
+  float: left;
+  margin-right: 10px;
+  padding: 10px;
+  color:  #0C0E68;
+  font-weight: bold;
+}
+.col-input{
+  width: 30%;
+  margin-left: 10px;
+}
+
+.lbl-ChangePassEmail{
+   color: #0275d8;
+ }
+.lbl-ChangePassEmail, .count-date, .acc{
+  width: 65%;
+  float: right;
+  text-align: left;
+  padding-left: 20px;
+  margin-top: 0px;
+
+}
+.count-date{
+  color: #009AFF;
+}
+.acc{
+  margin-top: 10px;
+  color: #0275d8;
+}
+.acc:hover, .lbl-ChangePassEmail:hover{
+  color: #C62FF8;
+  cursor:pointer;
+}
+.acc:active, .lbl-ChangePassEmail:active{
+  transform: translateY(1px);
+}
+.div-btn{
+  margin-top: 40px;
+  text-align: center;
+}
+.btnSave{
+  text-align: center;
+  width: 60px;
+  height: 45px;
+  border: 1.5px solid #0C0E68;
+  background: #0C0E68;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+}
+.btnSave:hover{
+  background: white;
+  color: #0C0E68;
+  font-weight: bold;
+}
+.btnSave:active{
+  transform: translateY(4px);
+}
+.col-birthdate select{
+  height: 40px;
+  width: 60px;
+  border-radius: 5px;
+  margin-right: 40px;
+}
+
+#year{
+  width: 100px;
+}
+
+.birthdate:hover{
+  border: 1.5px solid #0C0E68;
+}
