@@ -30,11 +30,14 @@
                 <tbody>
                   {{#each ListTag}}
                   <tr>
-                    <td>{{IDTag}}</td>
+                    <td >{{IDTag}}</td>
                     <td>{{TenTag}}</td>
                     <td class="action">
-                      <a href="/admin/danh-sach-tag/chinh-sua-tag/{{TenTag}}" title="">Chỉnh sửa</a>
-                      <button type="button">Xóa</button>
+                      <form method="POST">
+                      <a href="/admin/danh-sach-tag/chinh-sua-tag/{{remove TenTag}}" title="">Chỉnh sửa</a>
+                      <button type="submit" formaction="/admin/danh-sach-tag/xoa-tag">Xóa</button>
+                      <input type="text" name="abc" value="{{IDTag}}" class="d-none">
+                      </form>
                     </td>
                   </tr>
                   {{/each}}

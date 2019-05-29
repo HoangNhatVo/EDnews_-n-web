@@ -10,17 +10,20 @@
     Thêm chuyên mục mới
   </h4>
   <div class="card-body">
-    <form method="POST">
+    <div class="alert alert-danger d-none" role="alert">
+  Định dạng tên không dấu chưa đúng
+</div>
+    <form method="POST" action="/admin/danh-sach-chuyen-muc/them-chuyen-muc">
       <div class="form-group">
         <label for="txtCatName" style="width:300px">Tên chuyên mục</label>
-        <input type="text" class="form-control" id="txtCatName" name="CatName" autofocus placeholder="Enter category name">
+        <input type="text" class="form-control NewCatName"  name="NewCatName" autofocus placeholder="Enter category name">
 
       </div>
-      <div class="form-group">
+      {{!-- <div class="form-group">
         <label for="txtCatName" style="width:300px">Tên chuyên mục không dấu</label>
-        <input type="text" class="form-control" id="txtCatName" name="CatName" autofocus placeholder="Enter category name">
+        <input type="text" class="form-control NewCatNoName"  name="NewCatNoName" autofocus placeholder="Enter category name">
         
-      </div>
+      </div> --}}
       <a class="btn btn-primary" href="/admin/danh-sach-chuyen-muc" role="button">
         <i class="fa fa-backward" aria-hidden="true"></i>
         Trở về

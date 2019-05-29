@@ -18,9 +18,9 @@ router.get('/', async (req, res, next) => {
     var Smartphone = await singlepostModel.getPostfromCategories('smartphone', limit, offset);
     res.render('index',
       {
-        slick: '/javascripts/js/slick/slick.css',
-        slicktheme: '/javascripts/js/slick/slick-theme.css',
-        srcslick: '/javascripts/js/slick/slick.min.js',
+        // slick: '/javascripts/js/slick/slick.css',
+        // slicktheme: '/javascripts/js/slick/slick-theme.css',
+        // srcslick: '/javascripts/js/slick/slick.min.js',
         css: '/stylesheets/index.css',
         style: '/stylesheets/style.css',
         Featurepost: Feature.slice(0, 2),
@@ -114,6 +114,7 @@ router.get('/:TenCM', async (req, res) => {
       res.render('404', { layout: false });
     }
   } catch (err) {
+    next;
     console.log(err);
   }
 });
@@ -136,7 +137,6 @@ router.get('/:TenCm/:TensubCm', async (req, res) => {
         singlepostModel.getPostfromCategories(TensubCm, limit, offset),
         singlepostModel.getCountPostCat(TensubCm),
       ]).then(([rows, count_rows]) => {
-
         var total = count_rows[0].total;
         var nPages = Math.floor(total / limit);
         if (total % limit > 0) nPages++;
@@ -188,11 +188,13 @@ router.get('/:TenCm/:TensubCm', async (req, res) => {
           NameCat: NameCat,
           Post: rows,
           checkPre,
-          checkNext
+          checkNext,
         });
+      
       }).catch(err => {
         console.log(err);
       })
+      
     }
     else {
       res.render('404', { layout: false });
