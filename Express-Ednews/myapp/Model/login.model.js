@@ -9,5 +9,9 @@ module.exports ={
     },
     addUser:(HoTen, SDT, NgaySinh, GioiTinh, Email, Password) =>{
         return orm.selectAll(`call AddUser('${HoTen}','${SDT}','${NgaySinh}','${GioiTinh}','${Email}','${Password}')`);
+    },
+    addUser2:(HoTen, SDT, NgaySinh, GioiTinh, Email, Password,NgayDangKy,NgayHetHan,TinhTrang) =>{
+        return orm.selectAll(`call AddUser2('${HoTen}','${SDT}','${NgaySinh}','${GioiTinh}','${Email}',
+        '${Password}','${NgayDangKy}','${NgayHetHan}','${TinhTrang}')`);
     }
 };

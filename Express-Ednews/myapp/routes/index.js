@@ -49,7 +49,22 @@ router.get('/lien-he', function (req, res, next) {
 });
 
 router.get('/thong-tin-ca-nhan',function(req,res,next){
- res.render('subcriber', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user });
+  //res.render('subcriber', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user });
+   if(req.isAuthenticated()){
+    res.render('subcriber', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user });
+  }
+  else{
+    res.redirect('/');
+  }
+});
+
+router.get('/doi-mat-khau',function(req,res,next){
+  if(req.isAuthenticated()){
+    res.render('ChangePassword', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user })
+  }
+  else{
+    res.redirect('/');
+  }
 });
 router.get('/dangnhap', function (req, res, next) {
   console.log(req.user);

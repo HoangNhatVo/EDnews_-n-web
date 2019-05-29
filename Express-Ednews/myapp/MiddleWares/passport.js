@@ -68,17 +68,23 @@ module.exports = function(passport) {
                             GioiTinh: req.body.gender,
                             Email: email,
                             // Password: pass
-                            Password: bCrypt.hashSync(pass, bCrypt.genSaltSync(saltRounds))
+                            Password: bCrypt.hashSync(pass, bCrypt.genSaltSync(saltRounds)),
+                            NgayDangKy: moment().format('YYYY-MM-DD hh:mm:ss'),
+                            NgayHetHan:moment().add(7, 'days').format('YYYY-MM-DD hh:mm:ss'),
+                            TinhTrang: 'Còn hạn'
                         }
-                            loginModel.addUser(user.HoTen, user.SDT, user.NgaySinh, user.GioiTinh,
-                                user.Email, user.Password).then(id =>{
+                        // if(user.NgayHetHan.diff(moment(),'seconds')<0){
+                        //     user.TinhTrang = 'Hết hạn';
+                        // }
+                        console.log(user);
+                            loginModel.addUser2(user.HoTen, user.SDT, user.NgaySinh, user.GioiTinh,user.Email, 
+                                user.Password,user.NgayDangKy,user.NgayHetHan,user.TinhTrang).then(id =>{
                                 return done(null, true, req.flash('signupMessage', 'Đăng ký thành công'));
                             }).catch(err => {
                                 return done(err);
                             })
-                    }
-                    
-                }).catch(rows=>{
+                    }                    
+                }).catch(err=>{
                     return done(err);
                 })
             }
