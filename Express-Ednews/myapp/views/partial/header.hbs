@@ -7,6 +7,30 @@
 					<a class="logo" href="/"><img src="/images/logo-black.png" alt="Logo"></a>
 				</div><!-- col-sm-4 -->
 
+				{{#if user }}		
+				<div class="col-sm-8 d-flex justify-content-end">
+					<div class="dplay-tbl-cell text-right">
+						
+						<a id="dropdown-toggle" class="dropdown-toggle" data-toggle="dropdown" href="#" style="font-size: 15px">
+							{{!-- <img src="/images/avatar_thumb.jpg" width="30px"> --}}
+							{{user.HoTen}}
+						</a>
+					
+						<div class="dropdown-menu dropdown-menu-right ">
+							{{#if user.ID}}
+							<a class="dropdown-item" href="#"><i class="fa fa-user-tie"></i> Thông tin cá nhân</a>
+							<a class="dropdown-item" href="#"><i class="fa fa-cog"></i> Cập nhật thông tin</a>
+							{{else}}
+							<a class="dropdown-item" href="javascript:;"><i class="fab fa-facebook-square"></i> Login with Facebook</a>
+							{{/if}}
+
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="/logout"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
+						</div>
+					</div>
+				</div><!-- col-sm-8 -->
+
+				{{else}}
 				<div class="col-sm-8 d-flex justify-content-end">
 					<div class="dplay-tbl-cell text-right">
 						<button type="button" >
@@ -19,6 +43,7 @@
 						</button>
 					</div>
 				</div><!-- col-sm-8 -->
+				{{/if}}
 
 
 			</div><!-- row -->

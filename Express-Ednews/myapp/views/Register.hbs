@@ -19,7 +19,9 @@
     <!-- Vendor CSS-->
     <link rel="stylesheet" href="/stylesheets/index.css">
 
-   
+   {{!-- <link rel="stylesheet" href="/plugin-frameworks/bootstrap.css"> --}}
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+
     
 </head>
 
@@ -29,27 +31,38 @@
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title">Đăng kí Ednews</h2>
-                    <form method="POST">
+                    {{!-- {{#if message.length}}
+						<div class="alert alert-danger" role="alert">
+							{{message}}</a>.
+						</div>
+					{{/if}} --}}
+                    
+                    <form novalidate method="POST" action="/dangky" id="registerForm">
+                    {{#if message.length}}
+						<div class="alert alert-danger" role="alert">
+							{{message}}</a>.
+						</div>
+					{{/if}}
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Họ</label>
-                                    <input class="input--style-4" type="text" name="first_name">
+                                    <label class="label">Họ và tên*</label>
+                                    <input class="input--style-4" type="text" name="fullname">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Tên</label>
-                                    <input class="input--style-4" type="text" name="last_name">
+                                    <label class="label">SĐT*</label>
+                                    <input class="input--style-4" type="text" name="phonenumber">
                                 </div>
                             </div>
                         </div>
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Ngày sinh</label>
+                                    <label class="label">Ngày sinh*</label>
                                     <div class="input-group-icon">
-                                        <input class="input--style-4 js-datepicker" type="date" name="birthday">
+                                        <input class="input--style-4 js-datepicker" type="text" name="birthday" id="txtBirthday">
                                         <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
                                     </div>
                                 </div>
@@ -58,12 +71,12 @@
                                 <div class="input-group">
                                     <label class="label">Giới tính</label>
                                     <div class="p-t-10">
-                                        <label class="radio-container m-r-45">Nam
-                                            <input type="radio" checked="checked" name="gender">
+                                        <label class="radio-container m-r-45 label">Nam
+                                            <input type="radio" checked="checked" name="gender" value="Nam">
                                             <span class="checkmark"></span>
                                         </label>
-                                        <label class="radio-container">Nữ
-                                            <input type="radio" name="gender">
+                                        <label class="radio-container label">Nữ
+                                            <input type="radio" name="gender" value="Nữ">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -73,21 +86,22 @@
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Email</label>
-                                    <input class="input--style-4" type="email" name="email">
+                                    <label class="label">Email*</label>
+                                    <input class="input--style-4" type="text" name="email">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Mật khẩu</label>
-                                    <input class="input--style-4" type="password" name="phone">
+                                    <label class="label">Mật khẩu*</label>
+                                    <input class="input--style-4" type="password" name="pass">
                                 </div>
                             </div>
                         </div>
                         <div class="p-t-15">
                             <button class="btn btn--radius-2 btn--blue" type="submit">Đăng ký</button>
                             <p style="margin-top: 10px">
-                                <a href="/dangnhap" title="">Trở về đăng nhập</a>
+                                <a href="/dangnhap" title="" class="back">
+                                <i class="fa fa-arrow-left"></i>  Đăng nhập</a>
                             </p>
                         </div>
                     </form>
@@ -96,9 +110,67 @@
         </div>
     </div>
 
-    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script>
+    $(function () {
+        $('#txtBirthday').datetimepicker({
+        format: 'd/m/Y',
+        timepicker: false,
+        mask: false,
+        });
 
-   
+        $('#registerForm').validate({
+        rules: {
+            fullname: {
+                required: true,
+            },
+            phonenumber:{
+                required: true,
+            },
+            birthday:{
+                required: true,
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            pass: {
+                required: true,
+                minlength: 6
+            },
+        },
+        messages: {
+            fullname: {
+                required: 'Phải nhập đầy đủ họ tên.',
+            },
+            phonenumber:{
+                required: 'Phải nhập số điện thoại.',
+            },
+            birthday:{
+                required: 'Phải nhập ngày sinh.',
+            },
+            email: {
+                required: 'Phải nhập email.',
+                email: 'Chưa đúng định dạng email.'
+            },
+            pass: {
+                required: 'Phải nhập password.',
+                minlength: 'Password từ 6 kí tự trở lên.'
+            },
+        },
+        errorElement: 'small',
+        errorClass: 'help-block text-danger',
+        highlight: function (e) {
+            $(e).removeClass('is-valid').addClass('is-invalid');
+        },
+        unhighlight: function (e) {
+            $(e).removeClass('is-invalid').addClass('is-valid');
+        }
+        });
+    })
+    </script>
 </body>
 </html>
 <!-- end document-->

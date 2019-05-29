@@ -109,7 +109,7 @@ begin
                                 join chuyenmuc as CMCha on CMCha.IDCHuyenMuc=CMCon.ChuyenMucCha
 								join urlhinhanh as url on url.IDHinh=HA.IDHinh
                                 join nguoidung as nd on nd.ID=BV.PhongVien
-	where BV.TinhTrang=2 and CMCha.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau  and  datediff(date(now()),date(BV.NgayDang)) <=10
+	where BV.TinhTrang=2 and CMCha.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau  
     order by BV.NgayDang desc limit limi offset offse;
 end;$$
 DELIMITER ; 
@@ -125,7 +125,7 @@ begin
                                 join chuyenmuc as CMCha on CMCha.IDCHuyenMuc=CMCon.ChuyenMucCha
 								join urlhinhanh as url on url.IDHinh=HA.IDHinh
                                 join nguoidung as nd on nd.ID=BV.PhongVien
-	where BV.TinhTrang=2 and CMCha.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau  and  datediff(date(now()),date(BV.NgayDang)) <=10;
+	where BV.TinhTrang=2 and CMCha.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau  ;
   
 end;$$
 DELIMITER ;
@@ -141,7 +141,7 @@ begin
                                 join chuyenmuc as CMCha on CMCha.IDCHuyenMuc=CMCon.ChuyenMucCha
 								join urlhinhanh as url on url.IDHinh=HA.IDHinh
                                 join nguoidung as nd on nd.ID=BV.PhongVien
-	where BV.TinhTrang=2 and CMcon.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau and  datediff(date(now()),date(BV.NgayDang)) <=10 
+	where BV.TinhTrang=2 and CMcon.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau 
     order by BV.NgayDang desc limit limi offset offse;
 end;$$
 DELIMITER ;
@@ -156,7 +156,7 @@ begin
                                 join chuyenmuc as CMCha on CMCha.IDCHuyenMuc=CMCon.ChuyenMucCha
 								join urlhinhanh as url on url.IDHinh=HA.IDHinh
                                 join nguoidung as nd on nd.ID=BV.PhongVien
-	where BV.TinhTrang=2 and CMcon.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau and  datediff(date(now()),date(BV.NgayDang)) <=10 ;
+	where BV.TinhTrang=2 and CMcon.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau ;
 end;$$
 DELIMITER ;
 

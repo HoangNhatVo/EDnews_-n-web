@@ -23,14 +23,26 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 ">
-				<form class="login100-form validate-form">
+				
+				<form novalidate class="login100-form validate-form" action="/dangnhap" method="POST" id="formLogin">
 					<span class="login100-form-title p-b-49">
 						Đăng nhập
 					</span>
+					{{#if message.length}}
+						<div class="alert alert-danger" role="alert">
+							{{message}}</a>.
+						</div>
+					{{/if}}
+
+					{{#if message_register}}
+					<div class="alert alert-success" role="alert">
+							{{message_register}}</a>.
+						</div>
+					{{/if}}
 
 					<div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
 						<span class="label-input100">Email</span>
-						<input class="input100" type="email" name="username" placeholder="Type your email">
+						<input class="input100" type="text" name="email" placeholder="Type your email">
 
 					</div>
 
@@ -50,7 +62,7 @@
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
-							<button class="login100-form-btn">
+							<button class="login100-form-btn" type="submit">
 								Đăng nhập
 							</button>
 						</div>
@@ -58,12 +70,12 @@
 
 					<div class="txt1 text-center p-t-54 p-b-20 m-2">
 						<span>
-							hoặc đăng nhập
+							Hoặc
 						</span>
 					</div>
 
 					<div class="flex">
-						<a href="#" class="login100-social-item bg1">
+						<a href="/auth/facebook" class="login100-social-item bg1">
 							<i class="fab fa-facebook-f"></i>
 						</a>
 
@@ -100,6 +112,40 @@
 	<script src="plugin-frameworks/jquery-3.2.1.min.js"></script>
 	<script src="plugin-frameworks/bootstrap.js"></script>
 	<script src="plugin-frameworks/tether.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+	<script>
+	$(function () {    
+		$('#formLogin').validate({
+		rules: {
+			email: {
+			required: true,
+			email: true
+			},
+			pass: {
+			required: true,
+			},
+		},
+		messages: {
+			email: {
+			required: 'Phải nhập email.',
+			email: 'Chưa đúng định dạng email.'
+			},
+			pass: {
+			required: 'Phải nhập password.',
+			},
+		},
+		errorElement: 'small',
+		errorClass: 'help-block text-danger',
+		highlight: function (e) {
+			$(e).removeClass('is-valid').addClass('is-invalid');
+		},
+		unhighlight: function (e) {
+			$(e).removeClass('is-invalid').addClass('is-valid');
+		}
+		});
+	})
+	</script>
 </body>
 
 </html>
