@@ -24,7 +24,7 @@ module.exports = function(passport) {
         passReqToCallback : true
     },
     function(req, email, pass, done) {
-        loginModel.getUser(email).then(user =>{
+        loginModel.getUserWithEmail(email).then(user =>{
             if(!user.length){
                 return done(null, false, req.flash('loginMessage', 'Tài khoản không tồn tại'));
             }
@@ -51,25 +51,34 @@ module.exports = function(passport) {
         passReqToCallback : true 
     },
     function(req, email, pass, done) {
-        loginModel.getUser(email).then(rows =>{
+        loginModel.getUserWithEmail(email).then(rows =>{
             if(rows.length){
                 return done(null, false, req.flash('signupMessage', 'Email đã tồn tại'));
             }
             else{
-                var user = {
-                    HoTen: req.body.fullname,
-                    SDT: req.body.phonenumber,
-                    NgaySinh: moment(req.body.birthday,'DD/MM/YYYY').format('YYYY-MM-DD'),
-                    GioiTinh: req.body.gender,
-                    Email: email,
-                    // Password: pass
-                    Password: bCrypt.hashSync(pass, bCrypt.genSaltSync(saltRounds))
-                };
-                // console.log(user);                
-                loginModel.addUser(user.HoTen, user.SDT, user.NgaySinh, user.GioiTinh,
-                    user.Email, user.Password).then(id =>{
-                    return done(null, true, req.flash('signupMessage', 'Đăng ký thành công'));
-                }).catch(err => {
+                loginModel.getUserWithPhonenumber(req.body.phonenumber).then(rows =>{
+                    if(rows.length){
+                        return done(null, false, req.flash('signupMessage', 'SĐT đã tồn tại'));
+                    }
+                    else{
+                        var user = {
+                            HoTen: req.body.fullname,
+                            SDT: req.body.phonenumber,
+                            NgaySinh: moment(req.body.birthday,'DD/MM/YYYY').format('YYYY-MM-DD'),
+                            GioiTinh: req.body.gender,
+                            Email: email,
+                            // Password: pass
+                            Password: bCrypt.hashSync(pass, bCrypt.genSaltSync(saltRounds))
+                        }
+                            loginModel.addUser(user.HoTen, user.SDT, user.NgaySinh, user.GioiTinh,
+                                user.Email, user.Password).then(id =>{
+                                return done(null, true, req.flash('signupMessage', 'Đăng ký thành công'));
+                            }).catch(err => {
+                                return done(err);
+                            })
+                    }
+                    
+                }).catch(rows=>{
                     return done(err);
                 })
             }

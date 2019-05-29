@@ -12,11 +12,18 @@ DELIMITER ;
 	#------ PROCEDURE GetUser
 DELIMITER $$
 USE `baodientu3n`$$
-create procedure GetUser(in email varchar(50))
+create procedure GetUserWithEmail(in email varchar(50))
 begin
 	select * from nguoidung nd where nd.Email = email;
 end;$$
 DELIMITER ;
 
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure GetUserWithPhonenumber(in sdt varchar(15))
+begin
+	select * from nguoidung nd where nd.SDT = sdt;
+end;$$
+DELIMITER ;
 	#------ MODIFY lại kiểu dữ liệu của cột Password trong bảng người dùng
 ALTER TABLE nguoidung MODIFY COLUMN Password varchar(255)
