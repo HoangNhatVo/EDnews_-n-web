@@ -44,10 +44,10 @@ module.exports ={
     },
     //update chuyen muc cha
     updateMainCat:(Id,Name,NameNo)=>{
-        return orm.selectAll(`call UpdateMainCategory('${Id}','${Name})','${NameNo}'`);
+        return orm.selectAll(`call UpdateMainCategory('${Id}','${Name}','${NameNo}')`);
     },
     //update chuyen muc cha
     updateSubCat:(Id,Name,NameNo)=>{
-        return orm.selectAll(`call UpdateSubCategory('${Id}','${Name})','${NameNo}'`);
+        return orm.selectAll(`call UpdateSubCategory('${Id}','${Name}','${NameNo}')`);
     }
 };
