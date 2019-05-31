@@ -5,8 +5,8 @@ DELIMITER $$
 USE `baodientu3n`$$
 CREATE PROCEDURE DeleteMainCategory (in IDCM varchar(10) )
 BEGIN
-delete from chuyenmuc  where IDChuyenMuc=IDCM;
 delete from chuyenmuc where ChuyenMucCha=IDCM ;
+delete from chuyenmuc  where IDChuyenMuc=IDCM;
 END;$$
 DELIMITER ;
 
@@ -30,10 +30,11 @@ BEGIN
     set nextCat=lastCat+1;
     set IDCat =(select concat('CM', convert(nextCat,char)));
     insert into chuyenmuc values(IDCat,Ten,Ten_KhongDau,null);
+    select 1 as temp;
     end if;
      if( count1>0 or count2>0)
      then 
-	 select 'Chuyên mục này đã có' as ' ';
+	 select 0 as temp;
      end if;
 END;$$
 DELIMITER ;
@@ -42,7 +43,9 @@ DELIMITER $$
 USE `baodientu3n`$$
 CREATE PROCEDURE UpdateMainCategory (in IDCM varchar(10),in Ten varchar(50),in Ten_KhongDau varchar(50) )
 BEGIN
-update chuyenmuc set TenChuyenMuc =Ten and TenChuyenMuc_KhongDau=Ten_KhongDau where IDChuyenMuc=TDCM;
+update chuyenmuc set TenChuyenMuc =Ten  where IDChuyenMuc=TDCM;
+update chuyenmuc set  TenChuyenMuc_KhongDau=Ten_KhongDau where IDChuyenMuc=TDCM;
+ select 1 as temp;
 END;$$
 DELIMITER ;
 #------------------------------------------------Them chuyen muc con 
@@ -68,10 +71,11 @@ BEGIN
 	 set nextCat = lastCat +1;
      set IDSubCat = (select concat(IDMainCat,'_',convert(nextCat,char)));
      insert into ChuyenMuc values( IDSubCat,Ten,Ten_KhongDau,IDMainCat);
+     select 1 as temp;
      end if;
      if( count1>0 or count2>0)
      then 
-	 select 'Chuyên mục này đã có' as ' ';
+	 select 0 as temp;
      end if;
      
 END;$$
@@ -89,10 +93,45 @@ DELIMITER $$
 USE `baodientu3n`$$
 CREATE PROCEDURE UpdateSubCategory (in IDCM varchar(10),in Ten varchar(50),in Ten_KhongDau varchar(50) )
 BEGIN
-update chuyenmuc set TenChuyenMuc =Ten and TenChuyenMuc_KhongDau=Ten_KhongDau where IDChuyenMuc=TDCM;
+update chuyenmuc set TenChuyenMuc =Ten where IDChuyenMuc=TDCM;
+update chuyenmuc set TenChuyenMuc_KhongDau=Ten_KhongDau where IDChuyenMuc=TDCM;
+ select 1 as temp;
 END;$$
 DELIMITER ;
-
+#---------------------------QUAN LY TAG
+#--------------------THEM 1 TAG
+call AddTag('#ABC');
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE AddTag (in TagName varchar(50) )
+BEGIN
+	declare count1 int;
+	declare IDTagAdd varchar(10);
+    declare lastTag int; 
+    declare nextTag int;
+    if( substring(TagName,1,1)!='#')
+    then
+    select 0 as temp;
+    end if;
+    if(substring(TagName,1,1)='#')
+		then
+		set count1 =( select count(*) from nhan where TenTag = TagName);
+		if( count1=0 )
+			then 
+			set lastTag =(select max(convert(substring(IDTag,4),unsigned))
+				   from nhan  );
+			 set nextTag = lastTag +1;
+			 set IDTagAdd = (select concat('tag',convert(nextTag,char)));
+			 insert into nhan values( IDTagAdd,TagName);
+			 select 1 as temp;
+		end if;
+		if( count1>0 )
+		then 
+		select 0 as temp;
+		end if;
+     end if;
+END;$$
+DELIMITER ;
 #---------------------------QUAN LY TAI KHOAN
 #-------------------------Danh sach phan he 
 DELIMITER $$
