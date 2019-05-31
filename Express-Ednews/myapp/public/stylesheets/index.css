@@ -61,8 +61,26 @@ margin:0 5px;
 
 
 /*Register*/
-
-
+/* subcriber */
+.ava{
+  position: relative;
+}
+.ava img{
+  width:150px;
+  height:150px;
+  border-radius:5px;
+  cursor: pointer
+}
+.ava .fa-pen{
+  cursor: pointer;
+}
+.ava .dropdown{
+  display: inline;
+  position: relative;
+}
+.ava .dropdown-menu{
+  left: 157px;
+}
 /* ==========================================================================
    #GRID
    ========================================================================== */

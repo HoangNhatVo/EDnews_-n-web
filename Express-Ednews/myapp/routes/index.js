@@ -23,9 +23,6 @@ router.get('/', async (req, res, next) => {
 	console.log(req.user);
     res.render('index',
       {
-        slick: '/javascripts/js/slick/slick.css',
-        slicktheme: '/javascripts/js/slick/slick-theme.css',
-        srcslick: '/javascripts/js/slick/slick.min.js',
         css: '/stylesheets/index.css',
         style: '/stylesheets/style.css',
         Featurepost: Feature.slice(0, 2),
