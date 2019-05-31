@@ -23,9 +23,6 @@ router.get('/', async (req, res, next) => {
 	console.log(req.user);
     res.render('index',
       {
-        slick: '/javascripts/js/slick/slick.css',
-        slicktheme: '/javascripts/js/slick/slick-theme.css',
-        srcslick: '/javascripts/js/slick/slick.min.js',
         css: '/stylesheets/index.css',
         style: '/stylesheets/style.css',
         Featurepost: Feature.slice(0, 2),
@@ -48,9 +45,30 @@ router.get('/lien-he', function (req, res, next) {
   res.render('Contact', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user });
 });
 
+router.get('/thong-tin-ca-nhan',function(req,res,next){
+  //res.render('subcriber', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user });
+   if(req.isAuthenticated()){
+    res.render('subcriber', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user });
+  }
+  else{
+    res.redirect('/');
+  }
+});
+
+router.get('/doi-mat-khau',function(req,res,next){
+  if(req.isAuthenticated()){
+    res.render('ChangePassword', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user })
+  }
+  else{
+    res.redirect('/');
+  }
+});
 router.get('/dangnhap', function (req, res, next) {
-  if(!req.isAuthenticated()){
-   res.render('Login', { layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
+  console.log(req.user);
+  if(!req.isAuthenticated() || req.user==true){
+    req.logout();
+    req.session.cookie.expires = false;
+    res.render('Login', { layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
                         message:req.flash('loginMessage'),
                         message_register: req.flash('signupMessage')});
   }
@@ -87,7 +105,7 @@ router.get('/logout', function(req, res){
 
 router.get('/dangky', function (req, res, next) {
   if(!req.isAuthenticated()){
-  res.render('Register', { layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
+    res.render('Register', { layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
                           message:req.flash('signupMessage') });
   }
   else{
@@ -99,8 +117,8 @@ router.post('/dangky', passport.authenticate('local-signup',{
   successRedirect: '/dangnhap',
   failureFlash: true
 }),
-  function(req,res){
-    
+  function(req,res){    
+
   }
 );
 

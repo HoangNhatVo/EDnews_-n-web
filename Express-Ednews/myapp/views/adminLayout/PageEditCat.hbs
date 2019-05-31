@@ -2,46 +2,49 @@
 <div id="wrapper">
   {{>AdminSlidebar}}
   <div id="content-wrapper">
-
     <div class="container-fluid">
-
       <div class="card shadow">
         <h4 class="card-header">
           Chỉnh sửa chuyên mục
         </h4>
+        {{#if this.error}}
+        <div class="alert alert-danger" role="alert">
+          Không tồn tại chuyên mục này
+        </div>
+        {{else}}
         <div class="card-body">
-          <form method="POST">
-            {{#each MainCat}}
+          {{#each Cat}}
+          <form method="POST" class="update"
+            action="/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/{{MainCat.TenChuyenMuc_KhongDau}}">
             <div class="form-group">
-              <label for="txtCatID" style="width:200px">ID chuyên mục</label>
-              <input readonly type="text" class="form-control" id="txtCatID" name="CatID" value="{{IDChuyenMuc}}">
+              <label for="txtCatID" name ="IDMain"style="width:200px">ID chuyên mục</label>
+              <input readonly type="text" class="form-control" id="txtCatID" name="CatID1"
+                value="{{MainCat.IDChuyenMuc}}">
             </div>
-
             <div class="form-group">
-              <label for="txtCatName" style="width:400px">Tên chuyên mục</label>
-              <input type="text" class="form-control" id="txtCatName" name="CatName" autofocus
-                placeholder="Enter category name" value="{{TenChuyenMuc}} ">
-                <input type="text" class="form-control" id="txtCatName" name="CatName" autofocus
-                placeholder="Enter category name" value="{{TenChuyenMuc_KhongDau}}">
+              <label for="txtCatName" style="width:390px">Tên chuyên mục</label>
+              <input type="text" class="form-control CatName" name="CatName1" autofocus
+                placeholder="Enter category name" value="{{MainCat.TenChuyenMuc}} ">
+              <input type="text" class="d-none" name="NameNo" value="{{MainCat.TenChuyenMuc_KhongDau}}">
             </div>
-            {{/each}}
             {{#each ListSubCat}}
             <div class="form-group">
               <label for="txtCatName" style="width:411px">Tên chuyên mục con</label>
-              <input type="text" class="form-control" id="txtCatName" name="CatName" autofocus
-                placeholder="Enter category name" value="{{TenChuyenMuc}}">
-                <input type="text" class="form-control" id="txtCatName" name="CatName" autofocus
-                placeholder="Enter category name" value="{{TenChuyenMuc_KhongDau}}">
-              <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+              <input type="text" name="IDSubCat" value="{{IDChuyenMuc}}" class="d-none">
+              <input type="text" class="form-control CatName" name="CatName" autofocus placeholder="Enter category name"
+                value="{{TenChuyenMuc}}">
+              <button class="btn btn-danger"
+                formaction="/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/xoa-cmcon/{{IDChuyenMuc}}"><i
+                  class="fas fa-trash-alt"></i></button>
             </div>
             {{/each}}
             <div class="pos-f-t">
               <div class="collapse" id="navbarToggleExternalContent">
-                <div class="bg-success p-4">
-                  <form action="">
-                    <input type="text" class="form-control" id="txtCatName" name="CatName" autofocus
-                      placeholder="Enter category name">
-                  </form>
+                <div class="bg-success p-4 position-relative">
+                  <input type="text" class="form-control mb-1 CatName" id="txtCatName" name="CatSubName" autofocus
+                    placeholder="Nhập tên chuyên mục">
+                  <button class="btn btn-primary position-absolute" style="right: 0;bottom:-40px"
+                    formaction="/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/{{MainCat.TenChuyenMuc_KhongDau}}/them-chuyen-muc-con">Thêm</button>
                 </div>
               </div>
               <nav class="mb-4 mt-2">
@@ -56,16 +59,34 @@
               <i class="fa fa-backward" aria-hidden="true"></i>
               trở về
             </a>
-            <button type="submit" class="btn btn-success">
+            <button type="submit" class="btn btn-success CheckInvalid ">
               <i class="fa fa-check" aria-hidden="true"></i>
               Lưu
             </button>
+            <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger ">Xóa</button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    Bạn có muốn xóa chuyên mục này ?
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" style="background-color: #212529"
+                      data-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger"
+                      formaction="/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/xoa">Xóa</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </form>
-
+          {{/each}}
         </div>
+        {{/if}}
       </div>
-
-
     </div>
     <!-- /.container-fluid -->
 

@@ -61,8 +61,26 @@ margin:0 5px;
 
 
 /*Register*/
-
-
+/* subcriber */
+.ava{
+  position: relative;
+}
+.ava img{
+  width:150px;
+  height:150px;
+  border-radius:5px;
+  cursor: pointer
+}
+.ava .fa-pen{
+  cursor: pointer;
+}
+.ava .dropdown{
+  display: inline;
+  position: relative;
+}
+.ava .dropdown-menu{
+  left: 157px;
+}
 /* ==========================================================================
    #GRID
    ========================================================================== */
@@ -137,7 +155,7 @@ margin:0 5px;
    #SPACING
    ========================================================================== */
 .p-t-100 {
-  padding-top: 100px;
+  padding-top: 15px;
 }
 
 .p-t-130 {
@@ -165,7 +183,7 @@ margin:0 5px;
 }
 
 .p-b-100 {
-  padding-bottom: 100px;
+  padding-bottom: 15px;
 }
 
 .m-r-45 {
@@ -1060,4 +1078,232 @@ iframe {
 .back{
   text-decoration: none;
   font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
+}
+/*SUBSCRIBER*/
+.frmSubs{
+  margin: 40px 0px;
+  font-family:  Roboto;
+  font-size: 15px;
+}
+.lbl{
+  text-align: center;
+}
+.lbl label{
+  font-size: 30px;
+  font-weight: bold;
+  /*font-family: "Comic Sans MS", cursive, sans-serif;*/
+  color:  #0C0E68;
+}
+.row-info div{
+  display: inline-block;
+}
+.row-info{
+  margin-top: 20px;
+}
+.row-hsd{
+  margin-top: 30px;
+}
+.col-label{
+  width: 35%;
+  text-align: right;
+  float: left;
+  margin-right: 10px;
+  padding: 10px;
+  color:  #0C0E68;
+  font-weight: bold;
+}
+.col-input{
+  width: 30%;
+  margin-left: 10px;
+}
+
+.lbl-ChangePassEmail{
+   color: #0275d8;
+ }
+.lbl-ChangePassEmail, .count-date, .acc{
+  width: 65%;
+  float: right;
+  text-align: left;
+  padding-left: 20px;
+  margin-top: 0px;
+
+}
+.count-date{
+  color: #009AFF;
+}
+.acc{
+  margin-top: 10px;
+  color: #0275d8;
+}
+.acc:hover, .lbl-ChangePassEmail:hover{
+  color: #C62FF8;
+  cursor:pointer;
+}
+.acc:active, .lbl-ChangePassEmail:active{
+  transform: translateY(1px);
+}
+.div-btn{
+  margin-top: 40px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.btnSave{
+  text-align: center;
+  width: 90px;
+  height: 45px;
+  border: 1.5px solid #0C0E68;
+  background: #0C0E68;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  margin-left: 15px;
+}
+.btnSave:hover, .btnBack:hover{
+  background: white;
+  color: #0C0E68;
+  font-weight: bold;
+}
+.btnSave:active{
+  transform: translateY(4px);
+}
+.btnBack{
+  width: 90px;
+  /* height: 45px; */
+  border: 1.5px solid #0C0E68;
+  padding-top: 12.5px;
+  padding-bottom: 10.5px;
+  background: #0C0E68;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  
+}
+.change{
+  margin-bottom: 20px;
+}
+.col-birthdate select{
+  height: 40px;
+  width: 60px;
+  border-radius: 5px;
+  margin-right: 40px;
+}
+
+#year{
+  width: 100px;
+}
+
+.birthdate:hover{
+  border: 1.5px solid #0C0E68;
+}
+
+      /* Change Password */
+#card-change{
+  margin: 50px 300px;
+  border: 1px solid #CCCCCC;
+  border-radius: 4px;
+/* box-shadow:  */
+}
+
+#card-header{
+  padding: 5px 0px;
+  border-bottom: 1px solid #CCCCCC;
+  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
+  font-weight: bold;
+  font-size: 1.3em;
+  background-color: #65396A;
+  color: #fff;
+}
+#card-footer{
+  padding: 5px 0px;
+  border-top: 1px solid #CCCCCC;
+  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
+  font-weight: bold;
+  font-size: 1.3em;
+  background-color: #B9434C;
+  color: #fff;
+}
+
+.input-changePassword {
+  width: 100%;
+  border: px solid #aaa;
+  border-radius: 4px;
+  margin: 8px 0;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+.input-changePassword:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 8px 0 dodgerBlue;
+}
+
+.inputWithIcon .input-changePassword {
+  padding-left: 40px;
+}
+
+.inputWithIcon {
+  position: relative;
+  padding: 0px 50px;
+}
+
+.inputWithIcon i {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  padding: 12px 8px 9px 8px;
+  color: #aaa;
+  transition: 0.3s;
+  padding-left: 60px;
+}
+
+.inputWithIcon .input-changePassword:focus + i {
+  color: dodgerBlue;
+}
+
+.inputWithIcon.inputIconBg i {
+  background-color: #aaa;
+  color: #fff;
+  padding: 9px 4px;
+  border-radius: 4px 0 0 4px;
+}
+
+.inputWithIcon.inputIconBg .input-changePassword:focus + i {
+  color: #fff;
+  background-color: dodgerBlue;
+}
+
+#top{
+  margin-top: 20px;
+}
+.btnChangePassword{
+  width: 90px;
+  height: 40px;
+  border: 1.5px solid #0C0E68;
+  background: #0C0E68;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  margin-left: 10px;
+}
+.btn-CP{
+  margin-bottom: 25px;
+  margin-top: 10px;
+}
+.link{
+  width: 90px;
+  /* height: 45px; */
+  border: 1.5px solid #0C0E68;
+  padding-top: 10.5px;
+  padding-bottom: 8.5px;
+  background: #0C0E68;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  
+}
+.link:hover, .btnChangePassword:hover{
+  background: #fff;
+  color: #0C0E68;
 }

@@ -1,19 +1,39 @@
+	#------ PROCEDURE AddUser
 DELIMITER $$
 USE `baodientu3n`$$
-create procedure AddUser(in hoten varchar(50), in SDT varchar(15),
- in ngaysinh varchar(50), in gioitinh varchar(10), in email varchar(50), in password varchar(255))
+create procedure AddUser(in HoTen varchar(50), in SDT varchar(15),
+ in NgaySinh varchar(50), in GioiTinh varchar(10), in Email varchar(50), in Password varchar(255))
 begin
 	insert into nguoidung 
-    values(null,email,password,hoten,gioitinh,ngaysinh,email,SDT,'PH1',null,null,null,null,null);
+    values(null,Email,Password,HoTen,GioiTinh,NgaySinh,Email,SDT,'PH1',null,null,null,null,null);
 end;$$
 DELIMITER ;
 
-#----- Hàm AddUser gọi trên mysql thì chạy đc nhưng gọi trên project thì chưa chạy được
-
 DELIMITER $$
 USE `baodientu3n`$$
-create procedure GetUser(in email varchar(50))
+create procedure AddUser2(in HoTen varchar(50), in SDT varchar(15),
+ in NgaySinh varchar(50), in GioiTinh varchar(10), in Email varchar(50), in Password varchar(255),
+ in NgayDangKy varchar(50), in NgayHetHan varchar(50), in TinhTrang varchar(20))
+begin
+	insert into nguoidung 
+    values(null,Email,Password,HoTen,GioiTinh,NgaySinh,Email,SDT,'PH1',NgayDangKy,NgayHetHan,TinhTrang,null,null);
+end;$$
+DELIMITER ;
+	#------ PROCEDURE GetUser
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure GetUserWithEmail(in email varchar(50))
 begin
 	select * from nguoidung nd where nd.Email = email;
 end;$$
 DELIMITER ;
+
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure GetUserWithPhonenumber(in sdt varchar(15))
+begin
+	select * from nguoidung nd where nd.SDT = sdt;
+end;$$
+DELIMITER ;
+	#------ MODIFY lại kiểu dữ liệu của cột Password trong bảng người dùng
+ALTER TABLE nguoidung MODIFY COLUMN Password varchar(255)

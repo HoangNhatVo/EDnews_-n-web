@@ -3,11 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var bodyParser = require('body-parser')
 var exphbs  = require('express-handlebars');
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
 var app = express();
 var moment = require('moment');
+var express_handlebars_sections = require('express-handlebars-sections');
+
+
 
 
 var bodyParser = require('body-parser');
@@ -16,7 +20,7 @@ var flash = require('connect-flash');
 var localStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 var bCrypt = require('bcrypt');
-require('./config/passport')(Passport);
+require('./MiddleWares/passport')(Passport);
 
 
 // view engine setup
@@ -30,6 +34,10 @@ app.engine('.hbs',exphbs({
     format: val => {
       return moment(val).format('L');
     },
+    remove:val=>{
+      return val.replace("#","");
+    },
+   section:express_handlebars_sections() 
   }
 
 }));
@@ -67,15 +75,16 @@ app.use((error, req, res, next) => {
   })
 });
 
-// error handler
-// app.use(function(err, req, res, next) {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 
-//   // render the error page
-//   res.status(err.status || 500);
-//   res.render('error');
-// });
+// parse application/json
+app.use(bodyParser.json())
+
+app.use(function (req, res) {
+  res.setHeader('Content-Type', 'text/plain')
+  res.write('you posted:\n')
+  res.end(JSON.stringify(req.body, null, 2))
+})
 
 module.exports = app;

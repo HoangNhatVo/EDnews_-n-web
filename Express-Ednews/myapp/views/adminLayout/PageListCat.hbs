@@ -25,39 +25,25 @@
                   <th>ID</th>
                   <th>Tên chuyên mục</th>
                   <th>Action</th>
-
                 </tr>
               </thead>
               <tbody>
                 {{#each ListCat}}
                 <tr>
-                  <td>{{IDChuyenMuc}}</td>
+                  <td name="CatID">{{IDChuyenMuc}}</td>
                   <td>{{TenChuyenMuc}}</td>
                   <td class="action">
                     <a href="/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/{{TenChuyenMuc_KhongDau}}" title="">Chỉnh
                       sửa</a>
-                    <button type="button" data-toggle="modal" data-target="#exampleModal">Xóa</button>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                      aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-body">
-                            Bạn có muốn xóa chuyên mục này ?
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" style="background-color: #212529" data-dismiss="modal">Hủy</button>
-                            <button type="button" class="btn btn-primary">Xóa</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </td>
                 </tr>
+
                 {{/each}}
               </tbody>
             </table>
           </div>
         </div>
+        </form>
       </div>
 
 

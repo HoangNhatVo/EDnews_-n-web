@@ -1,0 +1,157 @@
+{{#section 'css'}}
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}
+
+{{#section 'js'}}
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script>
+	$(function () {
+		// if($('#txtBirthday').length ==0){
+		//$('#txtBirthdate').datetimepicker({
+		//  format: 'd/m/Y',
+		//   timepicker: false,
+		//  mask: true,
+		//});
+		//  }
+
+		$('#formSubs').validate({
+			rules: {
+				fullname: {
+					required: true,
+				},
+				Birthdate: {
+					required: true,
+				},
+			},
+			messages: {
+				fullname: {
+					required: 'Bạn phải nhập đầy đủ họ tên.',
+				},
+				Birthdate: {
+					required: 'Bạn phải nhập ngày sinh.',
+				},
+			},
+			errorElement: 'small',
+			errorClass: 'help-block text-danger',
+			highlight: function (e) {
+				$(e).removeClass('is-valid').addClass('is-invalid');
+			},
+			unhighlight: function (e) {
+				$(e).removeClass('is-invalid').addClass('is-valid');
+			}
+		});
+	})
+</script>
+{{/section}}
+
+{{>header}}
+{{!-- <section class="bg-primary p-0 pb-xs-20">
+	<div class="container">
+		{{>botnav}}
+	</div><!-- container -->
+</section> --}}
+<form class="frmSubs" id="formSubs" method="POST" action="/thong-tin-ca-nhan">
+	<div class="lbl">
+		<label>Cập nhật thông tin</label>
+	</div>
+	<div class="ava text-center">
+		<div class="dropdown">
+			<a id="dropdown-toggle"  data-toggle="dropdown" href="#">
+				<img src="/images/default-avatar.png" alt="">
+				<i class="fas fa-pen"></i>
+			</a>
+			<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				<a class="dropdown-item" href="#">Xem ảnh</a>
+				<a class="dropdown-item" href="#">Thay đổi ảnh</a>
+			</div>
+		</div>
+	</div>
+	<div class="row-info">
+		<div class="col-label">
+			<label class="lbl">Họ và tên</label>
+		</div>
+		<div class="col-input">
+			<input type="text" id="Ho" name="fullname" autofocus value="{{user.HoTen}} {{user.ID}}">
+		</div>
+	</div>
+	<div class="row-info">
+		<div class="col-label">
+			<label class="lbl">Ngày sinh</label>
+		</div>
+		<div class="col-input">
+			<input type="text" id="txtBirthdate" name="Birthdate" value="{{format user.NgaySinh}}">
+		</div>
+	</div>
+
+
+	{{!-- <div class="row-info row-birthdate">
+		<div class="col-label">
+			<label class="lbl">Ngày sinh</label>
+		</div>
+		<div class="col-input col-birthdate">
+			<select class="birthdate" id="date">
+				<script type="text/javascript">
+					for (var i = 1; i <= 31; i++) {
+						var html = '<option value="' + i + '">' + i + '</option>';
+						document.writeln(html);
+					}
+				</script>
+			</select>
+			<select class="birthdate" id="month">
+				<script type="text/javascript">
+					for (var i = 1; i <= 12; i++) {
+						var html = '<option value="' + i + '">' + i + '</option>';
+						document.writeln(html);
+					}
+				</script>
+			</select>
+			<select class="birthdate" id="year">
+				<script type="text/javascript">
+					for (var i = 1900; i <= 2019; i++) {
+						var html = '<option value="' + i + '">' + i + '</option>';
+						document.writeln(html);
+					}
+				</script>
+			</select>
+		</div>
+	</div> --}}
+
+	<div class="row-info">
+		<div class="col-label">
+			<label class="lbl">Email</label>
+		</div>
+		<div class="col-input">
+			<input class="Email" id="Email" type="text" name="Email" value="{{user.Email}}">
+		</div>
+	</div>
+	<a class="lbl-ChangePassEmail change" href="/doi-mat-khau">Đổi mật khẩu</a>
+	{{!-- <label class="lbl-ChangePassEmail">Đổi mật khẩu</label><br> --}}
+
+	<div class="row-info row-hsd">
+		<div class="col-label">
+			<label class="lbl">Sử dụng đến</label>
+		</div>
+		<div class="col-input">
+			<input class="HSD" id="HSD" type="text" name="Sudungden" readonly style="background-color: #ccc"
+				value="{{format user.NgayHetHan}}">
+
+			</style>
+		</div>
+	</div>
+
+	<label class="count-date">{{user.TinhTrang}}</label><br>
+	{{!-- <label class="count-date">còn 10</label><br> --}}
+	<a class="lbl-ChangePassEmail change" href="javascript:;">Gia hạn tài khoản</a><br>
+	{{!-- <label class="acc" onclick="ReNewedAcc()">Gia hạn tài khoản</label><br> --}}
+
+	<div class="div-btn">
+		<a href="/" class="btnBack"><i class="fa fa-backward" aria-hidden="true"></i> Trở về</a>
+		<button type="submit" class="btnSave" onclick="ClickButtonSave()"><i class="fa fa-check" aria-hidden="true"></i>
+			Lưu</button>
+
+	</div>
+</form>
+{{>footer}}

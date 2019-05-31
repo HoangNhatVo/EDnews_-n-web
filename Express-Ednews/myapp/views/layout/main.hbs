@@ -19,10 +19,10 @@
 	<link rel="stylesheet" href="{{style}}">	
   <link rel="stylesheet" href="{{css}}">
 <!-- Slick -->
-	<link rel="stylesheet" href={{slick}}>
-	<link rel="stylesheet" type="text/css" href={{slicktheme}}>
+	<link rel="stylesheet" href='/javascripts/js/slick/slick.css'>
+	<link rel="stylesheet" type="text/css" href='/javascripts/js/slick/slick-theme.css'>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/af.js">
-	
+	{{{_sections.css}}}
 </head>
   <body>
 
@@ -36,7 +36,7 @@
     <!-- Jquery -->
 	<script src="/plugin-frameworks/jquery-3.2.1.min.js"></script>
  <!-- slick -->
-  <script src={{srcslick}}></script>
+  <script src='/javascripts/js/slick/slick.min.js'></script>
  <!-- Boostrap -->
 	<script src="/plugin-frameworks/tether.min.js"></script>
 	<script src="/plugin-frameworks/bootstrap.js"></script>
@@ -44,10 +44,11 @@
 	<script src="/javascripts/scripts.js"></script>
   <script src="/javascripts/index.js"></script>
 	<script src="/javascripts/sb-admin.js"></script>
-	<script src="/javascripts/CreateNews.js"></script>
+	
 	<!-- Page level plugin JavaScript-->
   <script src="/javascripts/datatable/jquery.dataTables.min.js"></script>
   <script src="/javascripts/datatable/dataTables.bootstrap4.min.js"></script>
 	<script src="/javascripts/datatable/datatables-demo.js"></script>
+	 {{{_sections.js}}}
   </body>
 </html>
