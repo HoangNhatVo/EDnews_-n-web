@@ -20,7 +20,7 @@ router.get('/', async (req, res, next) => {
     var TaiChinh = await singlepostModel.getPostfromCategories('taichinh', limit, offset);
     var Showbiz = await singlepostModel.getPostfromCategories('showbiz', limit, offset);
     var Smartphone = await singlepostModel.getPostfromCategories('smartphone', limit, offset);
-	console.log(req.user);
+    console.log(req.user);
     res.render('index',
       {
         css: '/stylesheets/index.css',
@@ -41,88 +41,105 @@ router.get('/', async (req, res, next) => {
   };
 });
 
-router.get('/lien-he', function (req, res, next) {
-  res.render('Contact', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user });
+router.get('/lien-he', async function (req, res, next) {
+  var Feature = await singlepostModel.getFeaturePost();
+  res.render('Contact',
+    {
+      css: '/stylesheets/index.css',
+      style: '/stylesheets/style.css', user: req.user
+    });
 });
 
-router.get('/thong-tin-ca-nhan',function(req,res,next){
+router.get('/thong-tin-ca-nhan',async function (req, res, next) {
+  var Feature = await singlepostModel.getFeaturePost();
   //res.render('subcriber', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user });
-   if(req.isAuthenticated()){
+  if (req.isAuthenticated()) {
     res.render('subcriber', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user });
   }
-  else{
+  else {
     res.redirect('/');
   }
 });
 
-router.get('/doi-mat-khau',function(req,res,next){
-  if(req.isAuthenticated()){
+router.get('/doi-mat-khau', function (req, res, next) {
+  if (req.isAuthenticated()) {
     res.render('ChangePassword', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user })
   }
-  else{
+  else {
     res.redirect('/');
   }
 });
 router.get('/dangnhap', function (req, res, next) {
   console.log(req.user);
-  if(!req.isAuthenticated() || req.user==true){
+  if (!req.isAuthenticated() || req.user == true) {
     req.logout();
     req.session.cookie.expires = false;
-    res.render('Login', { layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
-                        message:req.flash('loginMessage'),
-                        message_register: req.flash('signupMessage')});
+    res.render('Login', {
+      layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
+      message: req.flash('loginMessage'),
+      message_register: req.flash('signupMessage')
+    });
   }
-  else{
+  else {
     res.redirect('/');
   }
 });
 router.post('/dangnhap', passport.authenticate('local-login', {
-      failureRedirect: '/dangnhap',
-      successRedirect: '/',
-      failureFlash: true
-  }),
-    function(req, res){
-      if(req.body.remember){
-        req.session.cookie.maxAge = 1000 * 60 *3;
-      }
-      else{
-        req.session.cookie.expires = false;
-      }
-      res.redirect('/');
+  failureRedirect: '/dangnhap',
+  successRedirect: '/',
+  failureFlash: true
+}),
+  function (req, res) {
+    if (req.body.remember) {
+      req.session.cookie.maxAge = 1000 * 60 * 3;
     }
+    else {
+      req.session.cookie.expires = false;
+    }
+    res.redirect('/');
+  }
 );
-router.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}));
-router.get('/auth/facebook/callback', passport.authenticate('facebook',{
-  failureRedirect:'/',
-  successRedirect:'/',
+router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+router.get('/auth/facebook/callback', passport.authenticate('facebook', {
+  failureRedirect: '/',
+  successRedirect: '/',
   failureFlash: true
 }));
-router.get('/logout', function(req, res){
+router.get('/logout', function (req, res) {
   req.logout();
   req.session.cookie.expires = false;
   res.redirect('/');
 });
 
 router.get('/dangky', function (req, res, next) {
-  if(!req.isAuthenticated()){
-    res.render('Register', { layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
-                          message:req.flash('signupMessage') });
+  if (!req.isAuthenticated()) {
+    res.render('Register', {
+      layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
+      message: req.flash('signupMessage')
+    });
   }
-  else{
+  else {
     res.redirect('/');
   }
 });
-router.post('/dangky', passport.authenticate('local-signup',{
+router.post('/dangky', passport.authenticate('local-signup', {
   failureRedirect: '/dangky',
   successRedirect: '/dangnhap',
   failureFlash: true
 }),
-  function(req,res){    
+  function (req, res) {
 
   }
 );
 
-router.get('/:TenCM', async (req, res) => {
+router.get('/tag/:Tentag', (req, res, next) => {
+  res.render('List_Post_withTag', {
+    css: '/stylesheets/index.css',
+    style: '/stylesheets/style.css',
+  });
+});
+
+router.get('/:TenCM', async (req, res, next) => {
   var NameCats = req.params.TenCM;
   try {
     var Feature = await singlepostModel.getFeaturePost();
@@ -183,9 +200,7 @@ router.get('/:TenCM', async (req, res) => {
           checkNext: checkNext,
           user: req.user
         });
-      }).catch(err => {
-        console.log(err);
-      })
+      }).catch(next);
     }
     else {
       res.render('404', { layout: false });
