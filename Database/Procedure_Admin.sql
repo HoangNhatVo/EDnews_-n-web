@@ -100,7 +100,7 @@ END;$$
 DELIMITER ;
 #---------------------------QUAN LY TAG
 #--------------------THEM 1 TAG
-call AddTag('#ABC');
+call AddTag('#ABCeDe');
 DELIMITER $$
 USE `baodientu3n`$$
 CREATE PROCEDURE AddTag (in TagName varchar(50) )
@@ -109,27 +109,29 @@ BEGIN
 	declare IDTagAdd varchar(10);
     declare lastTag int; 
     declare nextTag int;
-    if( substring(TagName,1,1)!='#')
+    declare TagNameNew varchar(10);
+    if( substring(TagName,1,1)='#')
     then
-    select 0 as temp;
+		set TagNameNew = TagName;
+	end if;
+	if( substring(TagName,1,1)!='#')
+	then
+    set TagNameNew = (select concat('#',TagName));
     end if;
-    if(substring(TagName,1,1)='#')
-		then
-		set count1 =( select count(*) from nhan where TenTag = TagName);
-		if( count1=0 )
+	set count1 =( select count(*) from nhan where TenTag = TagNameNew);
+	if( count1=0 )
 			then 
 			set lastTag =(select max(convert(substring(IDTag,4),unsigned))
 				   from nhan  );
 			 set nextTag = lastTag +1;
 			 set IDTagAdd = (select concat('tag',convert(nextTag,char)));
-			 insert into nhan values( IDTagAdd,TagName);
+			 insert into nhan values( IDTagAdd,TagNameNew);
 			 select 1 as temp;
-		end if;
-		if( count1>0 )
-		then 
-		select 0 as temp;
-		end if;
-     end if;
+	end if;
+	if( count1>0 )
+	then 
+	select 0 as temp;
+	end if;
 END;$$
 DELIMITER ;
 #--------------------------Lay 1 tag vs ID truyen vao
