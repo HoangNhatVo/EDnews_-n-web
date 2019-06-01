@@ -148,7 +148,8 @@ alter table BaiViet
 add constraint Fk_BV_CM
 foreign key (ChuyenMuc)
 references ChuyenMuc(IDChuyenMuc);
-
+#---------1/6
+alter table nhan modify TenTag varchar(50)
 
 
 
