@@ -223,13 +223,14 @@ DELIMITER $$
 USE `baodientu3n`$$
 create procedure GetPostsWithTag(in TagName varchar(50), in limi int,in offse int)
 begin
-	select BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,nd.ButDanh,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat
+	select BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat
     from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
 						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
 						join nhan as tag on tag.IDTag = n_bv.IDTag
                         join urlhinhanh as url on url.IDHinh=HA.IDHinh
 						join nguoidung as nd on nd.ID=BV.PhongVien
                         join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
 	where	tag.TenTag = TagName
     limit limi offset offse ;
 end;$$
@@ -281,3 +282,28 @@ begin
 end;$$
 DELIMITER ; 
 call CheckTag('#a');
+#-------------------TANG VIEW BAI VIET
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure IncreaseView(in IDBV varchar(15))
+begin
+	update baiviet set LuotXem = LuotXem +1 where IDBaiViet =	IDBV;	
+end;$$
+DELIMITER ; 
+#-------------------10 bai viet co VIEW cao nhat
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure GetHighestViewPost()
+begin
+	select BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+    order by BV.LuotXem
+    limit 10 ;
+end;$$
+DELIMITER ; 
+
