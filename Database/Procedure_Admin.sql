@@ -132,6 +132,38 @@ BEGIN
      end if;
 END;$$
 DELIMITER ;
+#--------------------------Lay 1 tag vs ID truyen vao
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE GetTagWithID(in IDTagGet varchar(10))
+BEGIN
+	select * from nhan where IDTag =IDTagGet;
+END;$$
+DELIMITER ;
+#--------------------------Xoa 1 tag voi ID
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE DeleteTag(in IDTagDel varchar(10))
+BEGIN
+	delete from nhan where IDTag=IDTagDel;
+END;$$
+DELIMITER ;
+#--------------------------Update 1 tag voi ID
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE UpdateTag(in IDTagUpdate varchar(10), in TagNameUpdate varchar(20))
+BEGIN
+	 if( substring(TagNameUpdate,1,1)!='#')
+    then
+    select 0 as temp;
+    end if;
+    if(substring(TagName,1,1)='#')
+		then
+        update nhan set TenTag=TagNameUpdate where IDTag=IDTagUpdate;
+        select 1 as temp;
+	end if;
+END;$$
+DELIMITER ;
 #---------------------------QUAN LY TAI KHOAN
 #-------------------------Danh sach phan he 
 DELIMITER $$
