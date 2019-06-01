@@ -263,3 +263,21 @@ begin
   
 end;$$
 DELIMITER ; 
+#-------------------------check tag
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure CheckTag(in TagName varchar(50))
+begin
+	declare count1 int;
+    set count1 =(select count(*) from nhan where TenTag=TagName);
+    if(count1 >0)
+    then 
+		select TenTag from nhan where TenTag=TagName;
+	end if;
+    if(count1=0)
+    then
+    select TenTag from nhan where TenTag=TagName;
+    end if;
+end;$$
+DELIMITER ; 
+call CheckTag('#a');
