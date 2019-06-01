@@ -43,5 +43,13 @@ module.exports ={
     //lay comment bai viet
     getCommentPost:idPost=>{
         return orm.selectAll(`call getcommentspost('${idPost}')`);
+    },
+    //lay danh sach bai viet theo tag
+    getPostwithTag:(TenTag,limit,offset)=>{
+        return orm.selectAll(`call GetPostsWithTag('#${TenTag}',${limit},${offset})`);
+    },
+    //dem so luong bai viet theo tag
+    getCountPostwithTag:TenTag=>{
+        return orm.selectAll(`call CountPostsWithTag('#${TenTag}')`);
     }
 };

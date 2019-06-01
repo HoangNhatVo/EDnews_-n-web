@@ -10,17 +10,19 @@
     Chỉnh sửa tag
   </h4>
   <div class="card-body">
-    <form method="POST" >
+    <form method="POST" action="/admin/danh-sach-tag/chinh-sua-tag" >
+      {{#each tag}}
       <div class="form-group">
         <label for="txtCatID" style="width:240px">ID Tag</label>
-        <input readonly type="text" class="form-control" id="txtCatID" name="CatID" value="1">
+        <input readonly type="text" class="form-control" id="txtCatID" name="IDTag" value="{{IDTag}}">
       </div>
       
       <div class="form-group">
         <label for="txtCatName"style="width:240px" >Tên Tag</label>
-        <input type="text" class="form-control" id="txtCatName" name="CatName" autofocus
-          placeholder="Enter category name" value="#Nhatrang">
+        <input type="text" class="form-control" id="txtCatName" name="TagName" autofocus
+          placeholder="Enter category name" value="{{TenTag}}">
       </div>
+      {{/each}}
       <a class="btn btn-primary" href="/admin/danh-sach-tag" role="button">
         <i class="fa fa-backward" aria-hidden="true"></i>
         trở về

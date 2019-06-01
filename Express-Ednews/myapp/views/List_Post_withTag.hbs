@@ -1,6 +1,6 @@
 {{>header}}
 
-<section class="bg-primary pt-0 pb-xs-20">
+<section class="bg-primary pt-0 pb-0">
 		<div class="container">
 			{{>botnav}}
 		
@@ -13,14 +13,11 @@
 		<div class="container">
 			<div class="row">
 			
-				{{!-- <div class="col-md-12 col-lg-8">
-					{{#each NameCat}}
-					<div class="ptb-0">
-						<a class="mt-10" href="/"><i class="mr-5 ion-ios-home"></i><b>TRANG CHỦ</b></a>
-						<a class="mt-10 color-ash" href="/{{TenKhongDau_Cha}}"><i class="mlr-10 ion-chevron-right"></i><b>{{TenCha}}</b></a>
-						<a class="mt-10 color-ash" href="/{{TenKhongDau_Cha}}/{{TenChuyenMuc_KhongDau}}"><i class="mlr-10 ion-chevron-right"></i><b>{{TenChuyenMuc}}</b></a>
-						 
-						<h1 class="mtb-20"><b>{{TenChuyenMuc}}</b></h1>
+				<div class="col-md-12 col-lg-8">
+					{{#each Nametag}}
+					<div class="ptb-0"  >
+						<span class="text-uppercase">Tin về {{remove TenTag}}</span>
+						<h1 class="mtb-20" style="color: #E3493D"><b>{{remove TenTag}}</b></h1>
 					</div>
 					{{/each}}
 					{{#each Post}}
@@ -57,7 +54,7 @@
 						{{/unless}}
 					</ul>
 					
-				</div><!-- col-sm-8 --> --}}
+				</div><!-- col-sm-8 -->
 				
 			</div><!-- row -->
 		</div><!-- container -->
