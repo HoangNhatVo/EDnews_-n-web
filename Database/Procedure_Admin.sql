@@ -151,18 +151,39 @@ BEGIN
 END;$$
 DELIMITER ;
 #--------------------------Update 1 tag voi ID
+call UpdateTag('tag8','#ABCeDh');
 DELIMITER $$
 USE `baodientu3n`$$
 CREATE PROCEDURE UpdateTag(in IDTagUpdate varchar(10), in TagNameUpdate varchar(20))
 BEGIN
+	declare TagNameNew varchar(20);
+    declare count1 int;
 	 if( substring(TagNameUpdate,1,1)!='#')
     then
-    select 0 as temp;
+		set TagNameNew =(select concat('#',TagNameUpdate));
+        set count1 = (select count(*) from nhan where TenTag= TagNameNew);
+        if(count1 >0)
+        then
+        select 0 as temp;
+        end if;
+        if(count1 =0)
+        then
+        update nhan set TenTag=TagNameNew where IDTag=IDTagUpdate;
+        select 1 as temp;
+        end if;
     end if;
-    if(substring(TagName,1,1)='#')
+    if(substring(TagNameUpdate,1,1)='#')
 		then
+        set count1 = (select count(*) from nhan where TenTag= TagNameUpdate);
+        if(count1 >0)
+        then
+        select 0 as temp;
+        end if;
+        if(count1 =0)
+        then
         update nhan set TenTag=TagNameUpdate where IDTag=IDTagUpdate;
         select 1 as temp;
+        end if;
 	end if;
 END;$$
 DELIMITER ;
