@@ -100,7 +100,7 @@ END;$$
 DELIMITER ;
 #---------------------------QUAN LY TAG
 #--------------------THEM 1 TAG
-call AddTag('#ABCeDe');
+call AddTag('hahahhahahahahhahahhahahahhaa');
 DELIMITER $$
 USE `baodientu3n`$$
 CREATE PROCEDURE AddTag (in TagName varchar(50) )
@@ -109,7 +109,7 @@ BEGIN
 	declare IDTagAdd varchar(10);
     declare lastTag int; 
     declare nextTag int;
-    declare TagNameNew varchar(10);
+    declare TagNameNew varchar(50);
     if( substring(TagName,1,1)='#')
     then
 		set TagNameNew = TagName;
@@ -151,12 +151,12 @@ BEGIN
 END;$$
 DELIMITER ;
 #--------------------------Update 1 tag voi ID
-call UpdateTag('tag8','#ABCeDh');
+call UpdateTag('tag8','#ihiihihhihihihihihihihiihihhiihi');
 DELIMITER $$
 USE `baodientu3n`$$
-CREATE PROCEDURE UpdateTag(in IDTagUpdate varchar(10), in TagNameUpdate varchar(20))
+CREATE PROCEDURE UpdateTag(in IDTagUpdate varchar(10), in TagNameUpdate varchar(50))
 BEGIN
-	declare TagNameNew varchar(20);
+	declare TagNameNew varchar(50);
     declare count1 int;
 	 if( substring(TagNameUpdate,1,1)!='#')
     then

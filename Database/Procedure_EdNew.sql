@@ -218,4 +218,21 @@ begin
 	where BV.IDBaiViet=	IDBaiViet;			
 end;$$
 DELIMITER ; 
+#-------------------------Lay bai viet theo tag
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure GetPostsWithTag(in TagName varchar(20), in limi int,in offse int)
+begin
+	select BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,nd.ButDanh,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+						join nhan as tag on tag.IDTag = n_bv.IDTag
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+	where	tag.TenTag = TagName
+    limit limi offset offse ;
+end;$$
+DELIMITER ; 
+call GetPostsWithTag('#nghiduong',10,0);
 
