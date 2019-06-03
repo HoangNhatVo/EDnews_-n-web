@@ -5,8 +5,9 @@ DELIMITER $$
 USE `baodientu3n`$$
 CREATE PROCEDURE DeleteMainCategory (in IDCM varchar(10) )
 BEGIN
-delete from chuyenmuc  where IDChuyenMuc=IDCM;
+
 delete from chuyenmuc where ChuyenMucCha=IDCM ;
+delete from chuyenmuc  where IDChuyenMuc=IDCM;
 END;$$
 DELIMITER ;
 

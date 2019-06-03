@@ -5,6 +5,12 @@ const CategoriesModel = require('../Model/categories.model');
 
 const loginModel = require('../Model/login.model');
 var passport = require('passport');
+var bCrypt = require('bcrypt');
+var moment = require('moment');
+var nodemailer = require('nodemailer');
+var xoauth2 = require('xoauth2');
+const configAuth = require('../MiddleWares/auth');
+const saltRounds = 10;
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
@@ -20,12 +26,12 @@ router.get('/', async (req, res, next) => {
     var TaiChinh = await singlepostModel.getPostfromCategories('taichinh', limit, offset);
     var Showbiz = await singlepostModel.getPostfromCategories('showbiz', limit, offset);
     var Smartphone = await singlepostModel.getPostfromCategories('smartphone', limit, offset);
-	console.log(req.user);
+	// console.log('Phan he',req.user.PhanHe);
     res.render('index',
       {
-        slick: '/javascripts/js/slick/slick.css',
-        slicktheme: '/javascripts/js/slick/slick-theme.css',
-        srcslick: '/javascripts/js/slick/slick.min.js',
+        // slick: '/javascripts/js/slick/slick.css',
+        // slicktheme: '/javascripts/js/slick/slick-theme.css',
+        // srcslick: '/javascripts/js/slick/slick.min.js',
         css: '/stylesheets/index.css',
         style: '/stylesheets/style.css',
         Featurepost: Feature.slice(0, 2),
@@ -49,23 +55,84 @@ router.get('/lien-he', function (req, res, next) {
 });
 
 router.get('/thong-tin-ca-nhan',function(req,res,next){
-  //res.render('subcriber', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user });
-   if(req.isAuthenticated()){
-    res.render('subcriber', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user });
+  if(req.isAuthenticated()){
+    res.render('subcriber', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user,
+                                 msg_changeInfo:req.flash('msg_info')});
   }
   else{
     res.redirect('/');
   }
+});
+router.post('/thong-tin-ca-nhan/:ID', function(req,res,next){
+  var ID = req.params.ID;
+  var Info = {
+    HoTen: req.body.fullname,
+    NgaySinh: moment(req.body.Birthdate,'MM/DD/YYYY').format('YYYY-MM-DD'),
+    Email: req.body.Email
+  }
+  loginModel.getUserWithIDAndEmail(ID, Info.Email).then(r1=>{
+    if(!r1.length){
+      loginModel.updateInfoUserWithID(ID,Info.HoTen,Info.NgaySinh,Info.Email).then(r =>{
+        req.logout();
+        req.session.cookie.expires = false;
+        req.flash('signupMessage', 'Đã cập nhật thông tin, mời đăng nhập lại');
+        res.redirect('/dangnhap');
+      }).catch(err =>{
+        req.flash('msg_info','Không cập nhật được thông tin');
+        res.redirect('/thong-tin-ca-nhan');
+      })
+    }
+    else{
+      req.flash('msg_info','Email vừa nhập đã tồn tại, chưa cập nhật được thông tin');
+      res.redirect('/thong-tin-ca-nhan');
+    }
+  }).catch(err=>{
+    req.flash('msg_info','Lỗi không cập nhật được thông tin');
+    res.redirect('/thong-tin-ca-nhan');
+  })
 });
 
-router.get('/doi-mat-khau',function(req,res,next){
+router.get('/thong-tin-ca-nhan/:ID/doi-mat-khau',function(req,res,next){  
   if(req.isAuthenticated()){
-    res.render('ChangePassword', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user })
+    res.render('ChangePassword', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user,
+                                  message_changePassword:req.flash('changePasswordMessage') })
   }
   else{
     res.redirect('/');
   }
 });
+router.post('/thong-tin-ca-nhan/:ID/doi-mat-khau', function(req,res,next){
+  var ID = req.params.ID;
+  var newPass = bCrypt.hashSync(req.body.newPass, bCrypt.genSaltSync(saltRounds));
+  var currentPass =  bCrypt.hashSync(req.body.currentPass, bCrypt.genSaltSync(saltRounds));
+  loginModel.getUserWithID(ID).then(r1=>{
+    if(!r1.length){
+      req.flash('changePasswordMessage','Không tìm thấy người dùng');
+      res.redirect(`/thong-tin-ca-nhan/${ID}/doi-mat-khau`);
+    }
+    else{
+      if(!bCrypt.compareSync(req.body.currentPass,r1[0].Password)){
+        req.flash('changePasswordMessage','Nhập mật khẩu hiện tại không đúng');
+        res.redirect(`/thong-tin-ca-nhan/${ID}/doi-mat-khau`);
+      }
+      else{
+        loginModel.updatePasswordUserWithID(ID,newPass).then(r2=>{
+          req.logout();
+          req.session.cookie.expires = false;
+          req.flash('signupMessage', 'Đổi mật khẩu thành công, mời đăng nhập lại');
+          res.redirect('/dangnhap');
+        }).catch(err=>{
+          req.flash('changePasswordMessage','Đã xảy ra lỗi');
+          res.redirect(`/thong-tin-ca-nhan/${ID}/doi-mat-khau`);
+        })
+      }
+    }
+  }).catch(err=>{
+    req.flash('changePasswordMessage','Đã xảy ra lỗi');
+    res.redirect(`/thong-tin-ca-nhan/${ID}/doi-mat-khau`);
+  });
+});
+
 router.get('/dangnhap', function (req, res, next) {
   console.log(req.user);
   if(!req.isAuthenticated() || req.user==true){
@@ -94,6 +161,7 @@ router.post('/dangnhap', passport.authenticate('local-login', {
       res.redirect('/');
     }
 );
+
 router.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}));
 router.get('/auth/facebook/callback', passport.authenticate('facebook',{
   failureRedirect:'/',
@@ -125,6 +193,210 @@ router.post('/dangky', passport.authenticate('local-signup',{
   }
 );
 
+router.get('/quen-mat-khau',function(req,res,next){
+ // var OTP = moment().unix();
+ // var x = bCrypt.hashSync(OTP.toString(), bCrypt.genSaltSync(saltRounds));
+ // console.log('OTP', OTP);
+//  console.log('OTP-bCrypt', x);
+
+  if(!req.isAuthenticated()){
+  res.render('ForgotPassword',{ layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
+                              message_send_error:req.flash('send_error')});
+  }
+  else{
+    res.redirect('/');
+  }
+});
+router.post('/quen-mat-khau',function(req,res,next){
+  loginModel.getUserWithEmail(req.body.email).then(r=>{
+    if(!r.length){
+      req.flash('send_error','Tài khoản không tồn tại');
+      res.redirect('/quen-mat-khau');
+    }
+    else{
+      var OTP = moment().unix();
+      console.log('OTP', OTP);
+
+      loginModel.addOTPUserWithEmail(req.body.email,'').then(rows=>{
+        console.log(rows);
+      }).catch(err=>{
+        console.log(err);
+      })
+
+      const options = {
+        pool: true,
+        host:'smtp-relay.example.com',
+        port: 465,
+        secure: true,
+        auth:{
+          user: configAuth.email,
+          pass: configAuth.pass
+        }
+      };
+      var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: configAuth.email,
+          pass: configAuth.pass
+        }
+      });
+      var message = {
+        from: configAuth.from,
+        to: req.body.email,
+        subject: 'OTP code',
+        test: 'Plaintext version of the message',
+        html: '<h3>OTP code: ' + OTP +' </h3>'
+      };
+
+      transporter.sendMail(message, (err, info)=>{
+        if(err){
+          console.log('err', err);
+          req.flash('send_error','Không gửi được OTP');
+          res.redirect('/quen-mat-khau');
+         // return   console.log('err', err);
+        }
+          console.log('Message sent: %s', info.messageId);   
+          console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+          req.flash('abc','abc');
+          req.flash('send_success','Đã gửi mã OTP');
+          loginModel.addOTPUserWithEmail(req.body.email,
+            bCrypt.hashSync(OTP.toString(), bCrypt.genSaltSync(saltRounds))).then(r=>{
+              console.log(r);
+            }).catch(err=>{
+              req.flash('send_error','Đã xảy ra lỗi');
+              res.redirect('/quen-mat-khau');
+            })
+          res.redirect(`/nhap-ma-otp-xac-nhan/${req.body.email}`);   
+      })
+
+      // var transporter = nodemailer.createTransport({
+      //   service: 'Gmail',
+      //   auth: {
+      //       xoauth2: {//xoauth2.createXOAuth2Generator({
+      //           user: 'ednewsmail@gmail.com',
+      //           clientId: '665059376256-er1hqtd16ua6c9l3ab7qco1vln3jnvo6.apps.googleusercontent.com',
+      //           clientSecret: 'P1fQu94M2Fs7hKNufLl2RvKG',
+      //           refreshToken: '1/Tznv54BsjIoHASC605E0nVcks-P7ULxe8TI3pSzyFnxiB7dTdEwUJIJ9M1BHliVG'
+      //       }
+      //   }
+      // });
+    
+      // var mailOptions = {
+      //     from: 'My Name <ednewsmail@gmail.com>',
+      //     to: 'vannhat8198@gmail.com',
+      //     subject: 'Nodemailer test',
+      //     generateTextFromHTML: true,
+      //     html: "<b>Hello world</b>"
+      // };
+    
+      // transporter.sendMail(mailOptions, function (err, res) {
+      //     if(err){
+      //         console.log(err);
+      //     } else {
+      //         console.log('Email Sent');
+      //     }
+      //     transporter.close();
+      // }); 
+
+    }
+  }).catch(err=>{
+    req.flash('send_error','Đã xảy ra lỗi');
+    res.redirect('/quen-mat-khau');
+  })
+});
+
+router.get('/nhap-ma-otp-xac-nhan/:email', function(req,res, next){
+  var email = req.params.email;
+  // console.log('email',email);
+  // console.log(req.flash('send_success').length);
+  if(!req.isAuthenticated() && (req.flash('abc').length!=0)){
+    res.render('InputOTP',{ layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
+                            email, message_send_success: req.flash('send_success'),
+                            message_input_error: req.flash('input_error')});
+  }
+  else{
+    res.redirect('/');
+  }
+});
+router.post('/nhap-ma-otp-xac-nhan/:email', function(req,res, next){
+  var email = req.params.email;
+  var OTP = req.body.OTP;
+  var y = moment().unix();
+  var x = (moment().unix()-120).toString();
+  console.log('OTP',OTP);
+  console.log('y',y);
+  console.log('x',x);
+  
+  if(OTP >= x){
+    loginModel.getUserWithEmail(email).then(r1=>{
+      if(!r1.length){
+        req.flash('abc','abc');
+        req.flash('input_error', 'Không tìm thấy tài khoản');
+        res.redirect(`/nhap-ma-otp-xac-nhan/${email}`);
+      }
+      else{
+        if(!bCrypt.compareSync(OTP, r1[0].OTP)){
+          req.flash('abc','abc');
+          req.flash('input_error', 'Mã OTP sai, mời nhập lại');
+          res.redirect(`/nhap-ma-otp-xac-nhan/${email}`);
+        }
+        else{
+          req.flash('opt_success','Mã OTP chính xác');
+          req.flash('xyz','xyz');
+          loginModel.addOTPUserWithEmail(email,'').then(r2=>{
+            console.log(r2);
+          }).catch(err=>{
+            console.log(err);
+          })
+          res.redirect(`/reset-password/${email}`);  
+        }   
+      }
+    }).catch(err=>{
+      req.flash('abc','abc');
+      req.flash('input_error', 'Đã xảy ra lỗi');
+      res.redirect(`/nhap-ma-otp-xac-nhan/${email}`);
+    })
+  }
+  else{
+    req.flash('send_error','Mã OTP đã quá hạn');
+    loginModel.addOTPUserWithEmail(email,'').then(r=>{
+      console.log(r);
+    }).catch(err=>{
+      console.log(err);
+      req.flash('send_error','Đã xảy ra lỗi');
+    })
+    res.redirect('/quen-mat-khau');
+  }
+});
+
+router.get('/reset-password/:email', function(req,res,next){
+  var email = req.params.email;
+  // if(!req.isAuthenticated()){
+  if(!req.isAuthenticated() && (req.flash('xyz').length!=0)){
+    res.render('ResetPassword',{ layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
+                email, message_send_success: req.flash('opt_success'),
+                message_input_password_error: req.flash('input_password_error')});
+  }
+  else{
+    res.redirect('/');
+  }
+});
+router.post('/reset-password/:email', function(req,res,next){
+  var Email = req.params.email;
+  var Password = bCrypt.hashSync(req.body.password, bCrypt.genSaltSync(saltRounds));
+  loginModel.updatePasswordUserWithEmail(Email,Password).then(r=>{
+    req.flash('signupMessage', 'Mật khẩu đã khôi phục, mời đăng nhập lại');
+    res.redirect('/dangnhap');
+  }).catch(err=>{
+    req.flash('xyz','xyz');
+    req.flash('input_password_error','Mật khẩu chưa đổi được');
+    res.redirect(`/reset-password/${Email}`);
+  })
+});
+
+
+
+// -------------------------------------------------------------------------------------------------------------//
 router.get('/:TenCM', async (req, res) => {
   var NameCats = req.params.TenCM;
   try {

@@ -9,14 +9,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script>
   $(function () {
-	 // if($('#txtBirthday').length ==0){
-    //$('#txtBirthdate').datetimepicker({
-    //  format: 'd/m/Y',
-   //   timepicker: false,
-    //  mask: true,
-    //});
-	//  }
-
     $('#formSubs').validate({
       rules: {
         fullname: {
@@ -45,24 +37,49 @@
     });
   })
 </script>
+<script type="text/javascript">
+            $(function () {
+                $('#txtBirthdate').datetimepicker({
+									  format: 'm/d/Y',
+										timepicker: false,
+										mask: true,
+								});
+            });
+</script>
 {{/section}}
 
 {{>header}}
-{{!-- <section class="bg-primary p-0 pb-xs-20">
-	<div class="container">
-		{{>botnav}}
-	</div><!-- container -->
-</section> --}}
-<form class="frmSubs" id="formSubs" method="POST" action="/thong-tin-ca-nhan">
+
+<form class="frmSubs" id="formSubs" method="POST" action="/thong-tin-ca-nhan/{{user.ID}}">
 	<div class="lbl">
 		<label>Cập nhật thông tin</label>
 	</div>
+
+	<div class="ava text-center">
+		<div class="dropdown">
+			<a id="dropdown-toggle"  data-toggle="dropdown" href="#">
+				<img src="/images/default-avatar.png" alt="">
+				<i class="fas fa-pen"></i>
+			</a>
+			<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				<a class="dropdown-item" href="#">Xem ảnh</a>
+				<a class="dropdown-item" href="#">Thay đổi ảnh</a>
+			</div>
+		</div>
+	</div>
+
+	{{#if msg_changeInfo.length}}
+		<div class="alert alert-danger alert-info" role="alert">
+									{{msg_changeInfo}}</a>.
+			</div>
+	{{/if}}
+
 	<div class="row-info">
 		<div class="col-label">
 			<label class="lbl">Họ và tên</label>
 		</div>
 		<div class="col-input">
-			<input type="text" id="Ho" name="fullname" autofocus value="{{user.HoTen}} {{user.ID}}">
+			<input type="text" id="Ho" name="fullname" autofocus value="{{user.HoTen}}">
 		</div>
 	</div>
 	<div class="row-info">
@@ -70,42 +87,9 @@
 			<label class="lbl">Ngày sinh</label>
 		</div>
 		<div class="col-input">
-			<input type="text" id="txtBirthdate" name="Birthdate" value="{{format user.NgaySinh}}">
+			<input type="text" class="form-control" id="txtBirthdate" name="Birthdate" value="{{format user.NgaySinh}}">
 		</div>
 	</div>
-
-
-	{{!-- <div class="row-info row-birthdate">
-		<div class="col-label">
-			<label class="lbl">Ngày sinh</label>
-		</div>
-		<div class="col-input col-birthdate">
-			<select class="birthdate" id="date">
-				<script type="text/javascript">
-					for (var i = 1; i <= 31; i++) {
-						var html = '<option value="' + i + '">' + i + '</option>';
-						document.writeln(html);
-					}
-				</script>
-			</select>
-			<select class="birthdate" id="month">
-				<script type="text/javascript">
-					for (var i = 1; i <= 12; i++) {
-						var html = '<option value="' + i + '">' + i + '</option>';
-						document.writeln(html);
-					}
-				</script>
-			</select>
-			<select class="birthdate" id="year">
-				<script type="text/javascript">
-					for (var i = 1900; i <= 2019; i++) {
-						var html = '<option value="' + i + '">' + i + '</option>';
-						document.writeln(html);
-					}
-				</script>
-			</select>
-		</div>
-	</div> --}}
 
 	<div class="row-info">
 		<div class="col-label">
@@ -115,8 +99,7 @@
 			<input class="Email" id="Email" type="text" name="Email" value="{{user.Email}}">
 		</div>
 	</div>
-	<a class="lbl-ChangePassEmail change" href="/doi-mat-khau">Đổi mật khẩu</a>
-	{{!-- <label class="lbl-ChangePassEmail">Đổi mật khẩu</label><br> --}}
+	<a class="lbl-ChangePassEmail change" href="/thong-tin-ca-nhan/{{user.ID}}/doi-mat-khau">Đổi mật khẩu</a>
 
 	<div class="row-info row-hsd">
 		<div class="col-label">
@@ -130,7 +113,6 @@
 	</div>
 
 	<label class="count-date">{{user.TinhTrang}}</label><br>
-	{{!-- <label class="count-date">còn 10</label><br> --}}
 	<a  class="lbl-ChangePassEmail change" href="javascript:;">Gia hạn tài khoản</a><br>
 	{{!-- <label class="acc" onclick="ReNewedAcc()">Gia hạn tài khoản</label><br> --}}
 
