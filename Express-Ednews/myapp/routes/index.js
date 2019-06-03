@@ -38,8 +38,8 @@ router.get('/', async (req, res, next) => {
         ThoiTrang: ThoiTrang,
         TaiChinh: TaiChinh,
         Showbiz: Showbiz,
-        Smartphone: Smartphone,
-        user: req.user
+        Smartphone: Smartphone
+        // user: req.user
       });
   } catch (err) {
     next();
@@ -51,7 +51,7 @@ router.get('/lien-he', async function (req, res, next) {
   res.render('Contact',
     {
       css: '/stylesheets/index.css',
-      style: '/stylesheets/style.css', user: req.user
+      style: '/stylesheets/style.css'//, user: req.user
     });
 });
 
@@ -61,7 +61,8 @@ router.get('/thong-tin-ca-nhan', async function (req, res, next) {
   //res.render('subcriber', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user });
   if (req.isAuthenticated()) {
     res.render('subcriber', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', 
-    user: req.user, msg_changeInfo:req.flash('msg_info')});
+    //user: req.user, 
+    msg_changeInfo:req.flash('msg_info')});
   }
   else {
     res.redirect('/');
@@ -75,6 +76,7 @@ router.post('/thong-tin-ca-nhan/:ID', function(req,res,next){
     NgaySinh: moment(req.body.Birthdate,'MM/DD/YYYY').format('YYYY-MM-DD'),
     Email: req.body.Email
   }
+  if(ID != 0){
   loginModel.getUserWithIDAndEmail(ID, Info.Email).then(r1=>{
     if(!r1.length){
       loginModel.updateInfoUserWithID(ID,Info.HoTen,Info.NgaySinh,Info.Email).then(r =>{
@@ -95,15 +97,24 @@ router.post('/thong-tin-ca-nhan/:ID', function(req,res,next){
     req.flash('msg_info','Lỗi không cập nhật được thông tin');
     res.redirect('/thong-tin-ca-nhan');
   })
+}
+else{
+  req.flash('msg_info','Không thể chỉnh sửa thông tin cá nhân');
+    res.redirect('/thong-tin-ca-nhan');
+}
 });
 
 //page doi mat khau
-router.get('/thong-tin-ca-nhan/:ID/doi-mat-khau',function(req,res,next){  
-  if(req.isAuthenticated()){
-    res.render('ChangePassword', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user,
+router.get('/thong-tin-ca-nhan/:ID/doi-mat-khau',async function(req,res,next){  
+  var Feature = await singlepostModel.getFeaturePost();
+  var ID = req.params.ID;
+  if(req.isAuthenticated() && ID != 0){
+    res.render('ChangePassword', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', //user: req.user,
                                   message_changePassword:req.flash('changePasswordMessage') })
   }
   else{
+    req.flash('msg_info','Không thể đổi mật khẩu');
+    if(ID == 0) res.redirect('/thong-tin-ca-nhan');
     res.redirect('/');
   }
 });
@@ -178,7 +189,7 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
   failureFlash: true
 }));
 //dang xuat
-router.get('/logout', function (req, res) {
+router.post('/logout', function (req, res) {
   req.logout();
   req.session.cookie.expires = false;
   res.redirect('/');
@@ -456,8 +467,8 @@ router.get('/tag/:Tentag', async (req, res, next) => {
           Post: rows,
           pages: pages,
           checkPre: checkPre,
-          checkNext: checkNext,
-          user: req.user
+          checkNext: checkNext
+          //user: req.user
         });
       }).catch(next);
     }
@@ -546,8 +557,8 @@ router.get('/:TenCM', async (req, res, next) => {
               // Post: rows,
               pages: pages,
               checkPre: checkPre,
-              checkNext: checkNext,
-              user: req.user,
+              checkNext: checkNext
+              //user: req.user,
             });
           })
           .catch(next);
@@ -648,8 +659,8 @@ router.get('/:TenCm/:TensubCm', async (req, res) => {
               NameCat: NameCat,
               Post: r,
               checkPre,
-              checkNext,
-              user: req.user
+              checkNext
+              //user: req.user
             });
           }).catch(next);
       })
@@ -679,8 +690,8 @@ router.get('/:TenCm/:TensubCm/:id/:Tenbaiviet', async (req, res) => {
         style: '/stylesheets/style.css',
         DetailPost: DetailPost,
         TagPost: TagPost,
-        CommentPost: CommentPost,
-        user: req.user
+        CommentPost: CommentPost
+        //user: req.user
       })
     }
     else {

@@ -1341,7 +1341,8 @@ iframe {
 
 /* ALERT INFO */
 .alert-info{
-  margin: 0px 350px;
+  margin: 10px 350px;
+  text-align: center;
 }
 
 .input-email{
