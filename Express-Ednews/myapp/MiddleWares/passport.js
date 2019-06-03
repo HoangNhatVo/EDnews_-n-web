@@ -32,7 +32,7 @@ module.exports = function(passport) {
             //     return done(null, false, req.flash('loginMessage', 'Mật khẩu không đúng'));
             // }
            
-            if(!bCrypt.compareSync(pass, user[0].Password)){
+            if(!bCrypt.compareSync(pass, user[0].password)){
                 return done(null, false, req.flash('loginMessage', 'Mật khẩu không đúng'));
             }           
             return done(null, user[0]);

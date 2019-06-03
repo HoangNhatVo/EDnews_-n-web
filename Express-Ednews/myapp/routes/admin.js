@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 const singlepostModel = require('../Model/single_post.model');
 const CategoriesModel = require('../Model/categories.model');
+const Tagmodel=require('../Model/tag.model');
 
-// create application/x-www-form-urlencoded parser
 
 /* GET users listing. */
 //Dashboard admin
@@ -196,28 +196,6 @@ router.post('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/:TenCM', async (req, res
   catch (err) {
     console.log(err);
   }
-  // CategoriesModel.updateMainCat(IDMain)
-  // console.log('main',IDMain,NewNameMain,NewNameMainNo);
-  // CategoriesModel.getListSubcatOfMainCat(NameCat)
-  //   .then(r => {
-  //     var count = 0;
-  //     for (var k in r) {
-  //       if (r.hasOwnProperty(k))
-  //         count++;
-  //     }
-  //     for(var i=0;i<count;i++){
-  //       var IDSubcat=req.body.IDSubCat[i];
-  //       var NameSubCat=req.body.CatName[i];
-  //       var NameNoSubCat=NameSubCat.normalize('NFD')
-  //       .replace(/[\u0300-\u036f]/g, '')
-  //       .replace(/đ/g, 'd').replace(/Đ/g, 'D')
-  //       .replace(/\s/g, "")
-  //       .toLowerCase();
-  //       console.log('sub',IDSubcat,NameSubCat,NameNoSubCat);
-  //     }
-
-  //   })
-  //   .catch(next);
 });
 
 //Page danh sach cac tag
@@ -235,21 +213,62 @@ router.get('/danh-sach-tag', (req, res, next) => {
 });
 //Xoa tag
 router.post('/danh-sach-tag/xoa-tag', (req, res, next) => {
-  console.log(req.body.abc);
-  res.send(req.body.abc);
+  var IDtag=req.body.IDtag;
+  Tagmodel.deleteTag(IDtag)
+  .then(r=>{
+    res.redirect('/admin/danh-sach-tag');
+  })
+  .catch(next);
 })
 //Page chỉnh sửa tag
-router.get('/danh-sach-tag/chinh-sua-tag/:TenTag', (req, res, next) => {
-  var name = req.params.TenTag;
-  console.log(name);
-  res.render('adminLayout/PageEditTag',
+router.get('/danh-sach-tag/chinh-sua-tag/:IDTag', (req, res, next) => {
+  var ID = req.params.IDTag;
+  console.log(ID);
+  Tagmodel.getTag(ID)
+  .then(r=>{
+    if(r.length>0){
+    res.render('adminLayout/PageEditTag',
     {
       css: '/stylesheets/admin.css',
-      style: '/stylesheets/sb-admin.css'
+      style: '/stylesheets/sb-admin.css',
+      tag:r
     });
+  }
+  else{
+    res.render('404',{layout:false});
+  }
+  })
+  .catch(next);
+ 
 });
+//router chinh sua tag
+router.post('/danh-sach-tag/chinh-sua-tag',(req,res,next)=>{
+  var IDtag=req.body.IDTag;
+  var newNameTag=req.body.TagName;
+  Tagmodel.updateTag(IDtag,newNameTag)
+  .then(r=>{
+    res.redirect('/admin/danh-sach-tag');
+  })
+  .catch(next);
+})
 //Page thêm tag
 router.get('/danh-sach-tag/them-tag', (req, res, next) => {
-  res.render('adminLayout/PageAddTag', { css: '/stylesheets/admin.css', style: '/stylesheets/sb-admin.css' });
+  res.render('adminLayout/PageAddTag', 
+  { 
+    css: '/stylesheets/admin.css', 
+    style: '/stylesheets/sb-admin.css' 
+  });
+});
+
+// router them 1 tag
+router.post('/danh-sach-tag/them-tag',(req,res,next)=>{
+  var NewNametag=req.body.TagName;
+  Tagmodel.addTag(NewNametag)
+  .then(r=>{
+    console.log(r);
+    res.redirect('/admin/danh-sach-tag');
+  })
+  .catch(next);
+
 });
 module.exports = router;

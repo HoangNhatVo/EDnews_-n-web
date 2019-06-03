@@ -34,7 +34,7 @@ BEGIN
     end if;
      if( count1>0 or count2>0)
      then 
-	 select 'ChuyÃªn má»¥c nÃ y Ä‘Ã£ cÃ³' as ' ';
+	 select 'Chuyên m?c này dã có' as ' ';
      end if;
 END;$$
 DELIMITER ;
@@ -72,7 +72,7 @@ BEGIN
      end if;
      if( count1>0 or count2>0)
      then 
-	 select 'ChuyÃªn má»¥c nÃ y Ä‘Ã£ cÃ³' as ' ';
+	 select 'Chuyên m?c này dã có' as ' ';
      end if;
      
 END;$$
