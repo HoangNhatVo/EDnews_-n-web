@@ -1327,3 +1327,82 @@ iframe {
   background: #fff;
   color: #0C0E68;
 }
+
+.alert-changePassword{
+  /* padding: 0 50px; */
+  margin: 20px 50px 0px 50px;
+  
+}
+
+#txtBirthdate{
+  color: #000;
+  font-family: inherit;
+}
+
+/* ALERT INFO */
+.alert-info{
+  margin: 0px 350px;
+}
+
+.input-email{
+  width: 100%;
+}
+
+/* Forgot Password */
+#card-forgotPassword{
+  margin: 30px 520px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.lg-pass{
+  text-align: center;
+  margin-top: 100px;
+}
+.lg-rp{
+  margin-top: 70px;
+}
+.header{
+  border-bottom: 1px solid #CCCCCC;
+  padding: 5px 0px;
+}
+.footer{
+  border-top: 1px solid #CCCCCC;
+  padding: 5px 0px;
+  background-color: #007BFF;
+  color: #fff;
+}
+
+.input-email{
+  margin: 0px;
+}
+
+#input-email{
+  padding-left: 35px ;
+  border: 1px solid #CCCCCC;;
+}
+
+.input-email i{
+  position: absolute;
+  left: -30px;
+  /* bottom:  */
+  padding: 19px 7px 9px 9px;
+  color: #aaa;
+  transition: 0.3s;
+  padding-left: 60px;
+}
+.btnSend{
+  margin: 10px 10px 0px 10px;
+  color: #fff;
+  width: 100px;
+  text-align: center;
+  border-radius: 4px;
+  height: 35px;
+}
+.btn-input-back{
+  font-size: 1.1em;
+  padding-bottom: 5px;
+}
+.btn-input-back:hover{
+  cursor: pointer;
+}

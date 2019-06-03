@@ -34,7 +34,7 @@ BEGIN
     end if;
      if( count1>0 or count2>0)
      then 
-	 select 'Chuyên m?c này dã có' as ' ';
+	 select 'Chuyï¿½n m?c nï¿½y dï¿½ cï¿½' as ' ';
      end if;
 END;$$
 DELIMITER ;
@@ -72,7 +72,7 @@ BEGIN
      end if;
      if( count1>0 or count2>0)
      then 
-	 select 'Chuyên m?c này dã có' as ' ';
+	 select 'Chuyï¿½n m?c nï¿½y dï¿½ cï¿½' as ' ';
      end if;
      
 END;$$
@@ -112,3 +112,100 @@ select * from nguoidung where PhanHe=IDPhanHe;
 END;$$
 DELIMITER ;
 #------------------------
+#---------------------------QUAN LY TAG
+#--------------------THEM 1 TAG
+call AddTag('hahahhahahahahhahahhahahahhaa');
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE AddTag (in TagName varchar(50) )
+BEGIN
+	declare count1 int;
+	declare IDTagAdd varchar(10);
+    declare lastTag int; 
+    declare nextTag int;
+    declare TagNameNew varchar(50);
+    if( substring(TagName,1,1)='#')
+    then
+		set TagNameNew = TagName;
+	end if;
+	if( substring(TagName,1,1)!='#')
+	then
+    set TagNameNew = (select concat('#',TagName));
+    end if;
+	set count1 =( select count(*) from nhan where TenTag = TagNameNew);
+	if( count1=0 )
+			then 
+			set lastTag =(select max(convert(substring(IDTag,4),unsigned))
+				   from nhan  );
+			 set nextTag = lastTag +1;
+			 set IDTagAdd = (select concat('tag',convert(nextTag,char)));
+			 insert into nhan values( IDTagAdd,TagNameNew);
+			 select 1 as temp;
+	end if;
+	if( count1>0 )
+	then 
+	select 0 as temp;
+	end if;
+END;$$
+DELIMITER ;
+#--------------------------Lay 1 tag vs ID truyen vao
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE GetTagWithID(in IDTagGet varchar(10))
+BEGIN
+	select * from nhan where IDTag =IDTagGet;
+END;$$
+DELIMITER ;
+#--------------------------Xoa 1 tag voi ID
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE DeleteTag(in IDTagDel varchar(10))
+BEGIN
+	delete from nhan where IDTag=IDTagDel;
+END;$$
+DELIMITER ;
+#--------------------------Update 1 tag voi ID
+call UpdateTag('tag8','#ihiihihhihihihihihihihiihihhiihi');
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE UpdateTag(in IDTagUpdate varchar(10), in TagNameUpdate varchar(50))
+BEGIN
+	declare TagNameNew varchar(50);
+    declare count1 int;
+	 if( substring(TagNameUpdate,1,1)!='#')
+    then
+		set TagNameNew =(select concat('#',TagNameUpdate));
+        set count1 = (select count(*) from nhan where TenTag= TagNameNew);
+        if(count1 >0)
+        then
+        select 0 as temp;
+        end if;
+        if(count1 =0)
+        then
+        update nhan set TenTag=TagNameNew where IDTag=IDTagUpdate;
+        select 1 as temp;
+        end if;
+    end if;
+    if(substring(TagNameUpdate,1,1)='#')
+		then
+        set count1 = (select count(*) from nhan where TenTag= TagNameUpdate);
+        if(count1 >0)
+        then
+        select 0 as temp;
+        end if;
+        if(count1 =0)
+        then
+        update nhan set TenTag=TagNameUpdate where IDTag=IDTagUpdate;
+        select 1 as temp;
+        end if;
+	end if;
+END;$$
+DELIMITER ;
+
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure GetListTag()
+begin
+	select * from nhan;			
+end;$$
+DELIMITER ;
