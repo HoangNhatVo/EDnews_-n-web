@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EDnews Nhập OTP</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+     {{!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> --}}
+    <link rel="stylesheet" href="/plugin-frameworks/bootstrap.css">
+
+	<!-- Mycss -->
+	<link rel="stylesheet" href="/stylesheets/index.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+		integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	
+</head>
+<body>
+    <div class="lg-pass">
+        <a href="/"><img src="/images/logo-black.png"></a>
+    </div>
+     <form id="formForgotPassword" method="POST" action="/nhap-ma-otp-xac-nhan/{{email}}">
+        <div class="card text-center shadow" id="card-forgotPassword">
+            <div class="card-body">
+                {{#if message_send_success.length}}
+                <div class="alert alert-success">{{message_send_success}}</div>
+                {{/if}}
+                {{#if message_input_error.length}}
+                <div class="alert alert-danger">{{message_input_error}}</div>
+                {{/if}}
+                <h3><i class="fa fa-lock fa-3x"></i></h3>
+                <h3 class="text-center">Input OTP</h3>
+                <p>Mã OTP chỉ sử dụng trong 2 phút.</p>
+                     <div class="input-email">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <input class="input-changePassword" id="input-email" type="number" name="OTP" placeholder="Nhập mã OTP đã gửi qua Email">
+                    </div>
+                    <a href="/dangnhap"><input type="" class="btn-primary btnSend btn-input-back" readonly value="Trở về"></input></a>
+                     <button type="submit" class="btn-primary btnSend">Xác nhận</button> 
+            </div>
+            <div class="footer">
+                Xác nhận mã OTP
+            </div>
+        </div>
+    </form>
+    <script src="plugin-frameworks/jquery-3.2.1.min.js"></script>
+	<script src="plugin-frameworks/bootstrap.js"></script>
+	<script src="plugin-frameworks/tether.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+	<script>
+	$(function () {    
+		$('#formForgotPassword').validate({
+            rules: {
+                OTP:{
+                    required: true,
+                    number: true
+                },
+            },
+            messages: {
+                OTP:{
+                    required: 'Bạn chưa nhập mã OTP',
+                    number: "Mã OTP là chuỗi số nguyên"
+                },
+            },
+            errorElement: 'small',
+            errorClass: 'help-block text-danger',
+            highlight: function (e) {
+                $(e).removeClass('is-valid').addClass('is-invalid');
+            },
+            unhighlight: function (e) {
+                $(e).removeClass('is-invalid').addClass('is-valid');
+            }
+		});
+	})
+	</script>
+
+</body>
+</html>
