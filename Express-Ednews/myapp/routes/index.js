@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const singlepostModel = require('../Model/single_post.model');
 const CategoriesModel = require('../Model/categories.model');
-const Tagmodel=require('../Model/tag.model');
+const Tagmodel = require('../Model/tag.model');
 const loginModel = require('../Model/login.model');
 var passport = require('passport');
 
@@ -50,7 +50,7 @@ router.get('/lien-he', async function (req, res, next) {
     });
 });
 //Page thong tin ca nhan
-router.get('/thong-tin-ca-nhan',async function (req, res, next) {
+router.get('/thong-tin-ca-nhan', async function (req, res, next) {
   var Feature = await singlepostModel.getFeaturePost();
   //res.render('subcriber', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user });
   if (req.isAuthenticated()) {
@@ -137,13 +137,13 @@ router.post('/dangky', passport.authenticate('local-signup', {
   }
 );
 //page danh sach bai viet theo tag
-router.get('/tag/:Tentag',async (req, res, next) => {
-  var nametag=req.params.Tentag;
+router.get('/tag/:Tentag', async (req, res, next) => {
+  var nametag = req.params.Tentag;
   console.log(nametag);
-  try{
-    var check= await Tagmodel.checkTag(nametag);
-    if(check.length>0){
-    var page = req.query.page || 1;
+  try {
+    var check = await Tagmodel.checkTag(nametag);
+    if (check.length > 0) {
+      var page = req.query.page || 1;
       if (page < 1) page = 1;
 
       var limit = 10;
@@ -151,7 +151,7 @@ router.get('/tag/:Tentag',async (req, res, next) => {
 
 
       Promise.all([
-        singlepostModel.getPostwithTag(nametag,limit,offset),
+        singlepostModel.getPostwithTag(nametag, limit, offset),
         singlepostModel.getCountPostwithTag(nametag)
       ]).then(([rows, count_rows]) => {
         var total = count_rows[0].SoLuongBaiViet;
@@ -189,7 +189,7 @@ router.get('/tag/:Tentag',async (req, res, next) => {
         res.render('List_Post_withTag', {
           css: '/stylesheets/index.css',
           style: '/stylesheets/style.css',
-          Nametag:check,
+          Nametag: check,
           Post: rows,
           pages: pages,
           checkPre: checkPre,
@@ -201,13 +201,13 @@ router.get('/tag/:Tentag',async (req, res, next) => {
     else {
       res.render('404', { layout: false });
     }
-    
+
   }
-  catch(err){
+  catch (err) {
     console.log(err);
   }
 });
-
+//page danh sach bai viet cua chuyen muc cha
 router.get('/:TenCM', async (req, res, next) => {
   var NameCats = req.params.TenCM;
   try {
@@ -219,65 +219,75 @@ router.get('/:TenCM', async (req, res, next) => {
 
       var limit = 2;
       var offset = (page - 1) * limit;
-      var post=["bbb"];
+
       Promise.all([
         singlepostModel.getPostfromMainCategories(NameCats, limit, offset),
         singlepostModel.getCountPostfromMainCat(NameCats),
       ]).then(([rows, count_rows]) => {
-        
-        rows.forEach(element => {
-          singlepostModel.getTagPost(element.IDBaiViet)
-          .then(r=>{
-            post.push("aaa");
-            
+        async function getTagPost(p) {
+          var post = [];
+          for (let t of p) {
+            try {
+              var Tag = await singlepostModel.getTagPost(t.IDBaiViet);
+              post.push({
+                Content: t,
+                Tag: Tag
+              });
+            }
+            catch (e) {
+              console.log(e);
+            }
+          }
+          return post;
+        }
+        getTagPost(rows)
+          .then(r => {
+            var total = count_rows[0].total;
+            var nPages = Math.floor(total / limit);
+            if (total % limit > 0) nPages++;
+            var pages = [];
+            for (i = 1; i <= nPages; i++) {
+              var obj = { value: i, active: i === +page };
+              pages.push(obj);
+            }
+            var checkPre;
+            var checkNext;
+            //kiem tra neu la page dau tien
+            if (page == pages[0].value && pages[0].active == true) {
+              checkPre = {
+                check: true,
+                value: 0
+              },
+                checkNext = {
+                  check: false,
+                  value: pages[page - 1].value + 1
+                }
+            }
+            //kiem tra la page cuoi cung
+            if (page == pages[nPages - 1].value && pages[nPages - 1].active == true) {
+              checkNext = {
+                check: true,
+                value: 0
+              },
+                checkPre = {
+                  check: false,
+                  value: pages[page - 1].value - 1
+                }
+            }
+            res.render('Category', {
+              css: '/stylesheets/index.css',
+              style: '/stylesheets/style.css',
+              Featurepost: Feature.slice(0, 3),
+              NameCat: NameCat,
+              Post: r,
+              // Post: rows,
+              pages: pages,
+              checkPre: checkPre,
+              checkNext: checkNext,
+              user: req.user,
+            });
           })
           .catch(next);
-        });
-        
-        var total = count_rows[0].total;
-        var nPages = Math.floor(total / limit);
-        if (total % limit > 0) nPages++;
-        var pages = [];
-        for (i = 1; i <= nPages; i++) {
-          var obj = { value: i, active: i === +page };
-          pages.push(obj);
-        }
-        var checkPre;
-        var checkNext;
-        //kiem tra neu la page dau tien
-        if (page == pages[0].value && pages[0].active == true) {
-          checkPre = {
-            check: true,
-            value: 0
-          },
-            checkNext = {
-              check: false,
-              value: pages[page - 1].value + 1
-            }
-        }
-        //kiem tra la page cuoi cung
-        if (page == pages[nPages - 1].value && pages[nPages - 1].active == true) {
-          checkNext = {
-            check: true,
-            value: 0
-          },
-            checkPre = {
-              check: false,
-              value: pages[page - 1].value - 1
-            }
-        }
-        console.log(post)
-        res.render('Category', {
-          css: '/stylesheets/index.css',
-          style: '/stylesheets/style.css',
-          Featurepost: Feature.slice(0, 3),
-          NameCat: NameCat,
-          Post: rows,
-          pages: pages,
-          checkPre: checkPre,
-          checkNext: checkNext,
-          user: req.user
-        });
       }).catch(next);
     }
     else {
@@ -287,8 +297,8 @@ router.get('/:TenCM', async (req, res, next) => {
     console.log(err);
   }
 });
+//Page danh sach bai viet cua chuyen muc con
 router.get('/:TenCm/:TensubCm', async (req, res) => {
-  // var TenCm=req.params.TenCm;
   var TensubCm = req.params.TensubCm;
   try {
     var Feature = await singlepostModel.getFeaturePost();
@@ -306,64 +316,83 @@ router.get('/:TenCm/:TensubCm', async (req, res) => {
         singlepostModel.getPostfromCategories(TensubCm, limit, offset),
         singlepostModel.getCountPostCat(TensubCm),
       ]).then(([rows, count_rows]) => {
-
-        var total = count_rows[0].total;
-        var nPages = Math.floor(total / limit);
-        if (total % limit > 0) nPages++;
-        var pages = [];
-        for (i = 1; i <= nPages; i++) {
-          var obj = { value: i, active: i === +page };
-          pages.push(obj);
-        }
-        var checkPre;
-        var checkNext;
-        if (nPages == 1) {
-          checkPre = {
-            check: true,
-            value: 1
-          },
-            checkNext = {
-              check: true,
-              value: 1
+        async function getTagPost(p) {
+          var post = [];
+          for (let t of p) {
+            try {
+              var Tag = await singlepostModel.getTagPost(t.IDBaiViet);
+              post.push({
+                Content: t,
+                Tag: Tag
+              });
             }
-        } else {
-          //kiem tra neu la page dau tien
-          if (page == pages[0].value && pages[0].active == true) {
-            checkPre = {
-              check: true,
-              value: 0
-            },
-              checkNext = {
-                check: false,
-                value: pages[page - 1].value + 1
-              }
-          } else {
-            //kiem tra la page cuoi cung
-            if (page == pages[nPages - 1].value && pages[nPages - 1].active == true) {
-              checkNext = {
-                check: true,
-                value: 0
-              },
-                checkPre = {
-                  check: false,
-                  value: pages[page - 1].value - 1
-                }
+            catch (e) {
+              console.log(e);
             }
           }
+          return post;
         }
-        res.render('Single_Category', {
-          css: '/stylesheets/index.css',
-          style: '/stylesheets/style.css',
-          Featurepost: Feature.slice(0, 3),
-          NameCat: NameCat,
-          Post: rows,
-          checkPre,
-          checkNext,
-          user: req.user
-        });
-      }).catch(err => {
-        console.log(err);
+        getTagPost(rows)
+          .then(r => {
+            var total = count_rows[0].total;
+            var nPages = Math.floor(total / limit);
+            if (total % limit > 0) nPages++;
+            var pages = [];
+            for (i = 1; i <= nPages; i++) {
+              var obj = { value: i, active: i === +page };
+              pages.push(obj);
+            }
+            var checkPre;
+            var checkNext;
+            if (nPages == 1) {
+              checkPre = {
+                check: true,
+                value: 1
+              },
+                checkNext = {
+                  check: true,
+                  value: 1
+                }
+            } else {
+              //kiem tra neu la page dau tien
+              if (page == pages[0].value && pages[0].active == true) {
+                checkPre = {
+                  check: true,
+                  value: 0
+                },
+                  checkNext = {
+                    check: false,
+                    value: pages[page - 1].value + 1
+                  }
+              } else {
+                //kiem tra la page cuoi cung
+                if (page == pages[nPages - 1].value && pages[nPages - 1].active == true) {
+                  checkNext = {
+                    check: true,
+                    value: 0
+                  },
+                    checkPre = {
+                      check: false,
+                      value: pages[page - 1].value - 1
+                    }
+                }
+              }
+            }
+            res.render('Single_Category', {
+              css: '/stylesheets/index.css',
+              style: '/stylesheets/style.css',
+              Featurepost: Feature.slice(0, 3),
+              NameCat: NameCat,
+              Post: r,
+              checkPre,
+              checkNext,
+              user: req.user
+            });
+          }).catch(next);
       })
+        .catch(err => {
+          console.log(err);
+        })
     }
     else {
       res.render('404', { layout: false });
@@ -380,6 +409,7 @@ router.get('/:TenCm/:TensubCm/:id/:Tenbaiviet', async (req, res) => {
     if (DetailPost.length > 0) {
       var TagPost = await singlepostModel.getTagPost(Id);
       var CommentPost = await singlepostModel.getCommentPost(Id);
+      singlepostModel.IncreaseViewPost(Id);
       // console.log(CommentPost);
       res.render('Single_Post', {
         css: '/stylesheets/index.css',

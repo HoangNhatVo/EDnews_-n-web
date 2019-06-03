@@ -51,5 +51,11 @@ module.exports ={
     //dem so luong bai viet theo tag
     getCountPostwithTag:TenTag=>{
         return orm.selectAll(`call CountPostsWithTag('#${TenTag}')`);
+    },
+    IncreaseViewPost:IDPost=>{
+        return orm.selectAll(`call IncreaseView('${IDPost}')`);
+    },
+    GetMostViewPost:()=>{
+        return orm.selectAll(`call GetHighestViewPost()`);
     }
 };
