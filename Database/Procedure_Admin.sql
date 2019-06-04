@@ -5,7 +5,6 @@ DELIMITER $$
 USE `baodientu3n`$$
 CREATE PROCEDURE DeleteMainCategory (in IDCM varchar(10) )
 BEGIN
-
 delete from chuyenmuc where ChuyenMucCha=IDCM ;
 delete from chuyenmuc  where IDChuyenMuc=IDCM;
 END;$$
@@ -31,10 +30,11 @@ BEGIN
     set nextCat=lastCat+1;
     set IDCat =(select concat('CM', convert(nextCat,char)));
     insert into chuyenmuc values(IDCat,Ten,Ten_KhongDau,null);
+    select 1 as temp;
     end if;
      if( count1>0 or count2>0)
      then 
-	 select 'Chuy�n m?c n�y d� c�' as ' ';
+	 select 0 as temp;
      end if;
 END;$$
 DELIMITER ;
@@ -43,7 +43,9 @@ DELIMITER $$
 USE `baodientu3n`$$
 CREATE PROCEDURE UpdateMainCategory (in IDCM varchar(10),in Ten varchar(50),in Ten_KhongDau varchar(50) )
 BEGIN
-update chuyenmuc set TenChuyenMuc =Ten and TenChuyenMuc_KhongDau=Ten_KhongDau where IDChuyenMuc=TDCM;
+update chuyenmuc set TenChuyenMuc =Ten  where IDChuyenMuc=TDCM;
+update chuyenmuc set  TenChuyenMuc_KhongDau=Ten_KhongDau where IDChuyenMuc=TDCM;
+ select 1 as temp;
 END;$$
 DELIMITER ;
 #------------------------------------------------Them chuyen muc con 
@@ -69,10 +71,11 @@ BEGIN
 	 set nextCat = lastCat +1;
      set IDSubCat = (select concat(IDMainCat,'_',convert(nextCat,char)));
      insert into ChuyenMuc values( IDSubCat,Ten,Ten_KhongDau,IDMainCat);
+     select 1 as temp;
      end if;
      if( count1>0 or count2>0)
      then 
-	 select 'Chuy�n m?c n�y d� c�' as ' ';
+	 select 0 as temp;
      end if;
      
 END;$$
@@ -90,28 +93,11 @@ DELIMITER $$
 USE `baodientu3n`$$
 CREATE PROCEDURE UpdateSubCategory (in IDCM varchar(10),in Ten varchar(50),in Ten_KhongDau varchar(50) )
 BEGIN
-update chuyenmuc set TenChuyenMuc =Ten and TenChuyenMuc_KhongDau=Ten_KhongDau where IDChuyenMuc=TDCM;
+update chuyenmuc set TenChuyenMuc =Ten where IDChuyenMuc=TDCM;
+update chuyenmuc set TenChuyenMuc_KhongDau=Ten_KhongDau where IDChuyenMuc=TDCM;
+ select 1 as temp;
 END;$$
 DELIMITER ;
-
-#---------------------------QUAN LY TAI KHOAN
-#-------------------------Danh sach phan he 
-DELIMITER $$
-USE `baodientu3n`$$
-CREATE PROCEDURE GetListRole ()
-BEGIN
-select * from phanhenguoidung;
-END;$$
-DELIMITER ;
-#-------------------------Dach sach nguoi dung theo phan he
-DELIMITER $$
-USE `baodientu3n`$$
-CREATE PROCEDURE GetListUserWithRole (in IDPhanHe varchar(10))
-BEGIN
-select * from nguoidung where PhanHe=IDPhanHe;
-END;$$
-DELIMITER ;
-#------------------------
 #---------------------------QUAN LY TAG
 #--------------------THEM 1 TAG
 call AddTag('hahahhahahahahhahahhahahahhaa');
@@ -201,11 +187,45 @@ BEGIN
 	end if;
 END;$$
 DELIMITER ;
-
+#---------------------------QUAN LY TAI KHOAN
+#-------------------------Danh sach phan he 
 DELIMITER $$
 USE `baodientu3n`$$
-create procedure GetListTag()
-begin
-	select * from nhan;			
-end;$$
+CREATE PROCEDURE GetListRole ()
+BEGIN
+select * from phanhenguoidung;
+END;$$
 DELIMITER ;
+#-------------------------Danh sach nguoi dung
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE GetListUsers ()
+BEGIN
+select * from nguoidung;
+END;$$
+DELIMITER ;
+#-------------------------Dach sach nguoi dung theo phan he
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE GetListUserWithRole (in IDPhanHe varchar(10))
+BEGIN
+select * from nguoidung where PhanHe=IDPhanHe;
+END;$$
+DELIMITER ;
+#-------------------------------------Lay bai viet theo trang thai
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure GetPostWithState(in State int)
+begin
+	select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+   where BV.TinhTrang=State;
+end;$$
+DELIMITER ; 
+call GetPostWithState(2);
+#----------------------------------
