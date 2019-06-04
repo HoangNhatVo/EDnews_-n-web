@@ -309,7 +309,7 @@ DELIMITER ;
 #----------------------TIM BAI VIET
 DELIMITER $$
 USE `baodientu3n`$$
-create procedure FindPost(in temp varchar(50))
+create procedure FindPost(in temp varchar(50), in limi int, in offse int)
 begin
 	select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat
     from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
@@ -318,7 +318,19 @@ begin
 						join nguoidung as nd on nd.ID=BV.PhongVien
                         join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
                         join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+   where match(BV.TieuDe) against( temp)
+   limit limi offset offse;
+end;$$
+DELIMITER ; 
+call FindPost('ana',1,0);
+#-----------------------------So luong bai viet dc tim thay theo tu khoa
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure NumberOfFindPost(in temp varchar(50))
+begin
+	select count(*) as Num
+    from baiviet as BV
    where match(BV.TieuDe) against( temp);
 end;$$
 DELIMITER ; 
-call FindPost('an');
+call NumberOfFindPost('nghi duong');

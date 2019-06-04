@@ -228,4 +228,11 @@ begin
 end;$$
 DELIMITER ; 
 call GetPostWithState(2);
-#----------------------------------
+#----------------------------------SO LUONG BAI VIET
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE GetNumberOfPosts ()
+BEGIN
+select count(*) from baiviet;
+END;$$
+DELIMITER ;
