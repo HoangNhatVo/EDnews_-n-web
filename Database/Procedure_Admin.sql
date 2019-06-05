@@ -217,7 +217,35 @@ DELIMITER $$
 USE `baodientu3n`$$
 create procedure GetPostWithState(in State int)
 begin
-	select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat
+	if(State =1)
+    then
+	select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,D.NgayDuyet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,btv.HoTen as NguoiDuyet
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+                        join duyetbai as D on D.IDBaiViet = BV.IDBaiViet
+                        join nguoidung as btv on btv.ID =D.IDBTV
+   where BV.TinhTrang=State;
+   end if;
+   if(State =3)
+    then
+	select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,D.NgayTuChoi,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,btv.HoTen as NguoiDuyet,D.NguyenNhanTuChoi
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+                        join tuchoibai as D on D.IDBaiViet = BV.IDBaiViet
+                        join nguoidung as btv on btv.ID =D.IDBTV
+   where BV.TinhTrang=State;
+   end if;
+   if( State = 2 )
+   then
+   select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,date(BV.NgayViet) as NgayViet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat
     from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
 						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
                         join urlhinhanh as url on url.IDHinh=HA.IDHinh
@@ -225,6 +253,18 @@ begin
                         join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
                         join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
    where BV.TinhTrang=State;
+   end if;
+   if(State = 4)
+   then
+   select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+   where BV.TinhTrang=State;
+   end if;
 end;$$
 DELIMITER ; 
 call GetPostWithState(2);
@@ -242,7 +282,28 @@ USE `baodientu3n`$$
 CREATE PROCEDURE ApprovePost (in IDBaiVietDuyet varchar(10),in IDBTV int)
 BEGIN
 	declare PhanHe int;
-    insert into duyetbai values(IDBTV,IDBaiVietDuyet,date(now()));
+    insert into duyetbai values(null,IDBTV,IDBaiVietDuyet,date(now()));
     update baiviet set TinhTrang= 1 where IDBaiViet = IDBaiVietDuyet;
+END;$$
+DELIMITER ;
+
+#----------------------------------- TU CHOI BAI
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE DeclinePost (in IDBaiVietDuyet varchar(10),in IDBTV int,in LyDo text)
+BEGIN
+	declare PhanHe int;
+    insert into tuchoibai values(null,IDBTV,IDBaiVietDuyet,date(now()),LyDo);
+    update baiviet set TinhTrang= 3 where IDBaiViet = IDBaiVietDuyet;
+END;$$
+DELIMITER ;
+#-----------------------------------XUAT BAN BAI VIET
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE PublishPost (in IDBaiVietDuyet varchar(10))
+BEGIN
+	declare PhanHe int;
+    update baiviet set TinhTrang= 2 where IDBaiViet = IDBaiVietDuyet;
+    update baiviet set NgayDang= now() where IDBaiViet = IDBaiVietDuyet;
 END;$$
 DELIMITER ;

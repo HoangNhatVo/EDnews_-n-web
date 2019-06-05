@@ -179,4 +179,11 @@ create table DuyetBai
   IDBaiViet varchar(15),
   NgayDuyet date,
   primary key(IDDuyet));
+  create table TuChoiBai
+( IDTuChoi int auto_increment,
+  IDBTV int,
+  IDBaiViet varchar(15),
+  NgayTuChoi date,
+  NguyenNhanTuChoi text,
+  primary key(IDTuChoi));
 
