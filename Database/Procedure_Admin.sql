@@ -236,3 +236,13 @@ BEGIN
 select count(*) from baiviet;
 END;$$
 DELIMITER ;
+#----------------------------------- DUYET BAI
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE ApprovePost (in IDBaiVietDuyet varchar(10),in IDBTV int)
+BEGIN
+	declare PhanHe int;
+    insert into duyetbai values(IDBTV,IDBaiVietDuyet,date(now()));
+    update baiviet set TinhTrang= 1 where IDBaiViet = IDBaiVietDuyet;
+END;$$
+DELIMITER ;
