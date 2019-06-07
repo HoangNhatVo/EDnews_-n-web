@@ -1,9 +1,72 @@
 {{#section 'css'}}
 <link rel="stylesheet" href="/javascripts/datatable/dataTables.bootstrap4.css">
 <script src="https://cdn.ckeditor.com/4.11.4/full/ckeditor.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/css/fileinput.min.css" media="all"
+  rel="stylesheet" type="text/css" />
+
 {{/section}}
 {{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
+<script>
+  $(function () {
+    $('#fuMain').fileinput({
+      theme: 'fa',
+      dropZoneEnabled: false,
+      allowedFileExtensions: ['png', 'jpg', 'gif'],
+      uploadUrl: '/upload',
+      uploadAsync: false,
+    });
+  });
+</script>
+
 <script src="/javascripts/CreateNews.js"></script>
+{{!-- <script
+  src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=wtnd3xbfybaxtd7216nf0no41mor1wo75hb96rr8fjhmwjrq"></script>
+<script>
+  $(function () {
+
+    tinymce.init({
+    selector: '#editor1',
+    height: 600,
+    plugins: [
+        'advlist autolink lists link image charmap preview hr anchor pagebreak',
+        'searchreplace wordcount visualblocks visualchars code',
+        'insertdatetime media nonbreaking table contextmenu directionality',
+        'emoticons template paste textcolor colorpicker textpattern imagetools media table'
+    ],
+    toolbar: 'code | bold italic underline strikethrough | formatselect sizeselect fontselect fontsizeselect | hr alignleft aligncenter alignright alignjustify outdent indent | bullist numlist | link image media table | insertfile undo redo | forecolor backcolor | emoticons',
+    fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+    menubar: false,
+
+    image_title: true, 
+    automatic_uploads: true,
+    file_picker_types: 'image',
+    file_picker_callback: function(cb, value, meta) {
+      var input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.setAttribute('accept', 'image/*');
+      input.onchange = function() {
+        var file = this.files[0];
+        var reader = new FileReader();        
+        reader.onload = function () {
+          var id = 'blobid' + (new Date()).getTime();
+          var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+          var base64 = reader.result.split(',')[1];
+          var blobInfo = blobCache.create(id, file, base64);
+          blobCache.add(blobInfo);
+
+          cb(blobInfo.blobUri(), { title: file.name });
+        };
+        reader.readAsDataURL(file);
+      };      
+      input.click();
+    }
+  });
+  })
+</script> --}}
+
 {{/section}}
 {{>AdminNav}}
  <div id="wrapper">   
@@ -24,120 +87,50 @@
         <!-- Area Chart Example-->
 
         <!-- CreateNews -->
-        <form class="frmCreateNews">    
-          <label for="file" class="input-label"><i class="fa fa-upload "></i> Thêm Image...</label>
+        {{!-- <form method="POST" action="/admin/{{user.ID}}/dang-bai">
+      <div class="form-group">
+        <label for="fuMain">Photo</label>
+        <div class="file-loading">
+          <input id="fuMain" name="fuMain" type="file" multiple>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Save
+      </button>
+    </form> --}}
+
+        <form class="frmCreateNews" method="POST" action="/admin/{{user.ID}}/dang-bai">   
+
+        <div class="">
+          <div class="file-loading">
+            <input id="fuMain" name="fuMain" type="file" multiple>
+          </div>
+        </div>
+
+
+          {{!-- <label for="file" class="input-label"><i class="fa fa-upload "></i> Thêm Image...</label>
           <input type="file" id="file" multiple="true" /><br>
           <button type="button" class="close-image" id="close-image" aria-label="Close" hidden="true" data-toggle="tooltip" title="Close All Image">
             <span aria-hidden="true">&times;</span>
           </button>
       
-          <div id="image-parent"></div>
+          <div id="image-parent"></div> --}}
 
           <div class="text-input">
             <label class="frmCreateNews">Tiêu đề:</label>
             <input type="text" id="TieuDe" name="TieuDe" autofocus="true"/>
           </div>
 
-          <p id="title" class="frmCreateNews">Category:</p>
-
-          <div class="flex-container">
-            <div class="row">
-              <div class="column">
-                <p class="checkbox">
-                    <input type="checkbox" id="test01" name="TaiChinh" />
-                    <label for="test01"> <span class="sp">Kinh doanh</span> > Tài chính</label>
-                  </p>
-                  <p class="checkbox">
-                    <input type="checkbox" id="test02" name="BatDongSan" />
-                    <label for="test02"><span class="sp">Kinh doanh</span> > Bất động sản</label>
-                </p>
-              </div>
-              <div class="column">
-                <p class="checkbox">
-                    <input type="checkbox" id="test03" name="BongDa" />
-                    <label for="test03"><span class="sp">Thể thao</span> > Bóng đá</label>
-                  </p>
-                  <p class="checkbox">
-                    <input type="checkbox" id="test04" name="TheThaoTheGioi" />
-                    <label for="test04"><span class="sp">Thể thao</span> > Thể thao thế giới</label>
-                </p>
-              </div>
-              <div class="column">
-                <p class="checkbox">
-                    <input type="checkbox" id="test05" name="SmartPhone" />
-                    <label for="test05"><span class="sp">Công nghệ</span> > Smart phone</label>
-                  </p>
-                  <p class="checkbox">
-                    <input type="checkbox" id="test06" name="TriTueNhanTao" />
-                    <label for="test06"><span class="sp">Công nghệ</span> > Trí tuệ nhân tạo</label>
-                </p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="column">
-                <p class="checkbox">
-                    <input type="checkbox" id="test07" name="DuLichVietNam" />
-                    <label for="test07"><span class="sp">Du lịch</span> > Du lịch Việt Nam</label>
-                  </p>
-                  <p class="checkbox">
-                    <input type="checkbox" id="test08" name="DuLichTheGioi" />
-                    <label for="test08"><span class="sp">Du lịch</span> > Du lịch Thế giới</label>
-                </p>
-              </div>
-              <div class="column">
-                <p class="checkbox">
-                    <input type="checkbox" id="test09" name="NhanVat" />
-                    <label for="test09"><span class="sp">Đời sống</span> > Nhân vật</label>
-                  </p>
-                  <p class="checkbox">
-                    <input type="checkbox" id="test10" name="XemAnChoi" />
-                    <label for="test10"><span class="sp">Đời sống</span> > Xem-Ăn-Chơi</label>
-                </p>
-              </div>
-                <div class="column">
-                <p class="checkbox">
-                    <input type="checkbox" id="test11" name="SongXanh" />
-                    <label for="test11"><span class="sp">Xã hội</span> > Sống xanh</label>
-                  </p>
-                  <p class="checkbox">
-                    <input type="checkbox" id="test12" name="HotTrenMang" />
-                    <label for="test12"><span class="sp">Xã hội</span> > Hot trên mạng</label>
-                </p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="column">
-                <p class="checkbox">
-                    <input type="checkbox" id="test13" name="Showbiz" />
-                    <label for="test13"><span class="sp">Giải trí</span> > Showbiz</label>
-                  </p>
-                  <p class="checkbox">
-                    <input type="checkbox" id="test14" name="Fashion" />
-                    <label for="test14"><span class="sp">Giải trí</span> > Fashion</label>
-                </p>
-              </div>
-              <div class="column">
-                <p class="checkbox">
-                    <input type="checkbox" id="test15" name="GiaoThong" />
-                    <label for="test15"><span class="sp">Thời sự</span> > Giao thông</label>
-                  </p>
-                  <p class="checkbox">
-                    <input type="checkbox" id="test16" name="ChinhTri" />
-                    <label for="test16"><span class="sp">Thời sự</span> > Chính trị</label>
-                </p>
-              </div>
-              <div class="column">
-                <p class="checkbox">
-                    <input type="checkbox" id="test17" name="PhapDinh" />
-                    <label for="test17"><span class="sp">Pháp luật</span> > Pháp đình</label>
-                  </p>
-                  <p class="checkbox">
-                    <input type="checkbox" id="test18" name="VuAn" />
-                    <label for="test18"><span class="sp">Pháp luật</span> > Vụ án</label>
-                </p>
-              </div>
-            </div>
-          </div>
+          <p id="title" class="frmCreateNews ttCategory">Category:</p>
+          <div>
+            <select name="category" id="sl-category">
+              {{#each ListCategory}}
+              <option value="{{IDChuyenMuc}}">{{TenChuyenMuc}}</option>
+              {{/each}}
+            </select>
+            <label class="lbl-category">Choose Category</label>
+          </div>          
 
           <p id="title">Tags:</p>
           <label for="tag-typer" class="frmCreateNews">
@@ -145,6 +138,7 @@
                 <input id="tag-typer" type="text" placeholder="Add tag..."/>
             </div>
           </label>
+          <input hidden name="ValueTags" id="valueTags">
 
           <div class="text-input input-TomTat" id="text-input">
               <label class="frmCreateNews">Tóm tắt:</label><br>
@@ -155,22 +149,14 @@
           <div class="text">
             <label>Nội dung bài báo:</label>
            </div>
+           {{!-- <div class="form-group">
+            <label for="txtFullDes">Description</label>
+            <textarea class="form-control" id="editor1" name="FullDes"></textarea>
+          </div> --}}
           <div class="ckeditor">
             <textarea id="editor1" name="editor1"></textarea>
           </div>
-
-          <div class="input-video">
-              <input type="text" value="" name="link-video" class="link-video frmCreateNews" id="link-video" placeholder="Add Video" data-toggle="tooltip" title="Find video youtube -> 'Share' -> 'Embed' -> 'Copy' the iframe code given">
-              <input type="button" value="Subscribe" name="subscribe" id="subscribe-button" class="" onclick="AddVideo()">
-          </div>
-
-          <div id="parent">
-            <button type="button" class="close-video" id="close-video" aria-label="Close" hidden="true"  data-toggle="tooltip" title="Close All Video">
-                <span aria-hidden="true">&times;</span>
-            </button><br>    
-          </div>
-
-          <button type="button" class="btnSend" onclick="Send()"><i class="fa fa-paper-plane-o"></i> Gửi bài</button>
+          <button type="submit" class="btnSend"><i class="fa fa-paper-plane-o"></i> Gửi bài</button>
   </form>
         <!-- End CreateNews -->      
 

@@ -12,7 +12,8 @@ body{
  font-size: 14px; font-family: 'Roboto', sans-serif; width: 100%; height: 100%; margin: 0; font-weight: 400;
 	-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; word-wrap: break-word; 
 	overflow-x: hidden; color: #333; background: #F7F7F7;
-	padding: 0 !important }
+	padding: 0 !important 
+}
 
 h1, h2, h3, h4, h5, h6, p, a, ul, span, li, img, inpot, button{ margin: 0; padding: 0; }
 
@@ -710,7 +711,7 @@ border-top-right-radius: 5px;
 .abs-form{ position: relative; width: 100%;  }
 .abs-form input{ padding: 0 35px 0 10px; width: 100%; background: none; height: 35px; border-radius: 3px;
 	border: 1px solid #777; color: #eee; }
-.abs-form button{ position: absolute; width: 35px; top: 0; bottom: 0; right: 0; color: #eee; }
+.abs-form button{ position: absolute; width: 35px; top: 0; bottom: 0; right: 0; color: #000; }
 
 .abs-form input:focus{ border-color: #eee; }
 

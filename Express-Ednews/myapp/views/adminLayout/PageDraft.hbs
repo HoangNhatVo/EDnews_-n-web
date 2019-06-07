@@ -32,51 +32,21 @@
                   </tr>
                 </thead>
                 <tbody>
+                  {{#each post}}
                   <tr>
-                    <td>1</td>
-                    <td>Hòn đảo dệt bằng cỏ trôi nổi trên biển suốt 1000 năm</td>
-                    <td>Du lịch thế giới</td>
-                    <td>2/2/2019</td>
+                    <td>{{IDBaiViet}}</td>
+                    <td>{{TieuDe}}</td>
+                    <td>{{TenChuyenMuc}}</td>
+                    <td>{{format NgayDang}}</td>
                     <td class="action">
                       <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
-                      <button type="button">Duyệt</button>
+                      <form action="/admin/duyet-bai-viet" method="POST">
+                    <button type="button">Duyệt</button>
                     <button type="button">Từ chối</button>
+                    </form>
                     </td>
                   </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Hòn đảo dệt bằng cỏ trôi nổi trên biển suốt 1000 năm</td>
-                    <td>Du lịch thế giới</td>
-                    <td>2/2/2019</td>
-                    <td class="action">
-                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
-                      <button type="button">Duyệt</button>
-                      <button type="button">Từ chối</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Hòn đảo dệt bằng cỏ trôi nổi trên biển suốt 1000 năm</td>
-                    <td>Du lịch thế giới</td>
-                    <td>2/2/2019</td>
-                    <td class="action">
-                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
-                      <button type="button">Duyệt</button>
-                      <button type="button">Từ chối</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Hòn đảo dệt bằng cỏ trôi nổi trên biển suốt 1000 năm</td>
-                    <td>Du lịch thế giới</td>
-                    <td>2/2/2019</td>
-                    <td class="action">
-                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
-                      <button type="button">Duyệt</button>
-                      <button type="button">Từ chối</button>
-                    </td>
-                  </tr>
-                  
+                  {{/each}}
                 </tbody>
               </table>
             </div>

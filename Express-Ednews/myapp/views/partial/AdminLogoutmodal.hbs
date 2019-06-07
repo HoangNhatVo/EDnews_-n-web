@@ -7,11 +7,12 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
+        <form action="/logout" method="POST" id="frmSignout"></form>
         <div class="modal-body">
-chọn "Đăng xuất" bên dưới nếu bạn muốn đăng xuất khỏi hệ thống</div>
+Chọn "Đăng xuất" bên dưới nếu bạn muốn đăng xuất khỏi hệ thống</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Đóng</button>
-          <a class="btn btn-primary" href="/admin/dang-nhap">Đăng xuất</a>
+          <a class="btn btn-primary" href="javascript: $('#frmSignout').submit();">Đăng xuất</a>
         </div>
       </div>
     </div>
