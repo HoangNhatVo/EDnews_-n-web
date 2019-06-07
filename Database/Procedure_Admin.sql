@@ -307,3 +307,38 @@ BEGIN
     update baiviet set NgayDang= now() where IDBaiViet = IDBaiVietDuyet;
 END;$$
 DELIMITER ;
+#-----------------------------------THEM BAI VIET
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE AddPost (in TieuDe varchar(225),in TieuDe_KhongDau varchar(225),in IDChuyenMuc varchar(10),in NoiDung text,in IDPhongVien int,in NoiDungTomTat varchar(500), in NgayViet date)
+BEGIN
+	declare num int; declare PostID varchar(15);
+    set num = (select max(convert(substring(IDBaiViet,3),unsigned)) from baiviet);
+    if(num is null)
+    then 
+    set num =1;
+    end if;
+    if ( num is not null)
+    then
+    set num = num +1;
+    end if;
+    set PostID = (select concat('BV',convert(num,char)));
+    insert into baiviet values (PostID,TieuDe,TieuDe_KhongDau,IDChuyenMuc,null,NoiDung,0,IDPhongVien,null,4,0,NoiDungTomTat,1,NgayViet);
+END;$$
+DELIMITER ;
+#-------------------------PHAN HANG BAI VIET
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE SetPremiumPost (in IDBaiVietDuyet varchar(15), in Hang int)#--- 1: thuong 2 : Cao Cap
+BEGIN
+    update baiviet set PhanHang= Hang where IDBaiViet = IDBaiVietDuyet;
+END;$$
+DELIMITER ;
+#-------------------------NOI BAT BAI VIET
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE HightlightPost (in IDBaiVietDuyet varchar(15), in Loai int)#--- 0: thuong 1 : NoiBat
+BEGIN
+    update baiviet set TinNoiBat= Loai where IDBaiViet = IDBaiVietDuyet;
+END;$$
+DELIMITER ;
