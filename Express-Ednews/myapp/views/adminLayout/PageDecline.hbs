@@ -26,30 +26,33 @@
                     <th>STT</th>
                     <th>Tiêu đề</th>
                     <th>Chuyên mục</th>
+                    <th>Người từ chối</th>
                     <th>Nguyên nhân từ chối</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
+                   {{#each post}}
                   <tr>
-                    <td>1</td>
-                    <td>Bạn có thể du lịch vong quanh thế giới với 5 triệu VNĐ ?</td>
-                    <td>Du lịch thế giới</td>
+                   
+                    <td>{{IDBaiViet}}</td>
+                    <td>{{TieuDe}}</td>
+                    <td>{{TenChuyenMuc}}</td>
+                    <td>{{ButDanh}}</td>
                     <td >
-                      Thích
+                      {{NguyenNhanTuChoi}}
                     </td>
                     <td class="action">
                       <a href="#" title="">Chỉnh sửa</a>
                       <button type="button">Xóa</button>
                     </td>
                   </tr>
-                  
+                  {{/each}}
                  
                 </tbody>
               </table>
             </div>
           </div>
-          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>        
 
         

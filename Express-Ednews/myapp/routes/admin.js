@@ -16,23 +16,77 @@ router.get('/dang-bai', (req, res, next) => {
 });
 //Page thong tin tai khoan
 router.get('/thong-tin-tai-khoan', (req, res, next) => {
-  res.render('adminLayout/PageInforUser', { css: '/stylesheets/admin.css', style: '/stylesheets/sb-admin.css' });
+  res.render('adminLayout/PageInforUser', 
+  { css: '/stylesheets/admin.css', style: '/stylesheets/sb-admin.css' });
 });
 //Page bai viet dang cho duyet
 router.get('/bai-viet-dang-cho', (req, res, next) => {
-  res.render('adminLayout/PageDraft', { css: '/stylesheets/admin.css', style: '/stylesheets/sb-admin.css' });
+  var state=4;
+  singlepostModel.GetPostWithState(state)
+  .then(r=>{
+    res.render('adminLayout/PageDraft',
+   { 
+     css: '/stylesheets/admin.css', 
+     style: '/stylesheets/sb-admin.css' ,
+      post:r
+    });
+  })
+  .catch(next);
+  
+});
+//Post duyet bai viet
+router.post('/duyet-bai-viet',(req,res,next)=>{
+  
 });
 //Page bai viet dang cho xuat ban
 router.get('/bai-viet-cho-xuat-ban', (req, res, next) => {
-  res.render('adminLayout/PageWaitRelease', { css: '/stylesheets/admin.css', style: '/stylesheets/sb-admin.css' });
+  var state=1;
+  singlepostModel.GetPostWithState(state)
+  .then(r=>{
+    res.render('adminLayout/PageWaitRelease', { 
+      css: '/stylesheets/admin.css',
+       style: '/stylesheets/sb-admin.css',
+       post:r
+      });
+  })
+  .catch(next);
 });
+
+//Post xuat ban bai viet
+router.post('/xuat-ban-bai-viet',(req,res,next)=>{
+
+})
 //Page bai viet da xuat ban
 router.get('/bai-viet-da-xuat-ban', (req, res, next) => {
-  res.render('adminLayout/PageRelease', { css: '/stylesheets/admin.css', style: '/stylesheets/sb-admin.css' });
+  var state=2;
+  singlepostModel.GetPostWithState(state)
+  .then(r=>{
+    res.render('adminLayout/PageRelease', 
+    { 
+      css: '/stylesheets/admin.css',
+       style: '/stylesheets/sb-admin.css' ,
+       post:r
+      });
+  })
+  .catch(next)
+ 
 });
 //Page bai viet bi tu choi
 router.get('/bai-viet-bi-tu-choi', (req, res, next) => {
-  res.render('adminLayout/PageDecline', { css: '/stylesheets/admin.css', style: '/stylesheets/sb-admin.css' });
+  var state=3;
+  singlepostModel.GetPostWithState(3)
+  .then(r=>{
+    res.render('adminLayout/PageDecline', { 
+      css: '/stylesheets/admin.css', 
+      style: '/stylesheets/sb-admin.css',
+      post:r
+     });
+  })
+  .catch(next);
+});
+//Post tu choi bai viet
+router.post('/tu-choi-bai-viet',(req,res,next)=>{
+
 });
 //Page quan ly tai khoan
 router.get('/quan-ly-tai-khoan', (req, res, next) => {
