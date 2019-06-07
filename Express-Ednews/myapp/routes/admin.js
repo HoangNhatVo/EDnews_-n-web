@@ -10,6 +10,7 @@ var passport = require('passport');
 const auth_index = require('../MiddleWares/auth_index');
 const auth_createnew = require('../MiddleWares/auth_createnew');
 const auth_admin = require('../MiddleWares/auth_admin');
+var moment = require('moment');
 //
 
 
@@ -27,23 +28,45 @@ router.get('/dang-bai',auth_createnew, (req, res, next) => {
         {
           css: '/stylesheets/admin.css',
           style: '/stylesheets/sb-admin.css',
-          ListCategory: row
+          ListCategory: row,
+          message_post:req.flash('msg_post')
         });
     }).catch(next);
-  // res.render('adminLayout/PageCreatenew', { css: '/stylesheets/admin.css', style: '/stylesheets/sb-admin.css',
-  // ListCategory: ListCategory });
 });
-router.post('/:ID/dang-bai', (req,res,next)=>{
-  var ID = req.params.ID;
+router.post('/dang-bai', (req,res,next)=>{
+  var IDPhongVien = req.user.ID;
+  var TieuDe = req.body.TieuDe;
+  var TieuDe_KhongDau = TieuDe.normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+    .replace(/\s/g, "")
+    .toLowerCase();
+  var IDChuyeMuc = req.body.category;
+  var TomTat = req.body.TomTat;
+  var NoiDung = req.body.FullDes;
+  var NgayViet =  moment().format('YYYY-MM-DD');
   var tmp = req.body.ValueTags;
-  var arr = tmp.split(",")
-//  var tmp = req.body.abc;
-  console.log('IDPV',ID);
-  for( var i = 0 ; i < arr.length; i++){
-    console.log(arr[i]);
-  }
+  var ListTag = tmp.split(",")  
+
+  createnewModel.addPost(TieuDe,TieuDe_KhongDau,IDChuyeMuc,NoiDung,IDPhongVien,TomTat,NgayViet).then(IDBaiViet=>{
+    var IDBV = IDBaiViet[0].PostID;
+    console.log('IDBV',IDBV);
+    for(var i=0; i<ListTag.length; i++){
+      Tagmodel.addTag(ListTag[i]).then(ID=>{
+        var IDTag = ID[0].IDTagAdd;
+        console.log('IDTag',IDTag);
+        createnewModel.addTagPost(IDBV,IDTag);
+      }).catch(next);
+    }
+
+    req.flash('msg_post','Bài viết đã được gửi để duyệt.');
+    res.redirect('/admin/dang-bai');
+
+  }).catch(next);
   
 });
+
+
 //Page thong tin tai khoan
 router.get('/thong-tin-tai-khoan',auth_index, (req, res, next) => {
   res.render('adminLayout/PageInforUser', 

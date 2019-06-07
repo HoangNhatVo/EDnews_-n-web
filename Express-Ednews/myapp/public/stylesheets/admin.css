@@ -55,7 +55,7 @@ height: 180px;
 }
 .form-group{
 	padding:10px;
-	border-top:1px solid #ccc;
+	/* border-top:1px solid #ccc; */
 	margin: 0;
 	display: flex;
 }
@@ -203,7 +203,10 @@ height: 180px;
 }
 
 .text-input{
-	border-bottom: 1px solid #676a6c;
+	/* border-bottom: 1px solid #676a6c; */
+}
+#TieuDe{
+  border-bottom: 1px solid #ccc; 
 }
 .text-input label, .text{
 	color: #676a6c;
@@ -621,6 +624,7 @@ background-color: #231f1f;
   color: #fff;
   background-color: #007BFF;
   border: 0px solid #007BFF;
+  padding-left: 3px;
 }
 .btnTag:hover{
   cursor: pointer;
