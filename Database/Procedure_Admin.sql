@@ -323,7 +323,7 @@ BEGIN
     set num = num +1;
     end if;
     set PostID = (select concat('BV',convert(num,char)));
-    insert into baiviet values (PostID,TieuDe,TieuDe_KhongDau,IDChuyenMuc,null,NoiDung,0,IDPhongVien,null,4,0,NoiDungTomTat,1,NgayViet);
+    insert into baiviet values (PostID,TieuDe,TieuDe_KhongDau,IDChuyenMuc,null,NoiDung,0,IDPhongVien,null,4,0,NoiDungTomTat,1,NgayViet,1);
 END;$$
 DELIMITER ;
 #-------------------------PHAN HANG BAI VIET
@@ -340,5 +340,38 @@ USE `baodientu3n`$$
 CREATE PROCEDURE HightlightPost (in IDBaiVietDuyet varchar(15), in Loai int)#--- 0: thuong 1 : NoiBat
 BEGIN
     update baiviet set TinNoiBat= Loai where IDBaiViet = IDBaiVietDuyet;
+END;$$
+DELIMITER ;
+#-----------------------VAN DE GIA HAN TAI KHOAN
+#--------------Nap tien vao tai khoan
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE AddAccountBalance (in TaiKhoan varchar(15), in SoTien float)#--- 0: thuong 1 : NoiBat
+BEGIN
+    update taikhoanthe set SoDu= SoDu + SoTien where SKT = TaiKhoan;
+END;$$
+DELIMITER ;
+#------------Dang ky nang cap tai khoan
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE UpgradeAccount (in IDNguoiDung int)#--- 0: thuong 1 : NoiBat
+BEGIN
+	declare SoDuTK float; declare SoTaiKhoan varchar(15);
+    set SoTaiKhoan= ( select tk.SKT from nguoidung as nd join taikhoanthe as tk on tk.ChuSoHuu = nd.ID);
+    set SoDuTK = ( select tk.SoDu from nguoidung as nd join taikhoanthe as tk on tk.ChuSoHuu = nd.ID);
+    if((SoDuTK - 50000) >=0)
+    then
+    set SoDuTK = SoDuTK-50000;
+    update nguoidung set PhanHe= 'PH4' where ID = IDNguoiDung;
+    update taikhoanthe set SoDu= SoDuTK where SKT = SoTaiKhoan;
+    update nguoidung set NgayDangKy = now() where ID = IDNguoiDung;
+    update nguoidung set NgayHetHan = date_add(now(),interval 7 day);
+    update nguoidung set TinhTrang = N'Còn hạn' where ID = IDNguoiDung;
+    select 1 as temp;
+    end if;
+    if((SoDuTK - 50000) <0)
+    then
+    select 0 as temp;
+    end if;
 END;$$
 DELIMITER ;

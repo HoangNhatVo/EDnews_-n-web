@@ -186,4 +186,7 @@ create table DuyetBai
   NgayTuChoi date,
   NguyenNhanTuChoi text,
   primary key(IDTuChoi));
-
+#------------------7/6
+alter table baiviet add SuDung int;
+SET SQL_SAFE_UPDATES = 0;
+update baiviet set SuDUng =1 where SuDung is null;
