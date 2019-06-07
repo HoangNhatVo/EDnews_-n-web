@@ -6,7 +6,7 @@
 				<div class="col-sm-4">
 					<a class="logo" href="/"><img src="/images/logo-black.png" alt="Logo"></a>
 				</div><!-- col-sm-4 -->
-
+				<form action="/logout" method="POST" id="frmSignout"></form>
 				{{#if user }}		
 				<div class="col-sm-8 d-flex justify-content-end">
 					<div class="dplay-tbl-cell text-right">
@@ -18,14 +18,19 @@
 					
 						<div class="dropdown-menu dropdown-menu-right">
 							{{#if user.ID}}
+								{{#if isAdmin}}
+							<a class="dropdown-item" href="/admin"><i class="fas fa-exchange-alt mr-1" style="color:#ccc"></i> Đến trang Admin</a>
+								{{else}}
 							{{!-- <a class="dropdown-item" href="#"><i class="fa fa-user-tie"></i> Thông tin cá nhân</a> --}}
 							<a class="dropdown-item" href="/thong-tin-ca-nhan"><i class="fa fa-cog mr-1" style="color:#ccc"></i> Cập nhật thông tin</a>
+								{{/if}}
+
 							{{else}}
 							<a class="dropdown-item" href="javascript:;"><i class="fab fa-facebook-square mr-1" style="color:#ccc"></i> Login with Facebook</a>
 							{{/if}}
 
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="/logout"><i class="fa fa-sign-out-alt mr-1" style="color:#ccc"></i> Đăng xuất</a>
+							<a class="dropdown-item" href="javascript: $('#frmSignout').submit();"><i class="fa fa-sign-out-alt mr-1" style="color:#ccc"></i> Đăng xuất</a>
 						</div>
 					</div>
 				</div><!-- col-sm-8 -->

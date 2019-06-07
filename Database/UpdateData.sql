@@ -149,7 +149,14 @@ add constraint Fk_BV_CM
 foreign key (ChuyenMuc)
 references ChuyenMuc(IDChuyenMuc);
 #---------1/6
-alter table nhan modify TenTag varchar(50)
+alter table nhan modify TenTag varchar(50);
+#----------4/6
+alter table baiviet
+add fulltext(TieuDe);
+
+#-----5/6
+set sql_safe_updates=0;
+update baiviet set NgayViet ='2019-05-10 00:00:00';
 
 
 

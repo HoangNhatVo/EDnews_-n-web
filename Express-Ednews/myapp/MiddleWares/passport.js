@@ -28,10 +28,15 @@ module.exports = function(passport) {
             if(!user.length){
                 return done(null, false, req.flash('loginMessage', 'Tài khoản không tồn tại'));
             }
+
+            // if(pass != user[0].Password){
+            //     return done(null, false, req.flash('loginMessage', 'Mật khẩu không đúng'));
+            // }
            
             if(!bCrypt.compareSync(pass, user[0].Password)){
                 return done(null, false, req.flash('loginMessage', 'Mật khẩu không đúng'));
-            }           
+            }     
+
             return done(null, user[0]);
 
         }).catch(err =>{

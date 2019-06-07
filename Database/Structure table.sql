@@ -22,6 +22,7 @@ create table NguoiDung
 	NgayDangKy datetime,
 	NgayHetHan datetime,
 	TinhTrang varchar(20),
+    ButDanh varchar(50),
     AnhDaiDien varchar(255)
 	 );
 
@@ -31,6 +32,7 @@ create table ChuyenMuc #category
 	TenChuyenMuc_KhongDau varchar(50),
 	ChuyenMucCha varchar(10)
 	);
+    
 create table Nhan #tag
 ( IDTag varchar(10) not null primary key,
   TenTag varchar(20) not null
@@ -84,7 +86,6 @@ create table BaiViet_HinhAnh
   AnhDaiDien int,#--1 là ảnh đại diện,0 là ảnh thường
   primary key(IDBaiViet,IDHinh)
   );
-
 ----------------------------	KHOA NGOAI	
 alter table binhluan
 add constraint FK_BL_BL
@@ -131,6 +132,7 @@ add constraint Fk_BV_CM
 foreign key (ChuyenMuc)
 references ChuyenMuc(IDChuyenMuc);
 
+
 alter table Nhan_BaiViet
 add constraint Fk_BV_Nhan
 foreign key (IDBaiViet)
@@ -168,5 +170,20 @@ references NguoiDung(ID);
 
 
 
-select * from INFORMATION_SCHEMA.TABLE_CONSTRAINTS where CONSTRAINT_TYPE='FOREIGN KEY'
+select * from INFORMATION_SCHEMA.TABLE_CONSTRAINTS where CONSTRAINT_TYPE='FOREIGN KEY';
+#-------------------4/6
+alter table baiviet add NgayViet date;
+create table DuyetBai
+( IDDuyet int auto_increment,
+  IDBTV int,
+  IDBaiViet varchar(15),
+  NgayDuyet date,
+  primary key(IDDuyet));
+  create table TuChoiBai
+( IDTuChoi int auto_increment,
+  IDBTV int,
+  IDBaiViet varchar(15),
+  NgayTuChoi date,
+  NguyenNhanTuChoi text,
+  primary key(IDTuChoi));
 
