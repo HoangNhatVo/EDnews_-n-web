@@ -3,24 +3,54 @@ var router = express.Router();
 const singlepostModel = require('../Model/single_post.model');
 const CategoriesModel = require('../Model/categories.model');
 const Tagmodel=require('../Model/tag.model');
+const createnewModel = require('../Model/createnew.model');
+var passport = require('passport');
+
+//  Phân quyền truy cập các router
+const auth_index = require('../MiddleWares/auth_index');
+const auth_createnew = require('../MiddleWares/auth_createnew');
+const auth_admin = require('../MiddleWares/auth_admin');
+//
 
 
 /* GET users listing. */
 //Dashboard admin
-router.get('/', function (req, res, next) {
+router.get('/', auth_index, function (req, res, next) {
   res.render('adminLayout/index', { css: '/stylesheets/admin.css', style: '/stylesheets/sb-admin.css' });
 });
+
 //Page Dang bai 
-router.get('/dang-bai', (req, res, next) => {
-  res.render('adminLayout/PageCreatenew', { css: '/stylesheets/admin.css', style: '/stylesheets/sb-admin.css' });
+router.get('/dang-bai',auth_createnew, (req, res, next) => {
+  createnewModel.getListCategory()
+    .then(row => {
+      res.render('adminLayout/PageCreatenew',
+        {
+          css: '/stylesheets/admin.css',
+          style: '/stylesheets/sb-admin.css',
+          ListCategory: row
+        });
+    }).catch(next);
+  // res.render('adminLayout/PageCreatenew', { css: '/stylesheets/admin.css', style: '/stylesheets/sb-admin.css',
+  // ListCategory: ListCategory });
+});
+router.post('/:ID/dang-bai', (req,res,next)=>{
+  var ID = req.params.ID;
+  var tmp = req.body.ValueTags;
+  var arr = tmp.split(",")
+//  var tmp = req.body.abc;
+  console.log('IDPV',ID);
+  for( var i = 0 ; i < arr.length; i++){
+    console.log(arr[i]);
+  }
+  
 });
 //Page thong tin tai khoan
-router.get('/thong-tin-tai-khoan', (req, res, next) => {
+router.get('/thong-tin-tai-khoan',auth_index, (req, res, next) => {
   res.render('adminLayout/PageInforUser', 
   { css: '/stylesheets/admin.css', style: '/stylesheets/sb-admin.css' });
 });
 //Page bai viet dang cho duyet
-router.get('/bai-viet-dang-cho', (req, res, next) => {
+router.get('/bai-viet-dang-cho',auth_index, (req, res, next) => {
   var state=4;
   singlepostModel.GetPostWithState(state)
   .then(r=>{
@@ -39,7 +69,7 @@ router.post('/duyet-bai-viet',(req,res,next)=>{
   
 });
 //Page bai viet dang cho xuat ban
-router.get('/bai-viet-cho-xuat-ban', (req, res, next) => {
+router.get('/bai-viet-cho-xuat-ban',auth_index, (req, res, next) => {
   var state=1;
   singlepostModel.GetPostWithState(state)
   .then(r=>{
@@ -57,7 +87,7 @@ router.post('/xuat-ban-bai-viet',(req,res,next)=>{
 
 })
 //Page bai viet da xuat ban
-router.get('/bai-viet-da-xuat-ban', (req, res, next) => {
+router.get('/bai-viet-da-xuat-ban',auth_index, (req, res, next) => {
   var state=2;
   singlepostModel.GetPostWithState(state)
   .then(r=>{
@@ -72,7 +102,7 @@ router.get('/bai-viet-da-xuat-ban', (req, res, next) => {
  
 });
 //Page bai viet bi tu choi
-router.get('/bai-viet-bi-tu-choi', (req, res, next) => {
+router.get('/bai-viet-bi-tu-choi',auth_index, (req, res, next) => {
   var state=3;
   singlepostModel.GetPostWithState(3)
   .then(r=>{
@@ -89,11 +119,11 @@ router.post('/tu-choi-bai-viet',(req,res,next)=>{
 
 });
 //Page quan ly tai khoan
-router.get('/quan-ly-tai-khoan', (req, res, next) => {
+router.get('/quan-ly-tai-khoan',auth_admin, (req, res, next) => {
   res.render('adminLayout/PageManagerUser', { css: '/stylesheets/admin.css', style: '/stylesheets/sb-admin.css' });
 });
 //Page danh sach chuyen muc
-router.get('/danh-sach-chuyen-muc', (rep, res, next) => {
+router.get('/danh-sach-chuyen-muc',auth_admin, (rep, res, next) => {
   CategoriesModel.getListNameCategory()
     .then(row => {
       res.render('adminLayout/PageListCat',
@@ -106,11 +136,11 @@ router.get('/danh-sach-chuyen-muc', (rep, res, next) => {
 
 });
 //Page them chuyen muc
-router.get('/danh-sach-chuyen-muc/them-chuyen-muc', (req, res, next) => {
+router.get('/danh-sach-chuyen-muc/them-chuyen-muc',auth_admin, (req, res, next) => {
   res.render('adminLayout/PageAddcat', { css: '/stylesheets/admin.css', style: '/stylesheets/sb-admin.css' });
 });
 //Page chinh sua chuyen muc
-router.get('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/:TenCM', async (req, res, next) => {
+router.get('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/:TenCM',auth_admin, async (req, res, next) => {
   var NameCats = req.params.TenCM;
   try {
     var MainCat = await CategoriesModel.getNameCategory(NameCats);
@@ -253,7 +283,7 @@ router.post('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/:TenCM', async (req, res
 });
 
 //Page danh sach cac tag
-router.get('/danh-sach-tag', (req, res, next) => {
+router.get('/danh-sach-tag',auth_admin, (req, res, next) => {
   CategoriesModel.getListTag()
     .then(row => {
       res.render('adminLayout/PageListTag',
@@ -275,7 +305,7 @@ router.post('/danh-sach-tag/xoa-tag', (req, res, next) => {
   .catch(next);
 })
 //Page chỉnh sửa tag
-router.get('/danh-sach-tag/chinh-sua-tag/:IDTag', (req, res, next) => {
+router.get('/danh-sach-tag/chinh-sua-tag/:IDTag', auth_admin,(req, res, next) => {
   var ID = req.params.IDTag;
   console.log(ID);
   Tagmodel.getTag(ID)
@@ -306,7 +336,7 @@ router.post('/danh-sach-tag/chinh-sua-tag',(req,res,next)=>{
   .catch(next);
 })
 //Page thêm tag
-router.get('/danh-sach-tag/them-tag', (req, res, next) => {
+router.get('/danh-sach-tag/them-tag',auth_admin, (req, res, next) => {
   res.render('adminLayout/PageAddTag', 
   { 
     css: '/stylesheets/admin.css', 

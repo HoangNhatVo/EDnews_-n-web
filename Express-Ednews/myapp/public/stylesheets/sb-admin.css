@@ -3744,7 +3744,7 @@ input[type="button"].btn-block {
 .input-group-append {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+  /* display: flex; */
 }
 
 .input-group-prepend .btn,

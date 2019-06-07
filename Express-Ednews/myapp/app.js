@@ -21,6 +21,7 @@ var localStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 var bCrypt = require('bcrypt');
 require('./MiddleWares/passport')(Passport);
+require('./MiddleWares/upload')(app);
 
 
 // view engine setup

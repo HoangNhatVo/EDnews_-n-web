@@ -1,3 +1,44 @@
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure AddUser2(in HoTen varchar(50), in SDT varchar(15),
+ in NgaySinh varchar(50), in GioiTinh varchar(10), in Email varchar(50), in Password varchar(255),
+ in NgayDangKy varchar(50), in NgayHetHan varchar(50), in TinhTrang varchar(20))
+begin
+	insert into nguoidung 
+    values(null,Email,Password,HoTen,GioiTinh,NgaySinh,Email,SDT,'PH4',NgayDangKy,NgayHetHan,TinhTrang,null,null);
+end;$$
+DELIMITER ;
+
+#-----THEM BAI VIET
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE AddPost (in TieuDe varchar(225),in TieuDe_KhongDau varchar(225),in IDChuyenMuc varchar(10),in NoiDung text,in IDPhongVien int,in NoiDungTomTat varchar(500), in NgayViet date)
+BEGIN
+	declare num int; declare PostID varchar(15);
+    set num = (select max(convert(substring(IDBaiViet,3),unsigned)) from baiviet);
+    if(num is null)
+    then 
+    set num =1;
+    end if;
+    if ( num is not null)
+    then
+    set num = num +1;
+    end if;
+    set PostID = (select concat('BV',convert(num,char)));
+    insert into baiviet values (PostID,TieuDe,TieuDe_KhongDau,IDChuyenMuc,null,NoiDung,0,IDPhongVien,null,4,0,NoiDungTomTat,1,NgayViet);
+END;$$
+DELIMITER ;
+
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure GetListCategory()
+begin
+	select * from chuyenmuc where ChuyenMucCha is not null;
+end;$$
+DELIMITER ;
+call GetListCategory()
+#----------------------------------------------------------------------------------------------------------------#
+
 alter table nguoidung drop INDEX UserName
 alter table nguoidung add column OTP varchar(255)
 
@@ -78,16 +119,6 @@ begin
 end;$$
 DELIMITER ;
 
-DELIMITER $$
-USE `baodientu3n`$$
-create procedure AddUser2(in HoTen varchar(50), in SDT varchar(15),
- in NgaySinh varchar(50), in GioiTinh varchar(10), in Email varchar(50), in Password varchar(255),
- in NgayDangKy varchar(50), in NgayHetHan varchar(50), in TinhTrang varchar(20))
-begin
-	insert into nguoidung 
-    values(null,Email,Password,HoTen,GioiTinh,NgaySinh,Email,SDT,'PH1',NgayDangKy,NgayHetHan,TinhTrang,null,null);
-end;$$
-DELIMITER ;
 	#------ PROCEDURE GetUser
 DELIMITER $$
 USE `baodientu3n`$$
