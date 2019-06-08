@@ -33,6 +33,7 @@
                   </tr>
                 </thead>
                 <tbody>
+                  {{#if isAdministrator}}
                   {{#each post}}
                   <tr>
                     <td>{{IDBaiViet}}</td>
@@ -50,6 +51,19 @@
                     </td>
                   </tr>
                   {{/each}}
+                  {{else}}
+                    {{#each post}}
+                  <tr>
+                    <td>{{IDBaiViet}}</td>
+                    <td>{{TieuDe}}</td>
+                    <td>{{TenChuyenMuc}}</td>
+                    <td>{{format NgayViet}}</td>
+                    <td>{{format NgayDuyet}}</td>
+                    <td>{{ButDanh}}</td>
+                    <td></td>
+                  </tr>
+                  {{/each}}
+                  {{/if}}
                 </tbody>
               </table>
             </div>

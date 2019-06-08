@@ -65,155 +65,159 @@
   $(function () {
 
     tinymce.init({
-    selector: '#editor1',
-    height: 600,
-    plugins: [
+      selector: '#editor1',
+      height: 600,
+      plugins: [
         'advlist autolink lists link image charmap preview hr anchor pagebreak',
         'searchreplace wordcount visualblocks visualchars code',
         'insertdatetime media nonbreaking table contextmenu directionality',
         'emoticons template paste textcolor colorpicker textpattern imagetools media table'
-    ],
-    toolbar: 'code | bold italic underline strikethrough | formatselect sizeselect fontselect fontsizeselect | hr alignleft aligncenter alignright alignjustify outdent indent | bullist numlist | link image media table | insertfile undo redo | forecolor backcolor | emoticons',
-    fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
-    menubar: false,
-     images_upload_url: 'postAcceptor.php',
+      ],
+      toolbar: 'code | bold italic underline strikethrough | formatselect sizeselect fontselect fontsizeselect | hr alignleft aligncenter alignright alignjustify outdent indent | bullist numlist | link image media table | insertfile undo redo | forecolor backcolor | emoticons',
+      fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+      menubar: false,
+      images_upload_url: 'postAcceptor.php',
 
-  /* we override default upload handler to simulate successful upload*/
-  images_upload_handler: function (blobInfo, success, failure) {
-    setTimeout(function () {
-      /* no matter what you upload, we will turn it into TinyMCE logo :)*/
-      success('http://moxiecode.cachefly.net/tinymce/v9/images/logo.png');
-    }, 2000);
-  }
+      /* we override default upload handler to simulate successful upload*/
+      images_upload_handler: function (blobInfo, success, failure) {
+        setTimeout(function () {
+          /* no matter what you upload, we will turn it into TinyMCE logo :)*/
+          success('http://moxiecode.cachefly.net/tinymce/v9/images/logo.png');
+        }, 2000);
+      }
     })
   });
-  </script>
+</script>
 
 {{!-- <script>
   $(function () {
 
     tinymce.init({
-    selector: '#editor1',
-    height: 600,
-    plugins: [
+      selector: '#editor1',
+      height: 600,
+      plugins: [
         'advlist autolink lists link image charmap preview hr anchor pagebreak',
         'searchreplace wordcount visualblocks visualchars code',
         'insertdatetime media nonbreaking table contextmenu directionality',
         'emoticons template paste textcolor colorpicker textpattern imagetools media table'
-    ],
-    toolbar: 'code | bold italic underline strikethrough | formatselect sizeselect fontselect fontsizeselect | hr alignleft aligncenter alignright alignjustify outdent indent | bullist numlist | link image media table | insertfile undo redo | forecolor backcolor | emoticons',
-    fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
-    menubar: false,
+      ],
+      toolbar: 'code | bold italic underline strikethrough | formatselect sizeselect fontselect fontsizeselect | hr alignleft aligncenter alignright alignjustify outdent indent | bullist numlist | link image media table | insertfile undo redo | forecolor backcolor | emoticons',
+      fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+      menubar: false,
 
-    image_title: true, 
-    automatic_uploads: true,
-    file_picker_types: 'image',
-    file_picker_callback: function(cb, value, meta) {
-      var input = document.createElement('input');
-      input.setAttribute('type', 'file');
-      input.setAttribute('accept', 'image/*');
-      input.onchange = function() {
-        var file = this.files[0];
-        var reader = new FileReader();        
-        reader.onload = function () {
-          var id = 'blobid' + (new Date()).getTime();
-          var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
-          var base64 = reader.result.split(',')[1];
-          var blobInfo = blobCache.create(id, file, base64);
-          blobCache.add(blobInfo);
+      image_title: true,
+      automatic_uploads: true,
+      file_picker_types: 'image',
+      file_picker_callback: function (cb, value, meta) {
+        var input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.onchange = function () {
+          var file = this.files[0];
+          var reader = new FileReader();
+          reader.onload = function () {
+            var id = 'blobid' + (new Date()).getTime();
+            var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+            var base64 = reader.result.split(',')[1];
+            var blobInfo = blobCache.create(id, file, base64);
+            blobCache.add(blobInfo);
 
-          cb(blobInfo.blobUri(), { title: file.name });
+            cb(blobInfo.blobUri(), { title: file.name });
+          };
+          reader.readAsDataURL(file);
         };
-        reader.readAsDataURL(file);
-      };      
-      input.click();
-    }
-  });
+        input.click();
+      }
+    });
   })
 </script> --}}
 
 {{/section}}
 {{>AdminNav}}
- <div id="wrapper">   
-   {{>AdminSlidebar}}
-    <div id="content-wrapper">
+<div id="wrapper">
+  {{>AdminSlidebar}}
+  <div id="content-wrapper">
 
-      <div class="container-fluid">
+    <div class="container-fluid">
 
-       
- <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="/admin">Dashboard</a>
-          </li>
-          <li class="breadcrumb-item active">Đăng bài</li>
-        </ol>
 
-        <form class="frmCreateNews" id="frmCreateNews" method="POST" action="/admin/dang-bai">   
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Đăng bài</li>
+      </ol>
+
+      <form class="frmCreateNews" id="frmCreateNews" method="POST" action="/admin/dang-bai">
 
         {{#if message_post.length}}
-              <div class="alert alert-success" role="alert">
-                {{message_post}}</a>
-              </div>
-				{{/if}}
+        <div class="alert alert-success" role="alert">
+          {{message_post}}</a>
+        </div>
+        {{/if}}
 
         <div class="">
+          <p style="color: #676a6c;
+    font-weight: 700;
+    font-size: 19px;
+    font-family: " Open sans", "Segoe UI" , "Segoe WP" , Helvetica, Arial, sans-serif;">Ảnh đại diện</p>
           <div class="file-loading">
             <input id="fuMain" name="fuMain" type="file" multiple>
           </div>
         </div>
 
 
-          <div class="text-input">
-            <label class="frmCreateNews">Tiêu đề:</label>
-            <input type="text" id="TieuDe" name="TieuDe" autofocus="true"/>
+        <div class="text-input">
+          <label class="frmCreateNews">Tiêu đề:</label>
+          <input type="text" id="TieuDe" name="TieuDe" autofocus="true" />
+        </div>
+
+        <p id="title" class="frmCreateNews ttCategory">Category:</p>
+        <div>
+          <select name="category" id="sl-category">
+            {{#each ListCategory}}
+            <option value="{{IDChuyenMuc}}">{{TenChuyenMuc}}</option>
+            {{/each}}
+          </select>
+          <label class="lbl-category">Choose Category</label>
+        </div>
+
+        <p id="title">Tags:</p>
+        <label for="tag-typer" class="frmCreateNews">
+          <div id="tags">
+            <input id="tag-typer" type="text" placeholder="Add tag..." />
           </div>
+        </label>
+        <input hidden name="ValueTags" id="valueTags">
 
-          <p id="title" class="frmCreateNews ttCategory">Category:</p>
-          <div>
-            <select name="category" id="sl-category">
-              {{#each ListCategory}}
-              <option value="{{IDChuyenMuc}}">{{TenChuyenMuc}}</option>
-              {{/each}}
-            </select>
-            <label class="lbl-category">Choose Category</label>
-          </div>          
+        <div class="text-input input-TomTat" id="text-input">
+          <label class="frmCreateNews">Tóm tắt:</label><br>
+          <textarea rows="3" class="TomTat" id="TomTat" name="TomTat"></textarea>
+        </div>
 
-          <p id="title">Tags:</p>
-          <label for="tag-typer" class="frmCreateNews">
-            <div id="tags">
-                <input id="tag-typer" type="text" placeholder="Add tag..."/>
-            </div>
-          </label>
-          <input hidden name="ValueTags" id="valueTags">
-
-          <div class="text-input input-TomTat" id="text-input">
-              <label class="frmCreateNews">Tóm tắt:</label><br>
-              <textarea rows="3" class="TomTat" id="TomTat" name="TomTat"></textarea>
-          </div>
-
-          <div class="text">
-            <label>Nội dung bài báo:</label>
-           </div>
-           <div class="form-group">
-            <textarea class="form-control" id="editor1" name="FullDes"></textarea>
-          </div>
-          {{!-- <div class="ckeditor">
+        <div class="text">
+          <label>Nội dung bài báo:</label>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" id="editor1" name="FullDes"></textarea>
+        </div>
+        {{!-- <div class="ckeditor">
             <textarea id="editor1" name="editor1"></textarea>
           </div> --}}
-          <button type="submit" class="btnSend"><i class="fa fa-paper-plane-o"></i> Gửi bài</button>
-  </form>
-        <!-- End CreateNews -->      
+        <button type="submit" class="btnSend"><i class="fa fa-paper-plane-o"></i> Gửi bài</button>
+      </form>
+      <!-- End CreateNews -->
 
-        
 
-      </div>
-      <!-- /.container-fluid -->
-
-      <!-- Sticky Footer -->
-      {{>AdminFooter}}
 
     </div>
-    </div>
-    
-    {{>AdminLogoutmodal}}
+    <!-- /.container-fluid -->
+
+    <!-- Sticky Footer -->
+    {{>AdminFooter}}
+
+  </div>
+</div>
+
+{{>AdminLogoutmodal}}
