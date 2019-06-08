@@ -1,5 +1,6 @@
 #------------------------------PROCEDURE
 #-------------------------------------------Lay bai viet noi bat
+
 DELIMITER $$
 USE `baodientu3n`$$
 CREATE PROCEDURE GetSinglePost ()
@@ -9,7 +10,7 @@ select BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,n
 								join chuyenmuc as CMCon on CMCon.IDChuyenMuc= BV.ChuyenMuc
                                 join chuyenmuc as CMCha on CMCha.IDCHuyenMuc=CMCon.ChuyenMucCha
 								join urlhinhanh as url on url.IDHinh=HA.IDHinh
-                                join nguoidung as nd on nd.ID=BV.PhongVien where BV.TinNoiBat = 1;
+                                join nguoidung as nd on nd.ID=BV.PhongVien where BV.TinNoiBat = 1 and BV.SuDung=1;
 END;$$
 
 DELIMITER ;
@@ -35,7 +36,8 @@ begin
                                 join chuyenmuc as CMCha on CMCha.IDCHuyenMuc=CMCon.ChuyenMucCha
 								join urlhinhanh as url on url.IDHinh=HA.IDHinh
                                 join nguoidung as nd on nd.ID=BV.PhongVien
-	where BV.TinhTrang=2 and  datediff(date(now()),date(BV.NgayDang)) <=10;
+	where BV.TinhTrang=2 and  datediff(date(now()),date(BV.NgayDang)) <=30  and BV.SuDung=1
+    order by date(BV.NgayDang) desc;
 end;$$
 DELIMITER ; 
 #------------------------------------------Lay cac bai viet hom nay
@@ -49,7 +51,7 @@ begin
                                 join chuyenmuc as CMCha on CMCha.IDCHuyenMuc=CMCon.ChuyenMucCha
 								join urlhinhanh as url on url.IDHinh=HA.IDHinh
                                 join nguoidung as nd on nd.ID=BV.PhongVien
-	where BV.TinhTrang=2 and date(BV.NgayDang)=date(now());
+	where BV.TinhTrang=2 and date(BV.NgayDang)=date(now())  and BV.SuDung=1;
 end;$$
 DELIMITER ;
 
@@ -109,7 +111,7 @@ begin
                                 join chuyenmuc as CMCha on CMCha.IDCHuyenMuc=CMCon.ChuyenMucCha
 								join urlhinhanh as url on url.IDHinh=HA.IDHinh
                                 join nguoidung as nd on nd.ID=BV.PhongVien
-	where BV.TinhTrang=2 and CMCha.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau  
+	where BV.TinhTrang=2 and CMCha.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau   and BV.SuDung=1 
     order by BV.NgayDang desc limit limi offset offse;
 end;$$
 DELIMITER ; 
@@ -125,7 +127,7 @@ begin
                                 join chuyenmuc as CMCha on CMCha.IDCHuyenMuc=CMCon.ChuyenMucCha
 								join urlhinhanh as url on url.IDHinh=HA.IDHinh
                                 join nguoidung as nd on nd.ID=BV.PhongVien
-	where BV.TinhTrang=2 and CMCha.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau  ;
+	where BV.TinhTrang=2 and CMCha.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau  and BV.SuDung=1 ;
   
 end;$$
 DELIMITER ;
@@ -141,7 +143,7 @@ begin
                                 join chuyenmuc as CMCha on CMCha.IDCHuyenMuc=CMCon.ChuyenMucCha
 								join urlhinhanh as url on url.IDHinh=HA.IDHinh
                                 join nguoidung as nd on nd.ID=BV.PhongVien
-	where BV.TinhTrang=2 and CMcon.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau 
+	where BV.TinhTrang=2 and CMcon.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau  and BV.SuDung=1
     order by BV.NgayDang desc limit limi offset offse;
 end;$$
 DELIMITER ;
@@ -156,7 +158,7 @@ begin
                                 join chuyenmuc as CMCha on CMCha.IDCHuyenMuc=CMCon.ChuyenMucCha
 								join urlhinhanh as url on url.IDHinh=HA.IDHinh
                                 join nguoidung as nd on nd.ID=BV.PhongVien
-	where BV.TinhTrang=2 and CMcon.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau ;
+	where BV.TinhTrang=2 and CMcon.TenChuyenMuc_KhongDau=TenChuyenMuc_KhongDau  and BV.SuDung=1 ;
 end;$$
 DELIMITER ;
 
@@ -231,7 +233,7 @@ begin
 						join nguoidung as nd on nd.ID=BV.PhongVien
                         join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
                         join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
-	where	tag.TenTag = TagName
+	where	tag.TenTag = TagName  and BV.SuDung=1
     limit limi offset offse ;
 end;$$
 DELIMITER ; 
@@ -260,7 +262,7 @@ begin
                         join urlhinhanh as url on url.IDHinh=HA.IDHinh
 						join nguoidung as nd on nd.ID=BV.PhongVien
                         join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
-	where	tag.TenTag = TagName;
+	where	tag.TenTag = TagName  and BV.SuDung=1;
   
 end;$$
 DELIMITER ; 
@@ -302,6 +304,7 @@ begin
 						join nguoidung as nd on nd.ID=BV.PhongVien
                         join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
                         join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+                        where   BV.SuDung=1
     order by BV.LuotXem
     limit 10 ;
 end;$$
@@ -318,7 +321,7 @@ begin
 						join nguoidung as nd on nd.ID=BV.PhongVien
                         join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
                         join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
-   where match(BV.TieuDe) against( temp)
+   where match(BV.TieuDe) against( temp)  and BV.SuDung=1
    limit limi offset offse;
 end;$$
 DELIMITER ; 
@@ -330,7 +333,7 @@ create procedure NumberOfFindPost(in temp varchar(50))
 begin
 	select count(*) as Num
     from baiviet as BV
-   where match(BV.TieuDe) against( temp);
+   where match(BV.TieuDe) against( temp)  and BV.SuDung=1;
 end;$$
 DELIMITER ; 
 call NumberOfFindPost('nghi duong');

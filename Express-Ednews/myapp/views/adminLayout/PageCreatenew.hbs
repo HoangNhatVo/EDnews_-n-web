@@ -1,14 +1,51 @@
 {{#section 'css'}}
 <link rel="stylesheet" href="/javascripts/datatable/dataTables.bootstrap4.css">
 <script src="https://cdn.ckeditor.com/4.11.4/full/ckeditor.js"></script>
-
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/css/fileinput.min.css" media="all"
   rel="stylesheet" type="text/css" />
-
 {{/section}}
+
 {{#section 'js'}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script>
+  $(function () {
+    $('#frmCreateNews').validate({
+      rules: {
+        TieuDe: {
+          required: true,
+        },
+        TomTat: {
+          required: true,
+        },
+        FullDes: {
+          required: true,
+        },
+      },
+      messages: {
+        TieuDe: {
+          required: 'Bạn phải nhập tiêu đề bài viết.',
+        },
+        TomTat: {
+          required: 'Bạn phải nhập nội dung tóm tắt.',
+        },
+        FullDes: {
+          required: 'Bạn phải nhập nội dung bài viết.',
+        },
+      },
+      errorElement: 'small',
+      errorClass: 'help-block text-danger',
+      highlight: function (e) {
+        $(e).removeClass('is-valid').addClass('is-invalid');
+      },
+      unhighlight: function (e) {
+        $(e).removeClass('is-invalid').addClass('is-valid');
+      }
+    });
+  })
+</script>
+
 <script>
   $(function () {
     $('#fuMain').fileinput({
@@ -22,9 +59,37 @@
 </script>
 
 <script src="/javascripts/CreateNews.js"></script>
-{{!-- <script
+<script
   src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=wtnd3xbfybaxtd7216nf0no41mor1wo75hb96rr8fjhmwjrq"></script>
 <script>
+  $(function () {
+
+    tinymce.init({
+    selector: '#editor1',
+    height: 600,
+    plugins: [
+        'advlist autolink lists link image charmap preview hr anchor pagebreak',
+        'searchreplace wordcount visualblocks visualchars code',
+        'insertdatetime media nonbreaking table contextmenu directionality',
+        'emoticons template paste textcolor colorpicker textpattern imagetools media table'
+    ],
+    toolbar: 'code | bold italic underline strikethrough | formatselect sizeselect fontselect fontsizeselect | hr alignleft aligncenter alignright alignjustify outdent indent | bullist numlist | link image media table | insertfile undo redo | forecolor backcolor | emoticons',
+    fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+    menubar: false,
+     images_upload_url: 'postAcceptor.php',
+
+  /* we override default upload handler to simulate successful upload*/
+  images_upload_handler: function (blobInfo, success, failure) {
+    setTimeout(function () {
+      /* no matter what you upload, we will turn it into TinyMCE logo :)*/
+      success('http://moxiecode.cachefly.net/tinymce/v9/images/logo.png');
+    }, 2000);
+  }
+    })
+  });
+  </script>
+
+{{!-- <script>
   $(function () {
 
     tinymce.init({
@@ -84,23 +149,13 @@
           <li class="breadcrumb-item active">Đăng bài</li>
         </ol>
 
-        <!-- Area Chart Example-->
+        <form class="frmCreateNews" id="frmCreateNews" method="POST" action="/admin/dang-bai">   
 
-        <!-- CreateNews -->
-        {{!-- <form method="POST" action="/admin/{{user.ID}}/dang-bai">
-      <div class="form-group">
-        <label for="fuMain">Photo</label>
-        <div class="file-loading">
-          <input id="fuMain" name="fuMain" type="file" multiple>
-        </div>
-      </div>
-      <button type="submit" class="btn btn-success">
-        <i class="fa fa-check" aria-hidden="true"></i>
-        Save
-      </button>
-    </form> --}}
-
-        <form class="frmCreateNews" method="POST" action="/admin/{{user.ID}}/dang-bai">   
+        {{#if message_post.length}}
+              <div class="alert alert-success" role="alert">
+                {{message_post}}</a>
+              </div>
+				{{/if}}
 
         <div class="">
           <div class="file-loading">
@@ -108,14 +163,6 @@
           </div>
         </div>
 
-
-          {{!-- <label for="file" class="input-label"><i class="fa fa-upload "></i> Thêm Image...</label>
-          <input type="file" id="file" multiple="true" /><br>
-          <button type="button" class="close-image" id="close-image" aria-label="Close" hidden="true" data-toggle="tooltip" title="Close All Image">
-            <span aria-hidden="true">&times;</span>
-          </button>
-      
-          <div id="image-parent"></div> --}}
 
           <div class="text-input">
             <label class="frmCreateNews">Tiêu đề:</label>
@@ -142,20 +189,18 @@
 
           <div class="text-input input-TomTat" id="text-input">
               <label class="frmCreateNews">Tóm tắt:</label><br>
-              <!-- <input type="text" id="TomTat" name="TomTat" /> -->
               <textarea rows="3" class="TomTat" id="TomTat" name="TomTat"></textarea>
           </div>
 
           <div class="text">
             <label>Nội dung bài báo:</label>
            </div>
-           {{!-- <div class="form-group">
-            <label for="txtFullDes">Description</label>
+           <div class="form-group">
             <textarea class="form-control" id="editor1" name="FullDes"></textarea>
-          </div> --}}
-          <div class="ckeditor">
-            <textarea id="editor1" name="editor1"></textarea>
           </div>
+          {{!-- <div class="ckeditor">
+            <textarea id="editor1" name="editor1"></textarea>
+          </div> --}}
           <button type="submit" class="btnSend"><i class="fa fa-paper-plane-o"></i> Gửi bài</button>
   </form>
         <!-- End CreateNews -->      

@@ -1,18 +1,8 @@
 DELIMITER $$
 USE `baodientu3n`$$
-create procedure AddUser2(in HoTen varchar(50), in SDT varchar(15),
- in NgaySinh varchar(50), in GioiTinh varchar(10), in Email varchar(50), in Password varchar(255),
- in NgayDangKy varchar(50), in NgayHetHan varchar(50), in TinhTrang varchar(20))
-begin
-	insert into nguoidung 
-    values(null,Email,Password,HoTen,GioiTinh,NgaySinh,Email,SDT,'PH4',NgayDangKy,NgayHetHan,TinhTrang,null,null);
-end;$$
-DELIMITER ;
-
-#-----THEM BAI VIET
-DELIMITER $$
-USE `baodientu3n`$$
-CREATE PROCEDURE AddPost (in TieuDe varchar(225),in TieuDe_KhongDau varchar(225),in IDChuyenMuc varchar(10),in NoiDung text,in IDPhongVien int,in NoiDungTomTat varchar(500), in NgayViet date)
+CREATE PROCEDURE AddPost (in TieuDe varchar(225),in TieuDe_KhongDau varchar(225),
+in IDChuyenMuc varchar(10),in NoiDung text,in IDPhongVien int,in NoiDungTomTat varchar(500),
+ in NgayViet date)
 BEGIN
 	declare num int; declare PostID varchar(15);
     set num = (select max(convert(substring(IDBaiViet,3),unsigned)) from baiviet);
@@ -25,8 +15,68 @@ BEGIN
     set num = num +1;
     end if;
     set PostID = (select concat('BV',convert(num,char)));
-    insert into baiviet values (PostID,TieuDe,TieuDe_KhongDau,IDChuyenMuc,null,NoiDung,0,IDPhongVien,null,4,0,NoiDungTomTat,1,NgayViet);
+    insert into baiviet values (PostID,TieuDe,TieuDe_KhongDau,IDChuyenMuc,null,NoiDung,0,IDPhongVien,null,4,0,NoiDungTomTat,1,NgayViet,1);
+    select PostID;
 END;$$
+DELIMITER ;
+
+
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE AddTag (in TagName varchar(50) )
+BEGIN
+	declare count1 int;
+	declare IDTagAdd varchar(10);
+    declare lastTag int; 
+    declare nextTag int;
+    declare TagNameNew varchar(50);
+    if( substring(TagName,1,1)='#')
+    then
+		set TagNameNew = TagName;
+	end if;
+	if( substring(TagName,1,1)!='#')
+	then
+    set TagNameNew = (select concat('#',TagName));
+    end if;
+	set count1 =( select count(*) from nhan where TenTag = TagNameNew);
+	if( count1=0 )
+			then 
+			set lastTag =(select max(convert(substring(IDTag,4),unsigned))
+				   from nhan  );
+			 set nextTag = lastTag +1;
+			 set IDTagAdd = (select concat('tag',convert(nextTag,char)));
+			 insert into nhan values( IDTagAdd,TagNameNew);
+			 #---- select 1 as temp;
+             select IDTagAdd;
+	end if;
+	if( count1>0 )
+	then 
+	 #----select 0 as temp;
+    select IDTag as IDTagAdd  from nhan where TenTag = TagNameNew;
+	end if;
+END;$$
+DELIMITER ;
+
+
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure AddTagPost(in IDBaiViet varchar(15), in IDTag varchar(10))
+begin
+	insert into nhan_baiviet values (IDBaiViet,IDTag);
+end;$$
+DELIMITER ;
+
+#-----------------------------------------------------------------------------------
+
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure AddUser2(in HoTen varchar(50), in SDT varchar(15),
+ in NgaySinh varchar(50), in GioiTinh varchar(10), in Email varchar(50), in Password varchar(255),
+ in NgayDangKy varchar(50), in NgayHetHan varchar(50), in TinhTrang varchar(20))
+begin
+	insert into nguoidung 
+    values(null,Email,Password,HoTen,GioiTinh,NgaySinh,Email,SDT,'PH4',NgayDangKy,NgayHetHan,TinhTrang,null,null);
+end;$$
 DELIMITER ;
 
 DELIMITER $$
