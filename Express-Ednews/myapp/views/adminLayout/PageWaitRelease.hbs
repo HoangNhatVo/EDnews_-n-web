@@ -42,8 +42,11 @@
                     <td>{{format NgayDuyet}}</td>
                     <td>{{ButDanh}}</td>
                     <td class="action">
-                      <button type="button">Xóa</button>
-                      <button type="button">Xuất bản</button>
+                      <form action="/admin/xuat-ban-bai-viet/{{IDBaiViet}}" method="POST">
+                      <input type="text" name="IDpost" value="{{IDBaiViet}}" class="d-none">
+                      <button type="submit">Xóa</button>
+                      <button type="submit">Xuất bản</button>
+                      </form>
                     </td>
                   </tr>
                   {{/each}}
@@ -52,7 +55,6 @@
             </div>
           </div>
         </div>       
-
         
 
       </div>

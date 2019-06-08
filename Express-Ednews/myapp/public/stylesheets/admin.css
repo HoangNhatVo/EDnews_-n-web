@@ -627,3 +627,6 @@ background-color: #231f1f;
   color: #fff;
   font-weight: bold;
 }
+thead{
+  text-align: center;
+}

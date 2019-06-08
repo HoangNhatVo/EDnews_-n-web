@@ -23,23 +23,28 @@
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
-                    <th>ID bài viết</th>
+                    
                     <th>Tiêu đề</th>
                     <th>Chuyên mục</th>
                     <th>Ngày viết</th>
+                    <th>Người đăng</th>
                     <th>Ngày xuất bản</th>
-                    
+                    <th>Action</th>                    
                   </tr>
                 </thead>
                 <tbody>
                   {{#each post}}
                   <tr>
-                    <td>{{IDBaiViet}}</td>
+                    
                     <td>{{TieuDe}}</td>
                     <td>{{TenChuyenMuc}}</td>
                     <td>{{format NgayViet}}</td>
+                    <td>{{ButDanh}}</td>
                     <td >
                       {{format NgayDang}}
+                    </td>
+                    <td class="action">
+                      <button type="submit">Xóa</button>
                     </td>
                     
                   </tr>

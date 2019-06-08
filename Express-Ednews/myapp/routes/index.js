@@ -26,6 +26,7 @@ router.get('/', async (req, res, next) => {
     var TaiChinh = await singlepostModel.getPostfromCategories('taichinh', limit, offset);
     var Showbiz = await singlepostModel.getPostfromCategories('showbiz', limit, offset);
     var Smartphone = await singlepostModel.getPostfromCategories('smartphone', limit, offset);
+    console.log(Showbiz);
     res.render('index',
       {
         css: '/stylesheets/index.css',

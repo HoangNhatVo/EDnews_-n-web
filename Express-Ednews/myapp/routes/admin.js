@@ -4,6 +4,7 @@ const singlepostModel = require('../Model/single_post.model');
 const CategoriesModel = require('../Model/categories.model');
 const Tagmodel=require('../Model/tag.model');
 const createnewModel = require('../Model/createnew.model');
+const adminmodel=require('../Model/admin.model');
 var passport = require('passport');
 
 //  Phân quyền truy cập các router
@@ -58,7 +59,7 @@ router.get('/bai-viet-dang-cho',auth_index, (req, res, next) => {
    { 
      css: '/stylesheets/admin.css', 
      style: '/stylesheets/sb-admin.css' ,
-      post:r
+      post:r,
     });
   })
   .catch(next);
@@ -66,6 +67,13 @@ router.get('/bai-viet-dang-cho',auth_index, (req, res, next) => {
 });
 //Post duyet bai viet
 router.post('/duyet-bai-viet',(req,res,next)=>{
+  if(req.user){
+    IDuser=req.user.ID;
+  }
+  var IDpost=req.body.IDpost;
+  console.log(IDuser,IDpost);
+  adminmodel.ApprovePost(IDpost,IDuser);
+  res.redirect('/admin/bai-viet-dang-cho');
   
 });
 //Page bai viet dang cho xuat ban
@@ -83,8 +91,11 @@ router.get('/bai-viet-cho-xuat-ban',auth_index, (req, res, next) => {
 });
 
 //Post xuat ban bai viet
-router.post('/xuat-ban-bai-viet',(req,res,next)=>{
-
+router.post('/xuat-ban-bai-viet/:IDpost',(req,res,next)=>{
+  var IDpost=req.params.IDpost;
+  console.log(IDpost);
+  adminmodel.PublishPost(IDpost);
+  res.redirect('/admin/bai-viet-cho-xuat-ban')
 })
 //Page bai viet da xuat ban
 router.get('/bai-viet-da-xuat-ban',auth_index, (req, res, next) => {
@@ -116,7 +127,14 @@ router.get('/bai-viet-bi-tu-choi',auth_index, (req, res, next) => {
 });
 //Post tu choi bai viet
 router.post('/tu-choi-bai-viet',(req,res,next)=>{
-
+var IDpost=req.body.IDpost;
+var reason=req.body.reasonDecline;
+var IDuser
+if(req.user){
+   IDuser=req.user.ID;
+}
+adminmodel.DeclinePost(IDpost,IDuser,reason)
+res.redirect('/admin/bai-viet-dang-cho');
 });
 //Page quan ly tai khoan
 router.get('/quan-ly-tai-khoan',auth_admin, (req, res, next) => {

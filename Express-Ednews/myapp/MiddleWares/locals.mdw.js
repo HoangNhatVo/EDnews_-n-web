@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
       });
     });
     singlepostModel.GetMostViewPost().then(result => {
-      res.locals.lcNewPost = result.slice(0,6);
+      res.locals.lcNewPost = result.slice(0,9);
     });
     next();
   });

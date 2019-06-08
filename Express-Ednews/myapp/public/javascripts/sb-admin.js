@@ -37,5 +37,10 @@
     }, 1000, 'easeInOutExpo');
     event.preventDefault();
   });
+ 
+  $('.navbar-nav li').click(function() {
 
+    $('.navbar-nav li.active').removeClass('active');
+    $(this).addClass('active');
+});
 })(jQuery); // End of use strict

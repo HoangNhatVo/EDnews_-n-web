@@ -1,67 +1,143 @@
- <link rel="stylesheet" href="/javascripts/datatable/dataTables.bootstrap4.css">
- {{>AdminNav}}
- <div id="wrapper">   
-   {{>AdminSlidebar}}
-    <div id="content-wrapper">
+<link rel="stylesheet" href="/javascripts/datatable/dataTables.bootstrap4.css">
+{{>AdminNav}}
+<div id="wrapper">
+  {{>AdminSlidebar}}
+  <div id="content-wrapper">
 
-      <div class="container-fluid">
+    <div class="container-fluid">
 
-        <!-- Breadcrumbs-->
-       <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="/admin">Dashboard</a>
-          </li>
-          <li class="breadcrumb-item active">Bài viết đang chờ duyệt</li>
-        </ol>
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Bài viết đang chờ duyệt</li>
+      </ol>
 
-        <!-- DataTables Example -->
-        <div class="card mb-3 List-Draft">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
-            Danh sách bài viết</div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>STT</th>
-                    <th>Tiêu đề</th>
-                    <th>Chuyên mục</th>
-                    <th>Ngày viết</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {{#each post}}
-                  <tr>
-                    <td>{{IDBaiViet}}</td>
-                    <td>{{TieuDe}}</td>
-                    <td>{{TenChuyenMuc}}</td>
-                    <td>{{format NgayDang}}</td>
-                    <td class="action">
+      <!-- DataTables Example -->
+      <div class="card mb-3 List-Draft">
+        <div class="card-header">
+          <i class="fas fa-table"></i>
+          Danh sách bài viết</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tiêu đề</th>
+                  <th>Chuyên mục</th>
+                  <th>Ngày viết</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#if isAdministrator}}
+                {{#each post}}
+                <tr>
+                  <td>{{IDBaiViet}}</td>
+                  <td>{{TieuDe}}</td>
+                  <td>{{TenChuyenMuc}}</td>
+                  <td>{{format NgayViet}}</td>
+                  <td class="action">
+                    <form action="/admin/duyet-bai-viet" method="POST">
                       <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
-                      <form action="/admin/duyet-bai-viet" method="POST">
-                    <button type="button">Duyệt</button>
-                    <button type="button">Từ chối</button>
+                      <input type="text" name="IDpost" value="{{IDBaiViet}}" class="d-none">
+                      
+                      <button type="submit" formaction="/admin/xuat-ban-bai-viet/{{IDBaiViet}}">Xuất bản</button>
+                      <button type="button" class=" btn-primary" data-toggle="modal" data-target="#exampleModal">Từ chối</button>
+                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Lý do từ chối</h5>
+                            </div>
+                            
+                            <div class="modal-body">
+                            <textarea name="reasonDecline" style="width: 100%"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                              <button type="submit" class="btn btn-primary" formaction="/admin/tu-choi-bai-viet">Gửi</button>
+                            </div>
+                            
+                          </div>
+                        </div>
+                      </div>
                     </form>
-                    </td>
-                  </tr>
-                  {{/each}}
-                </tbody>
-              </table>
-            </div>
+                  </td>
+                </tr>
+                {{/each}}
+                {{/if}}
+
+                {{#if isEditor}}
+                {{#each post}}
+                <tr>
+                  <td>{{IDBaiViet}}</td>
+                  <td>{{TieuDe}}</td>
+                  <td>{{TenChuyenMuc}}</td>
+                  <td>{{format NgayViet}}</td>
+                  <td class="action">
+                    <form action="/admin/duyet-bai-viet" method="POST">
+                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
+                      <input type="text" name="IDpost" value="{{IDBaiViet}}" class="d-none">
+                      
+                      <button type="submit">Duyệt</button>
+                      <button type="button" class=" btn-primary" data-toggle="modal" data-target="#exampleModal">Từ chối</button>
+                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Lý do từ chối</h5>
+                            </div>
+                            
+                            <div class="modal-body">
+                            <textarea name="reasonDecline" style="width: 100%"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                              <button type="submit" class="btn btn-primary" formaction="/admin/tu-choi-bai-viet">Gửi</button>
+                            </div>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </td>
+                </tr>
+                {{/each}}
+                {{/if}}
+                {{#if isWriter}}
+                {{#each post}}
+                <tr>
+                  <td>{{IDBaiViet}}</td>
+                  <td>{{TieuDe}}</td>
+                  <td>{{TenChuyenMuc}}</td>
+                  <td>{{format NgayViet}}</td>
+                  <td class="action">
+                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Chỉnh sửa</a>
+                      <input type="text" name="IDpost" value="{{IDBaiViet}}" class="d-none">
+                  </td>
+                </tr>
+                {{/each}}
+                {{/if}}
+              </tbody>
+
+            </table>
           </div>
-          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-        </div>   
-
-        
-
+        </div>
       </div>
-      <!-- /.container-fluid -->
 
-      <!-- Sticky Footer -->
-      {{>AdminFooter}}
+
 
     </div>
-    </div>
-    {{>AdminLogoutmodal}}
+    <!-- /.container-fluid -->
+
+    <!-- Sticky Footer -->
+    {{>AdminFooter}}
+
+  </div>
+</div>
+{{>AdminLogoutmodal}}
