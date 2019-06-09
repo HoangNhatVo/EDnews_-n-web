@@ -39,3 +39,13 @@ CKEDITOR.on('instanceReady', function (ev) {
 // CKEDITOR.replace('editor1',{
 //   height: 500,
 // });
+
+$(document).ready(function() { 
+  $('#fuMain').change(function() {
+    var name = $('#fuMain').val();
+    var length = name.length;
+    var start = name.lastIndexOf('\\') + 1;
+    var filename = name.substring(start, length);
+    $('#fileName').val(filename);
+  });
+});

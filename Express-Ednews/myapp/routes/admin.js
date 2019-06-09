@@ -47,7 +47,17 @@ router.post('/dang-bai', (req,res,next)=>{
   var NoiDung = req.body.FullDes;
   var NgayViet =  moment().format('YYYY-MM-DD');
   var tmp = req.body.ValueTags;
-  var ListTag = tmp.split(",")  
+  var ListTag = tmp.split(",")    
+  var link = req.body.filename;
+  // console.log('link',link);
+  // console.log('IDPhongVien',IDPhongVien);
+  // console.log('TieuDe',TieuDe);
+  // console.log('TieuDe_KhongDau',TieuDe_KhongDau);
+  // console.log('IDChuyeMuc',IDChuyeMuc);
+  // console.log('TomTat',TomTat);
+  // console.log('NoiDung',NoiDung);
+  // console.log('NgayViet',NgayViet);
+  // console.log('ListTag',ListTag);
 
   createnewModel.addPost(TieuDe,TieuDe_KhongDau,IDChuyeMuc,NoiDung,IDPhongVien,TomTat,NgayViet).then(IDBaiViet=>{
     var IDBV = IDBaiViet[0].PostID;
@@ -59,14 +69,15 @@ router.post('/dang-bai', (req,res,next)=>{
         createnewModel.addTagPost(IDBV,IDTag);
       }).catch(next);
     }
-
+    createnewModel.addPicture(link).then(IDPicture=>{
+      var IDH = IDPicture[0].IDHinh;
+      console.log('IDHinh',IDH);
+      createnewModel.addPostPicture(IDBV, IDH);
+    }).catch(next);
     req.flash('msg_post','Bài viết đã được gửi để duyệt.');
     res.redirect('/admin/dang-bai');
-
-  }).catch(next);
-  
+  }).catch(next);  
 });
-
 
 //Page thong tin tai khoan
 router.get('/thong-tin-tai-khoan',auth_index, (req, res, next) => {

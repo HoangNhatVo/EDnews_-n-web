@@ -83,8 +83,8 @@ router.post('/thong-tin-ca-nhan/:ID', function(req,res,next){
       loginModel.updateInfoUserWithID(ID,Info.HoTen,Info.NgaySinh,Info.Email).then(r =>{
         req.logout();
         req.session.cookie.expires = false;
-        req.flash('signupMessage', 'Đã cập nhật thông tin, mời đăng nhập lại');
-        res.redirect('/dangnhap');
+        // req.flash('signupMessage', 'Đã cập nhật thông tin, mời đăng nhập lại');
+        res.redirect('/');
       }).catch(err =>{
         req.flash('msg_info','Không cập nhật được thông tin');
         res.redirect('/thong-tin-ca-nhan');
@@ -137,8 +137,8 @@ router.post('/thong-tin-ca-nhan/:ID/doi-mat-khau', function(req,res,next){
         loginModel.updatePasswordUserWithID(ID,newPass).then(r2=>{
           req.logout();
           req.session.cookie.expires = false;
-          req.flash('signupMessage', 'Đổi mật khẩu thành công, mời đăng nhập lại');
-          res.redirect('/dangnhap');
+          // req.flash('signupMessage', 'Đổi mật khẩu thành công, mời đăng nhập lại');
+          res.redirect('/');
         }).catch(err=>{
           req.flash('changePasswordMessage','Đã xảy ra lỗi');
           res.redirect(`/thong-tin-ca-nhan/${ID}/doi-mat-khau`);

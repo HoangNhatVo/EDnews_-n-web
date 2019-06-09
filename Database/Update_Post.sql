@@ -5,31 +5,31 @@ where IDHinh=1;
 update urlhinhanh
 set urllinkHinh = 'ninh-binh.jpg'
 where IDHinh=2;
-insert into urlhinhanh values(null,'curacao-island.jpg');
-insert into urlhinhanh values(null,'dau-tu.jpg');
-insert into urlhinhanh values(null,'eximbank.jpg');
-insert into urlhinhanh values(null,'ong-Ha.jpg');
-insert into urlhinhanh values(null,'duy-manh.jpg');
-insert into urlhinhanh values(null,'Doi-Hinh-U23.jpg');
-insert into urlhinhanh values(null,'Thai-Land-U23.jpg');
-insert into urlhinhanh values(null,'apple.jpg');
-insert into urlhinhanh values(null,'dark-mode.jpg');
-insert into urlhinhanh values(null,'AI.jpg');
-insert into urlhinhanh values(null,'ChiPu.jpg');
-insert into urlhinhanh values(null,'NgocTrinh.jpg');
-insert into urlhinhanh values(null,'caraoken.jpg');
-insert into urlhinhanh values(null,'chill.jpg');
-insert into urlhinhanh values(null,'pmt.jpg');
-insert into urlhinhanh values(null,'NTN.jpg');
-insert into urlhinhanh values(null,'HoaiLinh.jpg');
-insert into urlhinhanh values(null,'Vo-Ba.jpg');
-insert into urlhinhanh values(null,'chipu-thoitrang.jpg');
-insert into urlhinhanh values(null,'tram-t2.jpg');
-insert into urlhinhanh values(null,'metro.jpg');
-insert into urlhinhanh values(null,'thu-tuong-ko-do-nhua.jpg');
-insert into urlhinhanh values(null,'mit.jpg');
-insert into urlhinhanh values(null,'toi-pham.jpg');
-insert into urlhinhanh values(null,'USD.jpg');
+insert into urlhinhanh values(4,'curacao-island.jpg');
+insert into urlhinhanh values(5,'dau-tu.jpg');
+insert into urlhinhanh values(6,'eximbank.jpg');
+insert into urlhinhanh values(7,'ong-Ha.jpg');
+insert into urlhinhanh values(8,'duy-manh.jpg');
+insert into urlhinhanh values(9,'Doi-Hinh-U23.jpg');
+insert into urlhinhanh values(10,'Thai-Land-U23.jpg');
+insert into urlhinhanh values(11,'apple.jpg');
+insert into urlhinhanh values(12,'dark-mode.jpg');
+insert into urlhinhanh values(13,'AI.jpg');
+insert into urlhinhanh values(14,'ChiPu.jpg');
+insert into urlhinhanh values(15,'NgocTrinh.jpg');
+insert into urlhinhanh values(16,'caraoken.jpg');
+insert into urlhinhanh values(18,'chill.jpg');
+insert into urlhinhanh values(19,'pmt.jpg');
+insert into urlhinhanh values(20,'NTN.jpg');
+insert into urlhinhanh values(21,'HoaiLinh.jpg');
+insert into urlhinhanh values(22,'Vo-Ba.jpg');
+insert into urlhinhanh values(23,'chipu-thoitrang.jpg');
+insert into urlhinhanh values(24,'tram-t2.jpg');
+insert into urlhinhanh values(25,'metro.jpg');
+insert into urlhinhanh values(26,'thu-tuong-ko-do-nhua.jpg');
+insert into urlhinhanh values(27,'mit.jpg');
+insert into urlhinhanh values(28,'toi-pham.jpg');
+insert into urlhinhanh values(29,'USD.jpg');
 #---------------------GAN HINH VAO BAI VIET
 update baiviet_hinhanh
 set IDHinh =2

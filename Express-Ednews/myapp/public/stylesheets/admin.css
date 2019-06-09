@@ -55,7 +55,7 @@ height: 180px;
 }
 .form-group{
 	padding:10px;
-	/* border-top:1px solid #ccc; */
+	border-top:1px solid #ccc;
 	margin: 0;
 	display: flex;
 }
@@ -222,7 +222,7 @@ height: 180px;
 	padding:5px;
 }
 #text-input{
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 
 #image-parent{
@@ -633,4 +633,7 @@ background-color: #231f1f;
 }
 thead{
   text-align: center;
+}
+#tt-top{
+  margin-top: 20px;
 }

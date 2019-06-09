@@ -1,3 +1,48 @@
+
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE CountPicture ()
+BEGIN
+	select count(*) as SL from urlhinhanh;
+END;$$
+DELIMITER ;
+call CountPicture ()
+
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE AddPicture (in link varchar(255))
+BEGIN
+	declare count1 int;
+    declare count2 int;
+    set count1 =( select count(*) from urlhinhanh where urllinkHinh = link);
+    if (count1 > 0) 
+    then
+    set count2 = (select count(*) from urlhinhanh);
+    set link = (select concat(count2,link));
+    end if;
+	insert into urlhinhanh values (null, link);
+    select IDHinh from urlhinhanh where urllinkHinh = link;
+END;$$
+DELIMITER ;
+
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure AddPostPicture(in IDBaiViet varchar(15), in IDHinh int(11))
+begin
+	insert into baiviet_hinhanh values (IDBaiViet,IDHinh,1);
+end;$$
+DELIMITER ;
+
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure GetPictureWithName(in NamePicture varchar(255))
+begin
+	select * from urlhinhanh where urllinkHinh = NamePicture;
+end;$$
+DELIMITER ;
+
+#-------------------------------------------------------------------------------------------
+
 DELIMITER $$
 USE `baodientu3n`$$
 CREATE PROCEDURE AddPost (in TieuDe varchar(225),in TieuDe_KhongDau varchar(225),
@@ -75,7 +120,7 @@ create procedure AddUser2(in HoTen varchar(50), in SDT varchar(15),
  in NgayDangKy varchar(50), in NgayHetHan varchar(50), in TinhTrang varchar(20))
 begin
 	insert into nguoidung 
-    values(null,Email,Password,HoTen,GioiTinh,NgaySinh,Email,SDT,'PH4',NgayDangKy,NgayHetHan,TinhTrang,null,null);
+    values(null,Email,Password,HoTen,GioiTinh,NgaySinh,Email,SDT,'PH5',NgayDangKy,NgayHetHan,TinhTrang,null,null);
 end;$$
 DELIMITER ;
 
