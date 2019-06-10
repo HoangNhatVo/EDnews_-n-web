@@ -72,15 +72,15 @@ module.exports = function(passport) {
                             // Password: pass
                             Password: bCrypt.hashSync(pass, bCrypt.genSaltSync(saltRounds)),
                             NgayDangKy: moment().format('YYYY-MM-DD hh:mm:ss'),
-                            NgayHetHan:moment().add(7, 'days').format('YYYY-MM-DD hh:mm:ss'),
-                            TinhTrang: 'Còn hạn'
+                            // NgayHetHan:moment().add(7, 'days').format('YYYY-MM-DD hh:mm:ss'),
+                            // TinhTrang: 'Còn hạn'
                         }
                         // if(user.NgayHetHan.diff(moment(),'seconds')<0){
                         //     user.TinhTrang = 'Hết hạn';
                         // }
                         console.log(user);
                             loginModel.addUser2(user.HoTen, user.SDT, user.NgaySinh, user.GioiTinh,user.Email, 
-                                user.Password,user.NgayDangKy,user.NgayHetHan,user.TinhTrang).then(id =>{
+                                user.Password,user.NgayDangKy).then(id =>{
                                 return done(null, true, req.flash('signupMessage', 'Đăng ký thành công'));
                             }).catch(err => {
                                 return done(err);

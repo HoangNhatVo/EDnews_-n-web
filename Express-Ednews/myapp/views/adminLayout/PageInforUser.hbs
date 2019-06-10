@@ -1,107 +1,168 @@
- {{>AdminNav}}
- <div id="wrapper">   
-   {{>AdminSlidebar}}
-    <div id="content-wrapper">
+{{#section 'css'}}
+<link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}
 
-      <div class="container-fluid">
+{{#section 'js'}}
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script>
+  $(function () {
+    $('#editinforUser').validate({
+      rules: {
+        fullname: {
+          required: true,
+        },
+        Birthdate: {
+          required: true,
+        },
+        ButDanh: {
+          require: true,
+        },
+      },
+      messages: {
+        fullname: {
+          required: 'Bạn phải nhập đầy đủ họ tên.',
+        },
+        Birthdate: {
+          required: 'Bạn phải nhập ngày sinh.',
+        },
+        ButDanh: {
+          require: 'Bạn phải nhập bút danh',
+        },
+      },
+      errorElement: 'small',
+      errorClass: 'help-block text-danger',
+      highlight: function (e) {
+        $(e).removeClass('is-valid').addClass('is-invalid');
+      },
+      unhighlight: function (e) {
+        $(e).removeClass('is-invalid').addClass('is-valid');
+      }
+    });
+  })
+</script>
+<script type="text/javascript">
+  $(function () {
+    $('#txtBirthdate').datetimepicker({
+      format: 'm/d/Y',
+      timepicker: false,
+      mask: true,
+    });
+  });
+</script>
+{{/section}}
+{{>AdminNav}}
+<div id="wrapper">
+  {{>AdminSlidebar}}
+  <div id="content-wrapper">
 
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="index.html">Dashboard</a>
-          </li>
-          <li class="breadcrumb-item active">
-            Thông tin tài khoản
-          </li>
-        </ol>
+    <div class="container-fluid">
 
-        <!-- Icon Cards-->
-        <div class="row">
-         <div class="container" style="
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">
+          Thông tin tài khoản
+        </li>
+      </ol>
+
+      <!-- Icon Cards-->
+      <div class="row">
+        <div class="container" style="
          display: flex;">
           <div class="col-6">
             <div class="ava">
               <img src="https://topsao.vn/wp-content/uploads/2018/05/12/5a2a258f05c14-buianhtuan25-970x546.jpg">
             </div>
-              
-            
+
+
             <div class="inforUser">
-               <div class="form-group">
-                     <div class="infor">
-                       <label >Họ tên:</label>
-                       <span>Vo Hoang Nhat</span>
-                       
-                     </div>
-                   </div>
-                   <div class="form-group">
-                     <label>Bút danh:</label>
-                     <span>Cool</span>
-                     
-                   </div>
-                   <div class="form-group">
-                     <label>Ngày sinh:</label>
-                     <span>12/2/2019</span>
-                   </div>
-                   <div class="form-group form-last">
-                     <label>Email</label>
-                     <span>vonhathoang11@gmail.com</span>
-                   </div>
-                   <div class="form-group form-last">
-                     <label>Quyền</label>
-                     <span class="role">Admin</span>
-                   </div>
-                   
-             </div>
+              {{#each user}}
+              <div class="form-group">
+                <div class="infor">
+                  <label>Họ tên:</label>
+                  <span>{{HoTen}}</span>
+
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Bút danh:</label>
+                <span>{{ButDanh}}</span>
+
+              </div>
+              <div class="form-group">
+                <label>Ngày sinh:</label>
+                <span>{{format NgaySinh}}</span>
+              </div>
+              <div class="form-group ">
+                <label>Email</label>
+                <span>{{Email}}</span>
+              </div>
+
+              {{/each}}
+              <div class="form-group form-last">
+                <label>Quyền</label>
+                <span class="role">{{role}}</span>
+              </div>
+
+            </div>
           </div>
-           <div class="col-6">
-              <form class="editinforUser">
-               <div class="form-group">
-                     <div class="infor">
-                       <label >Họ tên:</label>
-                       <input type="text" name="" value="Vo Hoang Nhat">
-                       
-                     </div>
-                  
-                   </div>
-                   <div class="form-group">
-                     <label>Bút danh</label>
-                     <input type="text" name="" value="Cool">
-                   </div>
-                   <div class="form-group">
-                     <label>Ngày sinh:</label>
-                     <input type="date" name="" value="2/2/1998">
-                     
-                   </div>
-                   <div class="form-group">
-                     <label>Email</label>
-                     <input type="text" name="" value="vonhathoang11@gmail.com">
-                     
-                   </div>
-                   <div class="form-group form-last">
-                    <label>Ảnh đại diện</label>
-                     <label for="file" class="input-label"><i class="fa fa-upload mr-1 "></i>Thêm ảnh</label>
-          <input type="file" id="file" multiple="true" /><br>
-          <button type="button" class="close-image" id="close-image" aria-label="Close" hidden="true" data-toggle="tooltip" title="Close All Image">
-            <span aria-hidden="true">&times;</span>
-          </button>
-                     
-                   </div>
-                   
-                   <div class="submit">
-                     <button type="submit" class="btn">Lưu</button>
-                   </div>
-             </form>
-           </div>
-         </div>
-        </div>       
+          <div class="col-6">
+            <form class="editinforUser" id="editinforUser" method="POST" action="/admin/thong-tin-tai-khoan/chinh-sua">
+              <div class="form-group">
+                {{#each user}}
+                <div class="infor">
+                  <label>Họ tên:</label>
+                  <input type="text" name="fullname" value="{{HoTen}}">
 
-        
+                </div>
 
+              </div>
+              <div class="form-group">
+                <label>Bút danh</label>
+                <input type="text" name="ButDanh" value="{{ButDanh}}">
+              </div>
+              <div class="form-group">
+                <label>Ngày sinh:</label>
+                <input type="text " name="Birthdate" id="txtBirthdate" value="{{format NgaySinh}}">
+
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input type="text" name="Email" value="{{Email}}">
+
+              </div>
+              {{/each}}
+              <div class="form-group form-last">
+                <label>Ảnh đại diện</label>
+                <label for="file" class="input-label"><i class="fa fa-upload mr-1 "></i>Thêm ảnh</label>
+                <input type="file" id="file" multiple="true" /><br>
+                <button type="button" class="close-image" id="close-image" aria-label="Close" hidden="true"
+                  data-toggle="tooltip" title="Close All Image">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+
+              </div>
+
+              <div class="submit">
+                <button type="submit" class="btn">Lưu</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-      <!-- /.container-fluid -->
 
-      <!-- Sticky Footer -->
-      {{>AdminFooter}}
+
 
     </div>
-    </div>
-    {{>AdminLogoutmodal}}
+    <!-- /.container-fluid -->
+
+    <!-- Sticky Footer -->
+    {{>AdminFooter}}
+
+  </div>
+</div>
+{{>AdminLogoutmodal}}
