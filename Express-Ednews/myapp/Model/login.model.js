@@ -22,9 +22,9 @@ module.exports ={
     addUser:(HoTen, SDT, NgaySinh, GioiTinh, Email, Password) =>{
         return orm.selectAll(`call AddUser('${HoTen}','${SDT}','${NgaySinh}','${GioiTinh}','${Email}','${Password}')`);
     },
-    addUser2:(HoTen, SDT, NgaySinh, GioiTinh, Email, Password,NgayDangKy,NgayHetHan,TinhTrang) =>{
+    addUser2:(HoTen, SDT, NgaySinh, GioiTinh, Email, Password,NgayDangKy) =>{
         return orm.selectAll(`call AddUser2('${HoTen}','${SDT}','${NgaySinh}','${GioiTinh}','${Email}',
-        '${Password}','${NgayDangKy}','${NgayHetHan}','${TinhTrang}')`);
+        '${Password}','${NgayDangKy}')`);
     },
     updatePasswordUserWithID:(ID,Password)=>{
         return orm.selectAll(`call UpdatePasswordUserWithID(${ID},'${Password}')`);
