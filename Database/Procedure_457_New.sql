@@ -5,7 +5,7 @@ create procedure AddUser2(in HoTen varchar(50), in SDT varchar(15),
  in NgayDangKy varchar(50))
 begin
 	insert into nguoidung 
-    values(null,Email,Password,HoTen,GioiTinh,NgaySinh,Email,SDT,'PH5',NgayDangKy,null,null,null,null,null);
+    values(null,Email,Password,HoTen,GioiTinh,NgaySinh,Email,SDT,'PH5',NgayDangKy,null,N'Còn sử dụng',null,null,null);
 end;$$
 DELIMITER ;
 
