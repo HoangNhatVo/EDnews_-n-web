@@ -1,58 +1,67 @@
 {{#section 'css'}}
 <link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 {{/section}}
 
 {{#section 'js'}}
 <script
-  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script>
-  $(function () {
-    $('#editinforUser').validate({
-      rules: {
-        fullname: {
+	$(function () {
+		$('#editinforUser').validate({
+			rules: {
+				fullname: {
+					required: true,
+				},
+        ButDanh:{
           required: true,
         },
-        Birthdate: {
+				Birthdate: {
+					required: true,
+				},
+        Email:{
           required: true,
+          email: true
         },
-        ButDanh: {
-          require: true,
+			},
+			messages: {
+				fullname: {
+					required: 'Bắt buộc.',
+				},
+        ButDanh:{
+          required: 'Bắt buộc.',
         },
-      },
-      messages: {
-        fullname: {
-          required: 'Bạn phải nhập đầy đủ họ tên.',
+				Birthdate: {
+					required: 'Bắt buộc.',
+				},
+        Email:{
+          required: 'Bắt buộc.',
+          email: 'Chưa đúng định dạng email.'
         },
-        Birthdate: {
-          required: 'Bạn phải nhập ngày sinh.',
-        },
-        ButDanh: {
-          require: 'Bạn phải nhập bút danh',
-        },
-      },
-      errorElement: 'small',
-      errorClass: 'help-block text-danger',
-      highlight: function (e) {
-        $(e).removeClass('is-valid').addClass('is-invalid');
-      },
-      unhighlight: function (e) {
-        $(e).removeClass('is-invalid').addClass('is-valid');
-      }
-    });
-  })
+			},
+			errorElement: 'small',
+			errorClass: 'help-block text-danger',
+			highlight: function (e) {
+				$(e).removeClass('is-valid').addClass('is-invalid');
+			},
+			unhighlight: function (e) {
+				$(e).removeClass('is-invalid').addClass('is-valid');
+			}
+		});
+	})
 </script>
 <script type="text/javascript">
-  $(function () {
-    $('#txtBirthdate').datetimepicker({
-      format: 'm/d/Y',
-      timepicker: false,
-      mask: true,
-    });
-  });
+            $(function () {
+                $('#txtBirthdate').datetimepicker({
+                  format: 'm/d/Y',
+                  timepicker: false,
+                  mask: true,
+                });
+            });
 </script>
 {{/section}}
+
 {{>AdminNav}}
 <div id="wrapper">
   {{>AdminSlidebar}}
@@ -123,7 +132,7 @@
               </div>
               <div class="form-group">
                 <label>Bút danh</label>
-                <input type="text" name="ButDanh" value="{{ButDanh}}">
+                <input type="text" name="ButDanh" value="{{ButDanh}}"><br>
               </div>
               <div class="form-group">
                 <label>Ngày sinh:</label>

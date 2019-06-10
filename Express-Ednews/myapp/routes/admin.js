@@ -107,6 +107,7 @@ router.post('/thong-tin-tai-khoan/chinh-sua',(req,res,next)=>{
   res.end('abc');
   // res.redirect('/admin/thong-tin-tai-khoan');
 })
+
 //Page bai viet dang cho duyet
 router.get('/bai-viet-dang-cho',auth_index, (req, res, next) => {
   var state=4;
