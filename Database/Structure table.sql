@@ -201,7 +201,7 @@ create table BienTapVien_ChuyenMuc
 alter table binhluan drop TinhTrang;
 alter table binhluan modify NgayBinhLuan datetime;
 #----------------function luot thich
-DELIMITER $$
+/*DELIMITER $$
 USE `baodientu3n`$$
 create function LikesOfComment( IDComment int)
 returns integer DETERMINISTIC
@@ -214,4 +214,4 @@ DELIMITER ;
 create table LikeBinhLuan
 ( IDBinhLuan int,
   IDUserLike int,
-  primary key(IDBinhLuan,IDUserLike));
+  primary key(IDBinhLuan,IDUserLike));*/
