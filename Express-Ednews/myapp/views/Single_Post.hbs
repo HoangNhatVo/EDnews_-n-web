@@ -1,117 +1,138 @@
 {{>header}}
 <section class="bg-primary p-0 pb-xs-20">
-		<div class="container">
-				{{>botnav}}
-		</div><!-- container -->
-	</section>
-	<!-- END OF MAIN SLIDER -->
-	
+	<div class="container">
+		{{>botnav}}
+	</div><!-- container -->
+</section>
+<!-- END OF MAIN SLIDER -->
 
-	<section class="ptb-30">
-		<div class="container">
-			<div class="row">
-			
-				<div class="col-md-12 col-lg-8">
-					{{#each DetailPost}}
-					<div class="ptb-0">
-						<a class="mt-10" href="/"><i class="mr-5 ion-ios-home"></i><b>TRANG CHỦ</b></a>
-						<a class="mt-10" href="/{{KhongDauCha}}"><i class="mlr-10 ion-chevron-right"></i><b>{{TenCHuyenMucCha}}</b></a>
-						<a class="mt-10" href="/{{KhongDauCha}}/{{KhongDauCon}}"><i class="mlr-10 ion-chevron-right"></i><b>{{TenChuyenMucCon}}</b></a>
-						<a class="mt-10 mb-30 color-ash" href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><i class="mlr-10 ion-chevron-right"></i>
-							<b>{{TieuDe}}</b></a>
-					</div>
-					
-					<div class="p-30 mb-30 card-view">
-						<img src="/images/{{urllinkHinh}}" style="max-height:330px;object-fit:cover">
-						<h3 class="mt-30 mb-5"><a href="#"><b>{{TieuDe}}</b></a></h3>
-						<ul class="list-li-mr-10 color-lite-black">
-							<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
-							<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
-							<li class="category"><a href="/{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMucCon}}</a></li>
+
+<section class="ptb-30">
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-12 col-lg-8">
+				{{#each DetailPost}}
+				<div class="ptb-0">
+					<a class="mt-10" href="/"><i class="mr-5 ion-ios-home"></i><b>TRANG CHỦ</b></a>
+					<a class="mt-10" href="/{{KhongDauCha}}"><i
+							class="mlr-10 ion-chevron-right"></i><b>{{TenCHuyenMucCha}}</b></a>
+					<a class="mt-10" href="/{{KhongDauCha}}/{{KhongDauCon}}"><i
+							class="mlr-10 ion-chevron-right"></i><b>{{TenChuyenMucCon}}</b></a>
+					<a class="mt-10 mb-30 color-ash"
+						href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><i
+							class="mlr-10 ion-chevron-right"></i>
+						<b>{{TieuDe}}</b></a>
+				</div>
+
+				<div class="p-30 mb-30 card-view">
+					<img src="/images/{{urllinkHinh}}" style="max-height:330px;object-fit:cover">
+					<h3 class="mt-30 mb-5"><a href="#"><b>{{TieuDe}}</b></a></h3>
+					<ul class="list-li-mr-10 color-lite-black">
+						<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
+						<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
+						<li class="category"><a href="/{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMucCon}}</a></li>
+					</ul>
+
+					{{{NoiDung}}}
+					{{/each}}
+					<div class="sided-half">
+						<ul class="s-left ptb-5 list-btn-semiwhite sided-sm-center">
+							{{#each TagPost}}
+							<li><a href="/tag/{{remove TenTag}}">{{TenTag}}</a></li>
+							{{/each}}
 						</ul>
-						
-						{{{NoiDung}}}
-						{{/each}}
-						<div class="sided-half">
-							<ul class="s-left ptb-5 list-btn-semiwhite sided-sm-center">
-								{{#each TagPost}}
-								<li><a href="/tag/{{remove TenTag}}">{{TenTag}}</a></li>
-								{{/each}}
-							</ul>
-							<ul class="s-right sided-sm-center ptb-5 list-a-p-5 list-a-plr-10 font-11 color-ash">
-								<li><a href="#"><i class="ion-social-facebook"></i></a></li>
-								<li><a href="#"><i class="ion-social-twitter"></i></a></li>
-								<li><a href="#"><i class="ion-social-google"></i></a></li>
-								<li><a href="#"><i class="ion-social-instagram"></i></a></li>
-							</ul>
-						</div><!-- sided-half -->
-					</div><!-- card-view -->
-					
-					
-					
-					<div class="p-30 mb-30 card-view">
-						<h4 class="p-title"><b>BÀI VIẾT LIÊN QUAN</b></h4>
-						<div class="row">
-							<div class="col-sm-4 mb-sm-20">
-								<img src="/images/slider-7-400x400.jpg" alt="">
-								<h5 class="mt-20"><a href="/thethao/the-thao-the-gioi/toc-do-lam-chu-cuoc-dua"><b>Bạn tình của tay đua Lê Văn Cẩm xác nhận chia tay</b></a></h5>
-								<ul class="mtb-5 list-li-mr-20 color-lite-black">
-									<li><i class="mr-5 font-12 ion-clock"></i>25/1/2018</li>
-									<li class="category"><a href="/thethao/bong-da">nhân vật</a></li>
-								</ul>
-							</div><!-- col-sm-4 -->
-							
-							<div class="col-sm-4 mb-sm-20">
-								<img src="/images/slider-6-400x400.jpg" alt="">
-								<h5 class="mt-20"><a href="/thethao/the-thao-the-gioi/toc-do-lam-chu-cuoc-dua"><b>Đua Văn Xe : 'Nhiều lần tôi chạm ngỏ tử'</b></a></h5>
-								<ul class="mtb-5 list-li-mr-20 color-lite-black">
-									<li><i class="mr-5 font-12 ion-clock"></i>25/1/2018</li>
-									<li class="category"><a href="/thethao/bong-da">nhân vật</a></li>
-								</ul>
-							</div><!-- col-sm-4 -->
-							
-							<div class="col-sm-4">
-								<img src="/images/news-3-250x250.jpg" alt="">
-								<h5 class="mt-20"><a href="/thethao/the-thao-the-gioi/toc-do-lam-chu-cuoc-dua"><b>Nhìn lại sự nghiệp của tay đua Lê Văn Cẩm</b></a></h5>
-								<ul class="mtb-5 list-li-mr-20 color-lite-black">
-									<li><i class="mr-5 font-12 ion-clock"></i>25/1/2018</li>
-									<li class="category"><a href="/thethao/bong-da">nhân vật</a></li>
-								</ul>
-							</div><!-- col-sm-4 -->
-						</div><!-- row -->
-					</div><!-- card-view -->
-					
-					<div class="p-30 mb-30 card-view">
-						<h4 class="p-title"><b>BÌNH LUẬN</b></h4>
-						{{#each CommentPost}}
-						<div class="sided-90x">
-							<div class="s-left br-3 oflow-hidden">
-								<img src="/images/{{AnhDaiDien}}" alt="">
-							</div><!-- s-left -->
-							
-							<div class="s-right">
-								<h5><b>{{HoTen}}</b><span class="ml-10 color-ash font-8">{{format NgayBinhLuan}}</span></h5>
-								<p class="mt-5 mb-10">{{NoiDung}}
-								</p>
-								<a class="mr-20" href="#"><b>THÍCH</b></a>
-								<a href="#"><b>TRẢ LỜI</b></a>
-							</div><!-- s-left -->
-						</div><!-- sided-90x -->
-						
-						<div class="ml-90 ml-sm-20 mt-20 brdr-grey-1 opacty-6"></div>
-						
-						<div class="mb-20 brdr-grey-1 opacty-6"></div>
-						{{/each}}
-						
-					</div><!-- card-view -->
-					
-					
-					
+						<ul class="s-right sided-sm-center ptb-5 list-a-p-5 list-a-plr-10 font-11 color-ash">
+							<li><a href="#"><i class="ion-social-facebook"></i></a></li>
+							<li><a href="#"><i class="ion-social-twitter"></i></a></li>
+							<li><a href="#"><i class="ion-social-google"></i></a></li>
+							<li><a href="#"><i class="ion-social-instagram"></i></a></li>
+						</ul>
+					</div><!-- sided-half -->
+				</div><!-- card-view -->
 
-				</div><!-- col-sm-8 -->
-				
+
+
+				<div class="p-30 mb-30 card-view">
+					<h4 class="p-title"><b>BÀI VIẾT LIÊN QUAN</b></h4>
+					<div class="row">
+						<div class="col-sm-4 mb-sm-20">
+							<img src="/images/slider-7-400x400.jpg" alt="">
+							<h5 class="mt-20"><a href="/thethao/the-thao-the-gioi/toc-do-lam-chu-cuoc-dua"><b>Bạn tình
+										của tay đua Lê Văn Cẩm xác nhận chia tay</b></a></h5>
+							<ul class="mtb-5 list-li-mr-20 color-lite-black">
+								<li><i class="mr-5 font-12 ion-clock"></i>25/1/2018</li>
+								<li class="category"><a href="/thethao/bong-da">nhân vật</a></li>
+							</ul>
+						</div><!-- col-sm-4 -->
+
+						<div class="col-sm-4 mb-sm-20">
+							<img src="/images/slider-6-400x400.jpg" alt="">
+							<h5 class="mt-20"><a href="/thethao/the-thao-the-gioi/toc-do-lam-chu-cuoc-dua"><b>Đua Văn Xe
+										: 'Nhiều lần tôi chạm ngỏ tử'</b></a></h5>
+							<ul class="mtb-5 list-li-mr-20 color-lite-black">
+								<li><i class="mr-5 font-12 ion-clock"></i>25/1/2018</li>
+								<li class="category"><a href="/thethao/bong-da">nhân vật</a></li>
+							</ul>
+						</div><!-- col-sm-4 -->
+
+						<div class="col-sm-4">
+							<img src="/images/news-3-250x250.jpg" alt="">
+							<h5 class="mt-20"><a href="/thethao/the-thao-the-gioi/toc-do-lam-chu-cuoc-dua"><b>Nhìn lại
+										sự nghiệp của tay đua Lê Văn Cẩm</b></a></h5>
+							<ul class="mtb-5 list-li-mr-20 color-lite-black">
+								<li><i class="mr-5 font-12 ion-clock"></i>25/1/2018</li>
+								<li class="category"><a href="/thethao/bong-da">nhân vật</a></li>
+							</ul>
+						</div><!-- col-sm-4 -->
+					</div><!-- row -->
+				</div><!-- card-view -->
+				<div class="p-30 mb-30 card-view">
+					<h4 class="p-title"><b>BÌNH LUẬN</b></h4>
+					{{#if user}}
+					{{#each DetailPost }}
+					
+					<form method="POST" action="/comment/{{IDBaiViet}}">
+						<input name="cmt" class="boxCmt" placeholder="Viết bình luận..." ;>
+						<button type="submit" class="btnCmt" style="margin-top:10px">GỬI BÌNH LUẬN</button>
+					</form>
+					{{/each}}
+					{{/if}}
+					{{#each CommentPost}}
+					<div class="sided-90x" id="cmtpost">
+						<div class="s-left br-3 oflow-hidden">
+							<img src="/images/{{AnhDaiDien}}" alt="">
+						</div><!-- s-left -->
+
+						<div class="s-right">
+							<h5><b>{{HoTen}}</b><span class="ml-10 color-ash font-8">{{format NgayBinhLuan}}</span></h5>
+							<p class="mt-5 mb-10" style="margin-bottom: 0%!important">{{NoiDung}}
+							</p>
+							{{!-- <p><img style="height: 25px;width:25px" src="/images/like.png" alt="">
+								<a style="color:#627aad; margin-right:15px;font-weight:bold ">{{LuotLike}}</a></p>
+							<form method="POST" action="/{{IDBaiViet}}/comment/{{IDBinhLuan}}" style="display: inline-block">
+							
+								<button type="submit" style="color:#627aad; font-weight:bold">Thích</button>
+							</form>
+							<a href="#"><b style="margin-left:10px;color:#627aad">Trả lời</b></a> --}}
+
+						</div><!-- s-left -->
+					</div><!-- sided-90x -->
+
+					<div class="ml-90 ml-sm-20 mt-20 brdr-grey-1 opacty-6"></div>
+
+					<div class="mb-20 brdr-grey-1 opacty-6"></div>
+					{{/each}}
+
+				</div><!-- card-view -->
+
+
+
+
+			</div><!-- col-sm-8 -->
+
 			{{>card-view}}
-			</div><!-- row -->
-		</div><!-- container -->
-	</section>
+		</div><!-- row -->
+	</div><!-- container -->
+</section>
 {{>footer}}

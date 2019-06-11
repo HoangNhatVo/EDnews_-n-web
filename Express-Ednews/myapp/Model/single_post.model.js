@@ -66,5 +66,15 @@ module.exports ={
     },
     GetPostWithState:IDstate=>{
         return orm.selectAll(`call GetPostWithState(${IDstate})`);
-    }
+    },
+    AddComment:(IDPost,IDUser,Comment)=>{
+        return orm.selectAll(`call AddComment('${IDPost}','${IDUser}','${Comment}')`);
+    },
+    // LikeOrDislikeComment:(IDUser,IDComment)=>{
+    //     return orm.selectAll(`call LikeOrDislikeComment('${IDUser}','${IDComment}')`);
+    // },
+    // CheckLike:(IDUser,IDComment)=>{
+    //     return orm.selectAll(`call CheckLike('${IDUser}','${IDComment}')`);
+    // }
+    
 };
