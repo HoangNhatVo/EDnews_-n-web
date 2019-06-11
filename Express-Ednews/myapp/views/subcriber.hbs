@@ -17,6 +17,10 @@
 				Birthdate: {
 					required: true,
 				},
+				Email:{
+					required: true,
+					email: true
+				},
 			},
 			messages: {
 				fullname: {
@@ -24,6 +28,10 @@
 				},
 				Birthdate: {
 					required: 'Bạn phải nhập ngày sinh.',
+				},
+				Email:{
+					required: 'Bạn phải nhập email.',
+					email: 'Chưa đúng định dạng email.'
 				},
 			},
 			errorElement: 'small',
@@ -70,6 +78,11 @@
 	{{#if msg_changeInfo.length}}
 		<div class="alert alert-danger alert-info" role="alert">
 				{{msg_changeInfo}}</a>.
+		</div>
+	{{/if}}
+	{{#if msg_changeInfo_success.length}}
+		<div class="alert alert-success alert-info" role="alert">
+				{{msg_changeInfo_success}}</a>.
 		</div>
 	{{/if}}
 

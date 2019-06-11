@@ -11,5 +11,11 @@ module.exports ={
     //xuất bản bài viết
     PublishPost:IDpost=>{
         return orm.selectAll(`call PublishPost('${IDpost}')`);
+    },
+    Getlistuser:()=>{
+        return orm.selectAll(`call GetListUsers()`);
+    },
+    Updateuser:(IDuser,Phanhe)=>{
+        return orm.selectAll(`call UpdateRoleUser(${IDuser},'${Phanhe}')`);
     }
 }

@@ -71,7 +71,7 @@ module.exports = function(passport) {
                             Email: email,
                             // Password: pass
                             Password: bCrypt.hashSync(pass, bCrypt.genSaltSync(saltRounds)),
-                            NgayDangKy: moment().format('YYYY-MM-DD hh:mm:ss')
+                            NgayDangKy: moment().format('YYYY-MM-DD hh:mm:ss'),
                             // NgayHetHan:moment().add(7, 'days').format('YYYY-MM-DD hh:mm:ss'),
                             // TinhTrang: 'Còn hạn'
                         }
