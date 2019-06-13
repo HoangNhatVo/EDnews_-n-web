@@ -17,25 +17,24 @@ $(document).ready( function() {
   });
 });
 
-  $(document).on("click",".btnTag",function(){
+$(document).on("click",".btnTag",function(){
     var index =  $(this).parent().index();
     arrTag.splice(index,1);
     $('[name=ValueTags]').val(arrTag);
     $(this).parent().remove();
-  });
- 
-
-CKEDITOR.on('instanceReady', function (ev) {
-    $('iframe').contents().click(function (e) {
-        if (typeof e.target.href !== 'undefined') {
-            window.open(e.target.href, 'new' + e.screenX);
-        }
-        else if (typeof e.currentTarget.activeElement.href !== 'undefined') {
-            window.open(e.currentTarget.activeElement.href, 'new' + e.screenX);
-        }
-    });
-    
 });
+
+
+// CKEDITOR.on('instanceReady', function (ev) {
+//     $('iframe').contents().click(function (e) {
+//         if (typeof e.target.href !== 'undefined') {
+//             window.open(e.target.href, 'new' + e.screenX);
+//         }
+//         else if (typeof e.currentTarget.activeElement.href !== 'undefined') {
+//             window.open(e.currentTarget.activeElement.href, 'new' + e.screenX);
+//         }
+//     });    
+// });
 // CKEDITOR.replace('editor1',{
 //   height: 500,
 // });
@@ -46,6 +45,19 @@ $(document).ready(function() {
     var length = name.length;
     var start = name.lastIndexOf('\\') + 1;
     var filename = name.substring(start, length);
+    filename = filename.replace('[','_');
+    filename = filename.replace(']','_');
     $('#fileName').val(filename);
   });
+});
+
+ 
+$(document).on("click",".btnSend",function(){
+  var n = $('#tag').size();
+  if(n == 0){
+    $('#btnAlert').click();
+  }
+  else{
+    $('#frmCreateNews').submit();
+  }  
 });

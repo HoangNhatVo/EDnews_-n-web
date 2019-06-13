@@ -79,6 +79,14 @@ router.post('/dang-bai', (req,res,next)=>{
     res.redirect('/admin/dang-bai');
   }).catch(next);  
 });
+router.get('/bai-viet-dang-cho/chinh-sua/:IDBV', auth_createnew, (req, res, next)=>{
+  var IDBaiViet = req.params.IDBV;
+  res.render('adminLayout/PageEditNews',
+        {
+          css: '/stylesheets/admin.css',
+          style: '/stylesheets/sb-admin.css',});
+})
+
 
 //Page thong tin tai khoan
 router.get('/thong-tin-tai-khoan',auth_index, (req, res, next) => {

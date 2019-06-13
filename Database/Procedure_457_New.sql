@@ -1,11 +1,29 @@
 DELIMITER $$
 USE `baodientu3n`$$
+create procedure GetRelatedPosts(in IDPost varchar(15))
+begin
+	declare Cat varchar(10);
+    set Cat=(select ChuyenMuc from baiviet where IDBaiViet=IDPost);
+	select BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,
+    nd.ButDanh,CMCon.TenChuyenMuc,CMCha.TenChuyenMuc_KhongDau as KhongDauCha,CMCon.TenChuyenMuc_KhongDau as KhongDauCon,url.urllinkHinh
+    from baiviet as BV join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+								join chuyenmuc as CMCon on CMCon.IDChuyenMuc= BV.ChuyenMuc
+                                join chuyenmuc as CMCha on CMCha.IDCHuyenMuc=CMCon.ChuyenMucCha
+								join urlhinhanh as url on url.IDHinh=HA.IDHinh
+                                join nguoidung as nd on nd.ID=BV.PhongVien
+	where BV.TinhTrang=2   and BV.SuDung=1 and BV.ChuyenMuc=Cat and BV.IDBaiViet!=IDPost
+    order by BV.NgayDang desc limit 5 ;
+end;$$
+DELIMITER ;
+
+DELIMITER $$
+USE `baodientu3n`$$
 create procedure AddUser2(in HoTen varchar(50), in SDT varchar(15),
  in NgaySinh varchar(50), in GioiTinh varchar(10), in Email varchar(50), in Password varchar(255),
  in NgayDangKy varchar(50))
 begin
 	insert into nguoidung 
-    values(null,Email,Password,HoTen,GioiTinh,NgaySinh,Email,SDT,'PH5',NgayDangKy,null,N'Còn sử dụng',null,null,null);
+    values(null,Email,Password,HoTen,GioiTinh,NgaySinh,Email,SDT,'PH5',NgayDangKy,null,N'Còn sử dụng',null,'default-avatar.png',null);
 end;$$
 DELIMITER ;
 

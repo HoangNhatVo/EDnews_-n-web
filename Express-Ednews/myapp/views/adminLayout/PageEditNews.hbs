@@ -29,12 +29,12 @@
         },
         filename:{
           required: true,
-        },        
+        },
       },
-      messages: {        
+      messages: {
         TieuDe: {
           required: 'Bạn phải nhập tiêu đề bài viết.',
-        },        
+        },
         TomTat: {
           required: 'Bạn phải nhập nội dung tóm tắt.',
         },
@@ -43,7 +43,7 @@
         },
         filename:{
           required: 'Bạn phải chọn ảnh đại diện cho bài viết.',
-        },        
+        },
       },
       errorElement: 'small',
       errorClass: 'help-block text-danger',
@@ -73,31 +73,6 @@
 <script
   src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=wtnd3xbfybaxtd7216nf0no41mor1wo75hb96rr8fjhmwjrq"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.0.6/jquery.tinymce.min.js"></script>
-
-{{!-- <script>
-  $(function () {
-    tinymce.init({
-    selector: '#editor1',
-    height: 600,
-    plugins: [
-        'advlist autolink lists link image charmap preview hr anchor pagebreak',
-        'searchreplace wordcount visualblocks visualchars code',
-        'insertdatetime media nonbreaking table contextmenu directionality',
-        'emoticons template paste textcolor colorpicker textpattern imagetools media table'
-    ],
-    toolbar: 'code | bold italic underline strikethrough | formatselect sizeselect fontselect fontsizeselect | hr alignleft aligncenter alignright alignjustify outdent indent | bullist numlist | link image media table | insertfile undo redo | forecolor backcolor | emoticons',
-    fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
-    menubar: false,
-    images_upload_url: 'postAcceptor.php',
-    images_upload_handler: function (blobInfo, success, failure) {
-    setTimeout(function () {
-      success('http://moxiecode.cachefly.net/tinymce/v9/images/logo.png');
-      }, 2000);
-    }
-    })
-  });
-  </script> --}}
-
 <script>
   $(function () {
 
@@ -204,25 +179,7 @@
            <div class="ckeditor">
             <textarea class="form-control" id="editor1" name="FullDes"></textarea>
           </div>
-          {{!-- <div class="ckeditor">
-            <textarea id="editor1" name="editor1"></textarea>
-          </div> --}}
-          <button type="button" id="btnNews" class="btnSend">Gửi bài</button>
-
-          <button type="button" class="" id="btnAlert" data-toggle="modal" data-target="#exampleModal" hidden></button>
-          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Bạn phải nhập Tag cho bài viết!</h5>
-                        </div>                        
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
-                        </div>                            
-                  </div>
-              </div>
-          </div>
+          <button type="button" id="btnNews" class="btnSend"><i class="fa fa-check"></i> Lưu</button>
     </form>
         <!-- End CreateNews -->      
 

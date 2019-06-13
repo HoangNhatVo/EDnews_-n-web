@@ -637,3 +637,11 @@ thead{
 #tt-top{
   margin-top: 20px;
 }
+
+#btnNews{
+  border-radius: 5px;
+  padding: 8px 20px;
+}
+#btnNews:hover{
+  background-color: #0055B1;
+}
