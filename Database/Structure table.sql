@@ -86,6 +86,7 @@ create table BaiViet_HinhAnh
   AnhDaiDien int,#--1 là ảnh đại diện,0 là ảnh thường
   primary key(IDBaiViet,IDHinh)
   );
+  
 ----------------------------	KHOA NGOAI	
 alter table binhluan
 add constraint FK_BL_BL
@@ -190,3 +191,27 @@ create table DuyetBai
 alter table baiviet add SuDung int;
 SET SQL_SAFE_UPDATES = 0;
 update baiviet set SuDUng =1 where SuDung is null;
+#------------------9/6
+SET SQL_SAFE_UPDATES = 0;
+create table BienTapVien_ChuyenMuc
+( IDBienTapVien int,
+  ChuyenMuc varchar(10),
+  primary key(IDBienTapVien,ChuyenMuc));
+#------------------10/6
+alter table binhluan drop TinhTrang;
+alter table binhluan modify NgayBinhLuan datetime;
+#----------------function luot thich
+/*DELIMITER $$
+USE `baodientu3n`$$
+create function LikesOfComment( IDComment int)
+returns integer DETERMINISTIC
+begin
+	declare Numberoflikes int;
+    set Numberoflikes=(select count(*) from LikeBinhLuan where IDBinhLuan=IDComment);
+    return Numberoflikes;
+end;$$
+DELIMITER ;
+create table LikeBinhLuan
+( IDBinhLuan int,
+  IDUserLike int,
+  primary key(IDBinhLuan,IDUserLike));*/

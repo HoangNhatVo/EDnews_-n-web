@@ -209,17 +209,6 @@ begin
 end;$$
 DELIMITER ;
 
-#----------------------------Lay binh luan bai viet
-DELIMITER $$
-USE `baodientu3n`$$
-create procedure GetCommentsPost(in IDBaiViet varchar(15))
-begin
-	select  docgia.HoTen,docgia.AnhDaiDien,cmt.NgayBinhLuan,cmt.NoiDung
-    from baiviet as BV join binhluan as cmt on cmt.BaiViet =BV.IDBaiViet
-					   join nguoidung as docgia on docgia.ID=cmt.DocGia
-	where BV.IDBaiViet=	IDBaiViet;			
-end;$$
-DELIMITER ; 
 #-------------------------Lay bai viet theo tag
 DELIMITER $$
 USE `baodientu3n`$$
@@ -240,17 +229,6 @@ DELIMITER ;
 call GetPostsWithTag('#nghiduong',10,0);
 #-------------------------So luong bai viet theo tag
 
-DELIMITER $$
-USE `baodientu3n`$$
-create procedure GetCommentsPost(in IDBaiViet varchar(15))
-begin
-	select  docgia.HoTen,docgia.AnhDaiDien,cmt.NgayBinhLuan,cmt.NoiDung
-    from baiviet as BV join binhluan as cmt on cmt.BaiViet =BV.IDBaiViet
-					   join nguoidung as docgia on docgia.ID=cmt.DocGia
-	where BV.IDBaiViet=	IDBaiViet;			
-end;$$
-DELIMITER ; 
-#-------------------------Lay bai viet theo tag
 DELIMITER $$
 USE `baodientu3n`$$
 create procedure CountPostsWithTag(in TagName varchar(50))
@@ -305,7 +283,7 @@ begin
                         join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
                         join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
                         where   BV.SuDung=1
-    order by BV.LuotXem
+    order by BV.LuotXem desc
     limit 10 ;
 end;$$
 DELIMITER ; 
@@ -325,7 +303,7 @@ begin
    limit limi offset offse;
 end;$$
 DELIMITER ; 
-call FindPost('ana',1,0);
+call FindPost('nghi',1,0);
 #-----------------------------So luong bai viet dc tim thay theo tu khoa
 DELIMITER $$
 USE `baodientu3n`$$
@@ -337,3 +315,55 @@ begin
 end;$$
 DELIMITER ; 
 call NumberOfFindPost('nghi duong');
+#---------------------------Them binh luan
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure AddComment(in IDBaiViet varchar(15),in IDUser int,in NoiDungCmt text)
+begin
+	insert into binhluan values(null,IDBaiViet,IDUser,NoiDungCmt,null,now());
+end;$$
+DELIMITER ; 
+#---------------------------Thich Binh Tuan
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure LikeorDislikeComment(in IDUser int,in IDComment int)
+begin
+	if exists ( select * from likebinhluan where IDBinhluan=IDComment and IDUserLike=IDUser)
+    then
+    delete from likebinhluan where IDBinhluan=IDComment and IDUserLike=IDUser;
+    elseif not exists ( select * from likebinhluan where IDBinhluan=IDComment and IDUserLike=IDUser)
+    then
+	insert into likebinhluan values(IDComment,IDUser);
+    end if;
+end;$$
+DELIMITER ;
+
+#----------------------------Lay binh luan bai viet
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure GetCommentsPost(in IDBaiViet varchar(15))
+begin
+	select  BV.TieuDe_KhongDau as TieuDe_KhongDau,con.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cmt.IDBinhLuan,BV.IDBaiViet,docgia.HoTen,docgia.AnhDaiDien,cmt.NgayBinhLuan,cmt.NoiDung,LikesOfComment(cmt.IDBinhLuan) as LuotLike
+    from baiviet as BV join binhluan as cmt on cmt.BaiViet =BV.IDBaiViet
+					   join nguoidung as docgia on docgia.ID=cmt.DocGia
+                       join chuyenmuc as con on con.IDChuyenMuc=BV.ChuyenMuc
+                       join chuyenmuc as cha on cha.IDChuyenMuc=con.ChuyenMucCha
+	where BV.IDBaiViet=	IDBaiViet;			
+end;$$
+DELIMITER ; 
+#-----------------------Check da thich hay chua
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure CheckLike(in IDUser int,in IDComment int)
+begin
+	if exists ( select * from likebinhluan where IDBinhluan=IDComment and IDUserLike=IDUser)
+    then
+    select 1 as result ;
+    elseif not exists ( select * from likebinhluan where IDBinhluan=IDComment and IDUserLike=IDUser)
+    then
+	select 0 as result ;
+    end if;
+end;$$
+DELIMITER ;
+call CheckLike(10,2);
+

@@ -123,17 +123,37 @@ BEGIN
 			then 
 			set lastTag =(select max(convert(substring(IDTag,4),unsigned))
 				   from nhan  );
+                   if(lastTag is null)
+                   then
+                   set lastTag=0;
+                   end if;
 			 set nextTag = lastTag +1;
 			 set IDTagAdd = (select concat('tag',convert(nextTag,char)));
 			 insert into nhan values( IDTagAdd,TagNameNew);
-			 select 1 as temp;
+			 #---- select 1 as temp;
+             select IDTagAdd;
 	end if;
 	if( count1>0 )
 	then 
-	select 0 as temp;
+	 #----select 0 as temp;
+    select IDTag as IDTagAdd  from nhan where TenTag = TagNameNew;
 	end if;
 END;$$
 DELIMITER ;
+#----------------- add tag post
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure AddTagPost(in IDBV varchar(15), in IDTa varchar(10))
+begin
+if exists( select * from nhan_baiviet where IDBaiViet=IDBV and IDTag=IDTa)
+then
+select 0 as temp;
+else
+	insert into nhan_baiviet values (IDBV,IDTa);
+end if;
+end;$$
+DELIMITER ;
+
 #--------------------------Lay 1 tag vs ID truyen vao
 DELIMITER $$
 USE `baodientu3n`$$
@@ -310,7 +330,9 @@ DELIMITER ;
 #-----------------------------------THEM BAI VIET
 DELIMITER $$
 USE `baodientu3n`$$
-CREATE PROCEDURE AddPost (in TieuDe varchar(225),in TieuDe_KhongDau varchar(225),in IDChuyenMuc varchar(10),in NoiDung text,in IDPhongVien int,in NoiDungTomTat varchar(500), in NgayViet date)
+CREATE PROCEDURE AddPost (in TieuDe varchar(225),in TieuDe_KhongDau varchar(225),
+in IDChuyenMuc varchar(10),in NoiDung text,in IDPhongVien int,in NoiDungTomTat varchar(500),
+ in NgayViet date)
 BEGIN
 	declare num int; declare PostID varchar(15);
     set num = (select max(convert(substring(IDBaiViet,3),unsigned)) from baiviet);
@@ -324,6 +346,7 @@ BEGIN
     end if;
     set PostID = (select concat('BV',convert(num,char)));
     insert into baiviet values (PostID,TieuDe,TieuDe_KhongDau,IDChuyenMuc,null,NoiDung,0,IDPhongVien,null,4,0,NoiDungTomTat,1,NgayViet,1);
+    select PostID;
 END;$$
 DELIMITER ;
 #-------------------------PHAN HANG BAI VIET
@@ -340,6 +363,25 @@ USE `baodientu3n`$$
 CREATE PROCEDURE HightlightPost (in IDBaiVietDuyet varchar(15), in Loai int)#--- 0: thuong 1 : NoiBat
 BEGIN
     update baiviet set TinNoiBat= Loai where IDBaiViet = IDBaiVietDuyet;
+END;$$
+DELIMITER ;
+#----------------------HINH ANH
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE AddPicture (in link varchar(255))
+BEGIN
+	declare newlink varchar(255);
+	if exists ( select * from urlhinhanh where urllinkHinh = link)
+    then
+    set newlink = (select concat(link,'#'));
+	insert into urlhinhanh values(null,newlink);
+    select IDHinh from urlhinhanh where urllinkHinh = newlink;
+    end if;
+    if not exists(select * from urlhinhanh where urllinkHinh = link)
+    then
+    insert into urlhinhanh values(null,link);
+    select IDHinh from urlhinhanh where urllinkHinh = link;
+    end if;
 END;$$
 DELIMITER ;
 #-----------------------VAN DE GIA HAN TAI KHOAN
@@ -373,5 +415,24 @@ BEGIN
     then
     select 0 as temp;
     end if;
+END;$$
+DELIMITER ;
+#-----------------------QUAN TRI USER
+#--------------GetUser
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE GetListUsers ()
+BEGIN
+    select nd.ID,nd.HoTen,nd.ButDanh,nd.Email,ph.TenPhanHe  
+    from nguoidung as nd join phanhenguoidung as ph on ph.IDPhanHe=nd.PhanHe;
+END;$$
+DELIMITER ;
+call GetListUsers()
+#--------------Cap nhat vai tro user
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE UpdateRoleUser (in IDUser int,in PhanHeCapNhat varchar(10))
+BEGIN
+    update nguoidung set PhanHe=PhanHeCapNhat where ID=IDUser;
 END;$$
 DELIMITER ;
