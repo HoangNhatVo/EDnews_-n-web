@@ -123,6 +123,10 @@ BEGIN
 			then 
 			set lastTag =(select max(convert(substring(IDTag,4),unsigned))
 				   from nhan  );
+                   if(lastTag is null)
+                   then
+                   set lastTag=0;
+                   end if;
 			 set nextTag = lastTag +1;
 			 set IDTagAdd = (select concat('tag',convert(nextTag,char)));
 			 insert into nhan values( IDTagAdd,TagNameNew);
@@ -136,6 +140,20 @@ BEGIN
 	end if;
 END;$$
 DELIMITER ;
+#----------------- add tag post
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure AddTagPost(in IDBV varchar(15), in IDTa varchar(10))
+begin
+if exists( select * from nhan_baiviet where IDBaiViet=IDBV and IDTag=IDTa)
+then
+select 0 as temp;
+else
+	insert into nhan_baiviet values (IDBV,IDTa);
+end if;
+end;$$
+DELIMITER ;
+
 #--------------------------Lay 1 tag vs ID truyen vao
 DELIMITER $$
 USE `baodientu3n`$$
