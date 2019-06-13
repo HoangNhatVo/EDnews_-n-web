@@ -26,7 +26,7 @@
 				</div>
 
 				<div class="p-30 mb-30 card-view">
-					<img src="/images/{{urllinkHinh}}" style="max-height:330px;object-fit:cover">
+					<img src="/images/{{urllinkHinh}}" style="max-height:330px;object-fit:fill">
 					<h3 class="mt-30 mb-5"><a href="#"><b>{{TieuDe}}</b></a></h3>
 					<ul class="list-li-mr-10 color-lite-black">
 						<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
@@ -55,37 +55,18 @@
 
 				<div class="p-30 mb-30 card-view">
 					<h4 class="p-title"><b>BÀI VIẾT LIÊN QUAN</b></h4>
+					{{#each Relatepost}}
 					<div class="row">
 						<div class="col-sm-4 mb-sm-20">
-							<img src="/images/slider-7-400x400.jpg" alt="">
-							<h5 class="mt-20"><a href="/thethao/the-thao-the-gioi/toc-do-lam-chu-cuoc-dua"><b>Bạn tình
-										của tay đua Lê Văn Cẩm xác nhận chia tay</b></a></h5>
+							<img src="/images/{{urllinkHinh}}" alt="">
+							<h5 class="mt-20"><a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><b>{{TieuDe}}</b></a></h5>
 							<ul class="mtb-5 list-li-mr-20 color-lite-black">
-								<li><i class="mr-5 font-12 ion-clock"></i>25/1/2018</li>
-								<li class="category"><a href="/thethao/bong-da">nhân vật</a></li>
-							</ul>
-						</div><!-- col-sm-4 -->
-
-						<div class="col-sm-4 mb-sm-20">
-							<img src="/images/slider-6-400x400.jpg" alt="">
-							<h5 class="mt-20"><a href="/thethao/the-thao-the-gioi/toc-do-lam-chu-cuoc-dua"><b>Đua Văn Xe
-										: 'Nhiều lần tôi chạm ngỏ tử'</b></a></h5>
-							<ul class="mtb-5 list-li-mr-20 color-lite-black">
-								<li><i class="mr-5 font-12 ion-clock"></i>25/1/2018</li>
-								<li class="category"><a href="/thethao/bong-da">nhân vật</a></li>
-							</ul>
-						</div><!-- col-sm-4 -->
-
-						<div class="col-sm-4">
-							<img src="/images/news-3-250x250.jpg" alt="">
-							<h5 class="mt-20"><a href="/thethao/the-thao-the-gioi/toc-do-lam-chu-cuoc-dua"><b>Nhìn lại
-										sự nghiệp của tay đua Lê Văn Cẩm</b></a></h5>
-							<ul class="mtb-5 list-li-mr-20 color-lite-black">
-								<li><i class="mr-5 font-12 ion-clock"></i>25/1/2018</li>
-								<li class="category"><a href="/thethao/bong-da">nhân vật</a></li>
+								<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
+								<li class="category"><a href="/{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a></li>
 							</ul>
 						</div><!-- col-sm-4 -->
 					</div><!-- row -->
+					{{/each}}
 				</div><!-- card-view -->
 				<div class="p-30 mb-30 card-view">
 					<h4 class="p-title"><b>BÌNH LUẬN</b></h4>

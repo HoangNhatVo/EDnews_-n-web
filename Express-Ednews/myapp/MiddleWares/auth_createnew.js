@@ -4,7 +4,7 @@ module.exports = (req, res, next) => {
         res.redirect('/');
         }
         else{
-            if(req.user.PhanHe != 'PH2'){
+            if(req.user.PhanHe == 'PH3'){
                 res.redirect('/admin');
             }
             else next();

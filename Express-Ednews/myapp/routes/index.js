@@ -31,7 +31,7 @@ router.get('/', async (req, res, next) => {
       {
         css: '/stylesheets/index.css',
         style: '/stylesheets/style.css',
-        Featurepost: Feature.slice(0, 2),
+        Featurepost: Feature.slice(0, 8),
         Newpost: New.slice(0, 6),
         ToDaypost: Today,
         ChinhTriCat: ChinhTriCat,
@@ -573,9 +573,10 @@ router.post('/comment/:IDBaiViet', async (req, res, next) => {
   var Cat = req.params.KhongDauCha;
   var SubCat = req.params.KhongDauCon;
   var Title = req.params.TieuDe_KhongDau;
-  console.log(IDPost, Comment, IDUser);
+ 
   if (req.user) {
     var IDUser = req.user.ID;
+    console.log(IDPost, Comment, IDUser);
     singlepostModel.AddComment(IDPost, IDUser, Comment);
     res.redirect(`/${Cat}/${SubCat}/${IDPost}/${Title}`);
   }
@@ -816,6 +817,7 @@ router.get('/:TenCm/:TensubCm/:id/:Tenbaiviet', async (req, res) => {
     if (DetailPost.length > 0) {
       var TagPost = await singlepostModel.getTagPost(Id);
       var CommentPost = await singlepostModel.getCommentPost(Id);
+      var Relatepost= await singlepostModel.GetRelatePost(Id);
       singlepostModel.IncreaseViewPost(Id);
 
       // console.log(CommentPost);
@@ -824,8 +826,9 @@ router.get('/:TenCm/:TensubCm/:id/:Tenbaiviet', async (req, res) => {
         style: '/stylesheets/style.css',
         DetailPost: DetailPost,
         TagPost: TagPost,
-        CommentPost: CommentPost
+        CommentPost: CommentPost,
         //user: req.user
+        Relatepost:Relatepost
       })
 
 

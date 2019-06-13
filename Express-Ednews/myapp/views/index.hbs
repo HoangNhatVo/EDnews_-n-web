@@ -10,7 +10,7 @@
 			<div class="plr-50 h-600x h-md-800x h-xs-1000x oflow-hidden">
 				
 				<div class="w-60 w-md-100 float-left float-md-none h-100 h-md-40 h-xs-50">
-				{{#each Featurepost}}
+				{{#with Featurepost.[0]}}
 					<div class="w-50 w-xs-100 float-left float-xs-none pos-relative h-100 h-xs-50">
 						<!-- Image as bg-1 -->
 						<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><div class="img-bg bg-1 bg-grad-layer-6 mr-10" style="background:url(../images/{{urllinkHinh}}) no-repeat top; background-size: cover"></div></a>
@@ -26,11 +26,27 @@
 							</ul>
 						</div><!--abs-blr -->
 					</div><!-- w-50 -->
-					{{/each}}
-					
+					{{/with}}
+					{{#with Featurepost.[1]}}
+					<div class="w-50 w-xs-100 float-left float-xs-none pos-relative h-100 h-xs-50">
+						<!-- Image as bg-1 -->
+						<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><div class="img-bg bg-1 bg-grad-layer-6 mr-10" style="background:url(../images/{{urllinkHinh}}) no-repeat top; background-size: cover"></div></a>
+						
+						<div class="abs-blr color-white p-20">
+							<h3 class="mb-10 mb-sm-5 t-upper">
+								<a class="hover-grey" href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><b>{{TieuDe}}</b></a></h3>
+							<ul class="list-li-mr-10 color-grey">
+								<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang }}</li>
+								<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
+								<li class="category"><a href="/{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a></li>
+								
+							</ul>
+						</div><!--abs-blr -->
+					</div><!-- w-50 -->
+					{{/with}}
 				</div><!-- w-60 -->
 				<div class="w-40 w-md-100 float-left float-md-none h-100 h-md-60 h-xs-50">
-				{{#each Featurepost}}
+				{{#with Featurepost.[0]}}
 					<div class="h-50 mb-10 pt-md-10">
 						<div class="h-100 pos-relative">
 							<!-- Image as bg-3 -->
@@ -48,7 +64,26 @@
 							</div><!--abs-blr -->
 						</div><!-- h-50 -->
 					</div><!-- h-50 -->
-					{{/each}}
+					{{/with}}
+					{{#with Featurepost.[1]}}
+					<div class="h-50 mb-10 pt-md-10">
+						<div class="h-100 pos-relative">
+							<!-- Image as bg-3 -->
+							<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><div class="img-bg bg-3 bg-grad-layer-6" style="background:url(../images/{{urllinkHinh}}) no-repeat top; background-size: cover"></div></a>
+							
+							<div class="abs-blr color-white p-20">
+								<h3 class="mb-10 mb-sm-5 t-upper">
+									<a class="hover-grey" href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><b>{{TieuDe}}</b></a></h3>
+								<ul class="list-li-mr-10 color-grey">
+									<li><i class="mr-5 font-12 ion-clock"></i>{{ format NgayDang }}</li>
+									<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
+									<li class="category"><a href="{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a></li>
+									
+								</ul>
+							</div><!--abs-blr -->
+						</div><!-- h-50 -->
+					</div><!-- h-50 -->
+					{{/with}}
 					
 				</div><!-- w-40 -->
 			</div>
@@ -111,7 +146,7 @@
 					<div class="mb-30 p-30 ptb-sm-25 plr-sm-15 card-view">
 						<h4 class="p-title"><b>BÀI VIẾT MỚI</b></h4>
 						{{#with Newpost.[0] }}
-						<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img style="height: 300px;width: 600px;object-fit: cover;" src="images/{{urllinkHinh}}" alt=""></a>
+						<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img style="height: 300px;width: 600px;object-fit: fill;" src="images/{{urllinkHinh}}" alt=""></a>
 						<h3 class="mt-30"><a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}">{{TieuDe}}</a></h3>
 						<ul class="mtb-10 list-li-mr-20 color-lite-black">
 							<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>

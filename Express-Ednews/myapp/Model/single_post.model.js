@@ -76,5 +76,7 @@ module.exports ={
     // CheckLike:(IDUser,IDComment)=>{
     //     return orm.selectAll(`call CheckLike('${IDUser}','${IDComment}')`);
     // }
-    
+    GetRelatePost:IDpost=>{
+        return orm.selectAll(`call GetRelatedPosts('${IDpost}')`);
+    }
 };

@@ -27,6 +27,7 @@
                   <th>Email</th>
                   <th>Quyền</th>
                   <th>Action</th>
+                  
                 </tr>
               </thead>
               <tbody>
@@ -50,11 +51,11 @@
                           <form action="/admin/quan-ly-tai-khoan/chinh-sua-quyen/{{ID}}" method="POST">
                           <div class="modal-body">
                             <select name="roleuser" id="roleuser" style="width:100%;padding:5px 10px;border-radius:5px">
-                              <option value="Admin">Admin</option>
+                              <option value="Quản trị viên">Quản trị viên</option>
                               <option value="Biên tập viên">Biên tập viên</option>
                               <option value="Phóng viên">Phóng viên</option>
                               <option value="Độc giả">Độc giả</option>
-                              <option value="Độc giả medium">Độc giả vãng lai</option>
+                              <option value="Độc giả vãng lai">Độc giả vãng lai</option>
                             </select>
                           </div>
                           <div class="modal-footer">
@@ -65,7 +66,15 @@
                         </div>
                       </div>
                     </div>
-                    <button type="button">Khóa tài khoản</button>
+                    {{#ifE TinhTrang 'Khóa'}}
+                    <form action="/admin/quan-ly-tai-khoan/khoa-tai-khoan/{{ID}}" method="POST" style="display: inline-block">
+                    <button type="submit" >Khóa tài khoản</button>
+                    </form>
+                    {{else}}
+                    <form action="/admin/quan-ly-tai-khoan/mo-tai-khoan/{{ID}}" method="POST" style="display: inline-block">
+                    <button type="submit" style="background-color: #007bff">Mở khóa tài khoản</button>
+                    </form>
+                    {{/ifE}}
                   </td>
                 </tr>
                 {{/each}}

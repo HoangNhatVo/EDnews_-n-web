@@ -12,10 +12,23 @@ module.exports ={
     PublishPost:IDpost=>{
         return orm.selectAll(`call PublishPost('${IDpost}')`);
     },
+    //lay danh sach nguoi dung
     Getlistuser:()=>{
         return orm.selectAll(`call GetListUsers()`);
     },
+    //cap nhat phan he nguoi dung
     Updateuser:(IDuser,Phanhe)=>{
         return orm.selectAll(`call UpdateRoleUser(${IDuser},'${Phanhe}')`);
+    },
+    //cap nhat thong tin nguoi dung
+    UpdateInforUser:(IDuser,Name,DateBirth,Email,ButDanh)=>{
+        return orm.selectAll(`call UpdateInfoUserWithID2(${IDuser},'${Name}','${DateBirth}','${Email}','${ButDanh}')`);
+    },
+    //Khóa tài khoản người dùng
+    LockUser:IDuser=>{
+        return orm.selectAll(`call LockUser(${IDuser})`);
+    },
+    UnLockUser:IDuser=>{
+        return orm.selectAll(`call UnLockUser(${IDuser})`);
     }
 }

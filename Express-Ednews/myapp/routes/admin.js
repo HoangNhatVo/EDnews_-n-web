@@ -84,14 +84,17 @@ router.post('/dang-bai', (req,res,next)=>{
 router.get('/thong-tin-tai-khoan',auth_index, (req, res, next) => {
   loginmodel.getUserWithID(req.user.ID)
   .then(result=>{
+    var handlebar=require('handlebars');
+    handlebar.registerHelper('ifE',function(arg1,arg2,options){
+      return (arg1!=arg2) ? options.fn(this): options.inverse(this);
+    });
     var role;
     if(result[0].PhanHe=='PH1')
-    role="Admin";
+    role="Quản trị viên";
     if(result[0].PhanHe=='PH2')
     role="Phóng viên"
     if(result[0].PhanHe=='PH3')
     role="Biên tập viên"
-    console.log(role);
     res.render('adminLayout/PageInforUser', 
   { 
     css: '/stylesheets/admin.css', 
@@ -104,8 +107,21 @@ router.get('/thong-tin-tai-khoan',auth_index, (req, res, next) => {
   
 });
 router.post('/thong-tin-tai-khoan/chinh-sua',(req,res,next)=>{
-  res.end('abc');
-  // res.redirect('/admin/thong-tin-tai-khoan');
+  var Name=req.body.fullname;
+  var othername=req.body.ButDanh;
+  var date=req.body.Birthdate;
+  date=moment(date,'MM/DD/YYYY').format('YYYY-MM-DD');
+  var email=req.body.Email;
+  console.log(Name,othername,date,email);
+  console.log(req.user.PhanHe);
+  if(req.user.PhanHe=="PH1" || req.user.PhanHe=="PH2"){
+    adminmodel.UpdateInforUser(req.user.ID,Name,date,email,othername);
+    res.redirect('/admin/thong-tin-tai-khoan');
+  }
+  else{
+    loginmodel.updateInfoUserWithID(req.user.ID,Name,date,email);
+    res.redirect('/admin/thong-tin-tai-khoan');
+  }
 })
 
 //Page bai viet dang cho duyet
@@ -198,6 +214,10 @@ res.redirect('/admin/bai-viet-dang-cho');
 router.get('/quan-ly-tai-khoan',auth_admin, (req, res, next) => {
   adminmodel.Getlistuser()
   .then(r=>{
+    var handlebar=require('handlebars');
+    handlebar.registerHelper('ifE',function(arg1,arg2,options){
+      return (arg1!=arg2) ? options.fn(this): options.inverse(this);
+    });
     res.render('adminLayout/PageManagerUser', 
   {
      css: '/stylesheets/admin.css', 
@@ -213,7 +233,7 @@ router.post('/quan-ly-tai-khoan/chinh-sua-quyen/:IDuser',(req,res,next)=>{
   var IDuser=req.params.IDuser;
   var role= req.body.roleuser;
   var PH;
-  if(role=='admin')
+  if(role=='Quản trị viên')
   PH='PH1';
   if(role=='Biên tập viên')
   PH='PH3'
@@ -223,6 +243,7 @@ router.post('/quan-ly-tai-khoan/chinh-sua-quyen/:IDuser',(req,res,next)=>{
   PH='PH4'
   if(role=='Độc giả vãng lai')
   PH='PH5'
+  console.log(IDuser,PH);
   adminmodel.Updateuser(IDuser,PH)
   .then(r=>{
     res.redirect('/admin/quan-ly-tai-khoan');
@@ -230,7 +251,24 @@ router.post('/quan-ly-tai-khoan/chinh-sua-quyen/:IDuser',(req,res,next)=>{
   .catch(next);
   
 })
-
+//post khóa tài khoản
+router.post('/quan-ly-tai-khoan/khoa-tai-khoan/:IDuser',(req,res,next)=>{
+  var IDuser=req.params.IDuser;
+  console.log(IDuser);
+  adminmodel.LockUser(IDuser)
+  .then(r=>{
+    res.redirect('/admin/quan-ly-tai-khoan');
+  })
+})
+//post mở tài khoản
+router.post('/quan-ly-tai-khoan/mo-tai-khoan/:IDuser',(req,res,next)=>{
+ var IDuser=req.params.IDuser;
+ console.log(IDuser);
+ adminmodel.UnLockUser(IDuser)
+ .then(r=>{
+   res.redirect('/admin/quan-ly-tai-khoan');
+ })
+})
 //Page danh sach chuyen muc
 router.get('/danh-sach-chuyen-muc',auth_admin, (rep, res, next) => {
   CategoriesModel.getListNameCategory()
