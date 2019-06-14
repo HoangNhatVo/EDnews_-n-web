@@ -130,56 +130,82 @@
           </li>
           <li class="breadcrumb-item active">Đăng bài</li>
         </ol>
-
-    <form class="frmCreateNews" id="frmCreateNews" method="POST" action="/admin/dang-bai">
-        {{#if message_post.length}}
-              <div class="alert alert-success" role="alert">
-                {{message_post}}</a>
-              </div>
-				{{/if}}
-        <p id="title">Ảnh đại diện bài viết:</p>
-        <div class="">
-          <div class="file-loading">
-            <input id="fuMain" name="fuMain" type="file">
-          </div>
+    <form class="frmCreateNews" id="frmCreateNews" method="POST" action="/admin/bai-viet-dang-cho/chinh-sua/{{IDBaiViet}}">
+        
+        {{!-- <p id="title">Ảnh đại diện bài viết:</p> --}}
+        {{#each AvatarPost}}
+        <div class="imgAvatar">
+          <img class="avtPost" src="/images/{{urllinkHinh}}" width="400px">
+          {{!-- <div class="tt-avt">
+              <p>Ảnh đại diện bài viết</p>
+          </div> --}}
         </div>
-        <input type="text" id="fileName" name="filename" value="news_default.jpg" hidden>
+        {{/each}}
 
+           {{#each Post}}
           <div class="text-input" id="tt-top">
             <label class="frmCreateNews">Tiêu đề:</label>
-            <input type="text" id="TieuDe" name="TieuDe" autofocus="true"/>
+            <input type="text" id="TieuDe" name="TieuDe" autofocus="true" value="{{TieuDe}}"/>
           </div>
+          {{/each}}
 
           <p id="title" class="frmCreateNews ttCategory">Chuyên mục:</p>
           <div>
             <select name="category" id="sl-category">
+              {{#each Post}}
+              <option value="{{ChuyenMuc}}" selected>{{TenChuyenMuc}}</option>
+              {{/each}}
               {{#each ListCategory}}
               <option value="{{IDChuyenMuc}}">{{TenChuyenMuc}}</option>
               {{/each}}
             </select>
             <label class="lbl-category">Choose Category</label>
           </div>          
-
+         
           <p id="title">Danh sách Tags:</p>
-          <label for="tag-typer" class="frmCreateNews">
+           {{#if Tags}}
+              <input hidden value="{{Tags}}" name="ValueTags" id="valueTags">
+          {{/if}}
+          <label for="tag-typer" class="frmCreateNews">            
             <div id="tags">
-                <input id="tag-typer" type="text" placeholder="Add tag..."/>
+              <input id="tag-typer" type="text" placeholder="Add tag..."/>
             </div>
-          </label>
-          <input hidden name="ValueTags" id="valueTags">
-
+          </label>         
+         
+         {{#each Post}}
           <div class="text-input input-TomTat" id="text-input">
               <label class="frmCreateNews">Nội dung tóm tắt:</label><br>
-              <textarea rows="3" class="TomTat" id="TomTat" name="TomTat"></textarea>
+              <textarea rows="3" class="TomTat" id="TomTat" name="TomTat">{{NoiDungTomTat}}</textarea>
           </div>
-
+          {{/each}}
+          
+          {{#each Post}}
           <div class="text">
             <label>Nội dung bài báo:</label>
            </div>
            <div class="ckeditor">
-            <textarea class="form-control" id="editor1" name="FullDes"></textarea>
+            <textarea class="form-control" id="editor1" name="FullDes">
+              {{{NoiDung}}}
+            </textarea>
           </div>
+          {{/each}}
           <button type="button" id="btnNews" class="btnSend"><i class="fa fa-check"></i> Lưu</button>
+          
+          <button type="button" class="" id="btnAlert" data-toggle="modal" data-target="#exampleModal" hidden></button>
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Bạn phải nhập Tag cho bài viết!</h5>
+                        </div>                        
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                        </div>                            
+                  </div>
+              </div>
+          </div>
+
     </form>
         <!-- End CreateNews -->      
 

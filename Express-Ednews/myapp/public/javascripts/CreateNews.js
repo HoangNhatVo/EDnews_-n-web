@@ -24,21 +24,6 @@ $(document).on("click",".btnTag",function(){
     $(this).parent().remove();
 });
 
-
-// CKEDITOR.on('instanceReady', function (ev) {
-//     $('iframe').contents().click(function (e) {
-//         if (typeof e.target.href !== 'undefined') {
-//             window.open(e.target.href, 'new' + e.screenX);
-//         }
-//         else if (typeof e.currentTarget.activeElement.href !== 'undefined') {
-//             window.open(e.currentTarget.activeElement.href, 'new' + e.screenX);
-//         }
-//     });    
-// });
-// CKEDITOR.replace('editor1',{
-//   height: 500,
-// });
-
 $(document).ready(function() { 
   $('#fuMain').change(function() {
     var name = $('#fuMain').val();
@@ -48,8 +33,13 @@ $(document).ready(function() {
     filename = filename.replace('[','_');
     filename = filename.replace(']','_');
     $('#fileName').val(filename);
+
+    // if($('#fuMain').val()==""){
+    //   $('.imgAvatar').append("<img id='/images/"+$('#fileName').val()+" width='300px'>");
+    // }
   });
 });
+
 
  
 $(document).on("click",".btnSend",function(){
@@ -60,4 +50,19 @@ $(document).on("click",".btnSend",function(){
   else{
     $('#frmCreateNews').submit();
   }  
+});
+
+///////////////////////// CHỈNH SỬA BÀI VIẾT
+
+$(document).ready(function() { 
+  $(window).load(function() { 
+  // $('#valueTags').change(function() {
+    // alert('abc');
+    if($('#valueTags').val() != ""){
+    arrTag = $('#valueTags').val().split(",") 
+    for(var i =0; i < arrTag.length; i++){
+      $("<span class='tag' id = 'tag' style='display:none'>"+arrTag[i]+"<button id='btnTag' class = 'btnTag' type='button'>&times</button></span>").insertBefore("#tag-typer").fadeIn(100);
+    }
+  }
+  });
 });

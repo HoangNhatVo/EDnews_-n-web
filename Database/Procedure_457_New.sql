@@ -1,5 +1,98 @@
 DELIMITER $$
 USE `baodientu3n`$$
+CREATE PROCEDURE DeleteTagNotUse()
+BEGIN
+	declare CheckTagNotUse bool default true;
+    declare countTag int;
+    declare IDTagDel varchar(10);
+    while (CheckTagNotUse = true) do
+		set countTag = (select count(*) from nhan n where n.IDTag not in (select distinct n1.IDTag
+																		  from nhan n1, nhan_baiviet nbv1
+																		  where n1.IDTag = nbv1.IDTag));
+		if (countTag > 0)
+        then
+        set IDTagDel = (select n.IDTag from nhan n where n.IDTag not in (select distinct n1.IDTag
+																		 from nhan n1, nhan_baiviet nbv1
+																		 where n1.IDTag = nbv1.IDTag)
+																 limit 1);
+		delete from nhan where IDTag = IDTagDel;		
+        end if;
+        
+        if(countTag = 0)
+        then
+        set CheckTagNotUse = false;
+        end if;
+    end while;    
+END;$$
+DELIMITER ;
+
+
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE DeleteAllTagPost(in IDBV varchar(10))
+BEGIN
+	delete from nhan_baiviet  where IDBaiViet = IDBV;
+END;$$
+DELIMITER ;
+
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE UpdatePost(in IDBaiViet varchar(10), in TieuDe varchar(255), 
+in TieuDe_KhongDau varchar(255), in ChuyenMuc varchar(10), in NoiDung text,
+in NoiDungTomTat varchar(500), in NgayViet date)
+BEGIN
+	update baiviet bv
+    set bv.TieuDe = TieuDe, bv.TieuDe_KhongDau=TieuDe_KhongDau, bv.ChuyenMuc = ChuyenMuc,
+    bv.NoiDung=NoiDung, bv.TinhTrang = 4, bv.NoiDungTomTat=NoiDungTomTat, bv.NgayViet=NgayViet
+    where bv.IDBaiViet = IDBaiViet;
+END;$$
+DELIMITER ;
+
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE GetAvatarPost(in IDBaiViet varchar(10))
+BEGIN
+	select a.urllinkHinh
+    from baiviet_hinhanh abv, urlhinhanh a
+    where IDBaiViet = abv.IDBaiViet and abv.IDHinh = a.IDHinh;
+END;$$
+DELIMITER ;
+
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE ListCat(in IDBaiViet varchar(10))
+BEGIN
+	declare IDCM_BV varchar(10);
+    set IDCM_BV = (select bv.ChuyenMuc from baiviet bv where bv.IDBaiViet = IDBaiViet);
+   select * from chuyenmuc where ChuyenMucCha is not null and IDChuyenMuc != IDCM_BV;	
+END;$$
+DELIMITER 
+
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE GetPostWithIDPost(in IDBaiViet varchar(10))
+BEGIN
+	select bv.TieuDe, bv.ChuyenMuc, cm.TenChuyenMuc, bv.NoiDungTomTat, bv.NoiDung
+    from baiviet bv, chuyenmuc cm
+    where bv.IDBaiViet = IDBaiViet and cm.IDChuyenMuc = bv.ChuyenMuc;
+END;$$
+DELIMITER ;
+
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE GetTagWithIDPost(in IDBaiViet varchar(10))
+BEGIN
+	select N.TenTag
+    from nhan N, nhan_baiviet NBV
+    where NBV.IDBaiViet = IDBaiViet and N.IDTag = NBV.IDTag;
+END;$$
+DELIMITER ;
+call GetTagWithIDPost('BV3');
+#----------------------------------------------------------------------------------
+
+
+DELIMITER $$
+USE `baodientu3n`$$
 create procedure GetRelatedPosts(in IDPost varchar(15))
 begin
 	declare Cat varchar(10);
