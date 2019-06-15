@@ -1445,9 +1445,9 @@ iframe {
 .col-2
 {
   border-radius: 5px;
-  width: 20px;
+  /* width: 20px; */
   height:50%;
-  margin: 20px 20px 5px 120px;
+  /* margin: 20px 20px 5px 120px; */
   padding-top: 2px;
   padding-bottom: 4px;
 }
@@ -1466,4 +1466,8 @@ iframe {
   color: #fff;
   background-color: #339266;
   border-color: #339266;
+}
+
+#msgCenter{
+  text-align: center;
 }

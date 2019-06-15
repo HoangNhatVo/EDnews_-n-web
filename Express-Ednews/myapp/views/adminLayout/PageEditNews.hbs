@@ -132,13 +132,9 @@
         </ol>
     <form class="frmCreateNews" id="frmCreateNews" method="POST" action="/admin/bai-viet-dang-cho/chinh-sua/{{IDBaiViet}}">
         
-        {{!-- <p id="title">Ảnh đại diện bài viết:</p> --}}
         {{#each AvatarPost}}
         <div class="imgAvatar">
-          <img class="avtPost" src="/images/{{urllinkHinh}}" width="400px">
-          {{!-- <div class="tt-avt">
-              <p>Ảnh đại diện bài viết</p>
-          </div> --}}
+          <img class="avtPost" src="/images/{{urllinkHinh}}" style="max-height:330px;object-fit:fill">
         </div>
         {{/each}}
 

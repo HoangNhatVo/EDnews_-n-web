@@ -85,8 +85,8 @@ router.post('/thong-tin-ca-nhan/:ID', function (req, res, next) {
         loginModel.updateInfoUserWithID(ID, Info.HoTen, Info.NgaySinh, Info.Email).then(r => {
           req.logout();
           req.session.cookie.expires = false;
-          req.flash('signupMessage', 'Đã cập nhật thông tin, mời đăng nhập lại');
-          res.redirect('/dangnhap');
+          // req.flash('signupMessage', 'Đã cập nhật thông tin, mời đăng nhập lại');
+          res.redirect('/');
         }).catch(err => {
           req.flash('msg_info', 'Không cập nhật được thông tin');
           res.redirect('/thong-tin-ca-nhan');
@@ -141,8 +141,8 @@ router.post('/thong-tin-ca-nhan/:ID/doi-mat-khau', function (req, res, next) {
         loginModel.updatePasswordUserWithID(ID, newPass).then(r2 => {
           req.logout();
           req.session.cookie.expires = false;
-          req.flash('signupMessage', 'Đổi mật khẩu thành công, mời đăng nhập lại');
-          res.redirect('/dangnhap');
+          // req.flash('signupMessage', 'Đổi mật khẩu thành công, mời đăng nhập lại');
+          res.redirect('/');
         }).catch(err => {
           req.flash('changePasswordMessage', 'Đã xảy ra lỗi');
           res.redirect(`/thong-tin-ca-nhan/${ID}/doi-mat-khau`);
@@ -345,13 +345,11 @@ router.get('/nhap-ma-otp-xac-nhan/:email', function (req, res, next) {
 router.post('/nhap-ma-otp-xac-nhan/:email', function (req, res, next) {
   var email = req.params.email;
   var OTP = req.body.OTP;
-  var y = moment().unix();
   var x = (moment().unix() - 120).toString();
   console.log('OTP', OTP);
-  console.log('y', y);
   console.log('x', x);
 
-  if (OTP >= x) {
+  // if (OTP >= x) {
     loginModel.getUserWithEmail(email).then(r1 => {
       if (!r1.length) {
         req.flash('abc', 'abc');
@@ -365,6 +363,7 @@ router.post('/nhap-ma-otp-xac-nhan/:email', function (req, res, next) {
           res.redirect(`/nhap-ma-otp-xac-nhan/${email}`);
         }
         else {
+          if(OTP >= x){
           req.flash('opt_success', 'Mã OTP chính xác');
           req.flash('xyz', 'xyz');
           loginModel.addOTPUserWithEmail(email, '').then(r2 => {
@@ -374,28 +373,38 @@ router.post('/nhap-ma-otp-xac-nhan/:email', function (req, res, next) {
           })
           res.redirect(`/reset-password/${email}`);
         }
+        else{
+          req.flash('send_error', 'Mã OTP đã quá hạn');
+          loginModel.addOTPUserWithEmail(email, '').then(r => {
+            console.log(r);
+          }).catch(err => {
+            console.log(err);
+            req.flash('send_error', 'Đã xảy ra lỗi');
+          })
+          res.redirect('/quen-mat-khau');
+        }
       }
+    }
     }).catch(err => {
       req.flash('abc', 'abc');
       req.flash('input_error', 'Đã xảy ra lỗi');
       res.redirect(`/nhap-ma-otp-xac-nhan/${email}`);
-    })
-  }
-  else {
-    req.flash('send_error', 'Mã OTP đã quá hạn');
-    loginModel.addOTPUserWithEmail(email, '').then(r => {
-      console.log(r);
-    }).catch(err => {
-      console.log(err);
-      req.flash('send_error', 'Đã xảy ra lỗi');
-    })
-    res.redirect('/quen-mat-khau');
-  }
+  })
+  // }
+  // else {
+  //   req.flash('send_error', 'Mã OTP đã quá hạn');
+  //   loginModel.addOTPUserWithEmail(email, '').then(r => {
+  //     console.log(r);
+  //   }).catch(err => {
+  //     console.log(err);
+  //     req.flash('send_error', 'Đã xảy ra lỗi');
+  //   })
+  //   res.redirect('/quen-mat-khau');
+  // }
 });
 
 router.get('/reset-password/:email', function (req, res, next) {
   var email = req.params.email;
-  // if(!req.isAuthenticated()){
   if (!req.isAuthenticated() && (req.flash('xyz').length != 0)) {
     res.render('ResetPassword', {
       layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',

@@ -1,6 +1,7 @@
 var LocalStrategy   = require('passport-local').Strategy;
 const loginModel = require('../Model/login.model');
 var moment = require('moment');
+var request = require('request');
 const bCrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -29,10 +30,6 @@ module.exports = function(passport) {
                 return done(null, false, req.flash('loginMessage', 'Tài khoản không tồn tại'));
             }
 
-            // if(pass != user[0].Password){
-            //     return done(null, false, req.flash('loginMessage', 'Mật khẩu không đúng'));
-            // }
-
             if(user[0].TinhTrang != 'Còn sử dụng'){
                 return done(null, false, req.flash('loginMessage', 'Tài khoản đã bị khóa'));
             }
@@ -57,6 +54,23 @@ module.exports = function(passport) {
         passReqToCallback : true 
     },
     function(req, email, pass, done) {
+        if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
+            return done(null, false, req.flash('signupMessage', 'Vui lòng chọn Captcha'));
+          }
+          
+        //   Captcha chỉ tích vào ô:
+        //   var secretKey = "6LdSAKkUAAAAALVtWgwcv80nTqhREVYyXWHGNzYw";  
+
+          // Captcha chọn hình:
+          var secretKey = "6LfqAqkUAAAAAP8my3MTQ7tMxkUxkXBK98qghREQ";   
+          var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
+          request(verificationUrl,function(error,response,body) {
+            body = JSON.parse(body);
+            if(body.success !== undefined && !body.success) {
+                return done(null, false, req.flash('signupMessage', 'Captcha không đúng'));
+            }
+          });
+
         loginModel.getUserWithEmail(email).then(rows =>{
             if(rows.length){
                 return done(null, false, req.flash('signupMessage', 'Email đã tồn tại'));
@@ -73,15 +87,11 @@ module.exports = function(passport) {
                             NgaySinh: moment(req.body.birthday,'DD/MM/YYYY').format('YYYY-MM-DD'),
                             GioiTinh: req.body.gender,
                             Email: email,
-                            // Password: pass
                             Password: bCrypt.hashSync(pass, bCrypt.genSaltSync(saltRounds)),
                             NgayDangKy: moment().format('YYYY-MM-DD hh:mm:ss'),
                             // NgayHetHan:moment().add(7, 'days').format('YYYY-MM-DD hh:mm:ss'),
                             // TinhTrang: 'Còn hạn'
                         }
-                        // if(user.NgayHetHan.diff(moment(),'seconds')<0){
-                        //     user.TinhTrang = 'Hết hạn';
-                        // }
                         console.log(user);
                             loginModel.addUser2(user.HoTen, user.SDT, user.NgaySinh, user.GioiTinh,user.Email, 
                                 user.Password,user.NgayDangKy).then(id =>{
