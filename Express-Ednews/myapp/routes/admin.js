@@ -80,6 +80,13 @@ router.post('/dang-bai', (req,res,next)=>{
   }).catch(next);  
 });
 
+
+
+
+
+
+
+
 //Page thong tin tai khoan
 router.get('/thong-tin-tai-khoan',auth_index, (req, res, next) => {
   loginmodel.getUserWithID(req.user.ID)
@@ -100,7 +107,8 @@ router.get('/thong-tin-tai-khoan',auth_index, (req, res, next) => {
     css: '/stylesheets/admin.css', 
     style: '/stylesheets/sb-admin.css' ,
     user:result,
-    role
+    role,
+    mesg:req.flash('mesg')
   });
   })
   .catch(next);
@@ -115,12 +123,20 @@ router.post('/thong-tin-tai-khoan/chinh-sua',(req,res,next)=>{
   console.log(Name,othername,date,email);
   console.log(req.user.PhanHe);
   if(req.user.PhanHe=="PH1" || req.user.PhanHe=="PH2"){
-    adminmodel.UpdateInforUser(req.user.ID,Name,date,email,othername);
-    res.redirect('/admin/thong-tin-tai-khoan');
+    adminmodel.UpdateInforUser(req.user.ID,Name,date,email,othername)
+    .then(r=>{
+      req.flash('mesg','Thay đổi thành công');
+      res.redirect('/admin/thong-tin-tai-khoan');
+    })
+    
   }
   else{
-    loginmodel.updateInfoUserWithID(req.user.ID,Name,date,email);
-    res.redirect('/admin/thong-tin-tai-khoan');
+    loginmodel.updateInfoUserWithID(req.user.ID,Name,date,email)
+    .then(r=>{
+      req.flash('mesg','Thay đổi thành công');
+      res.redirect('/admin/thong-tin-tai-khoan');
+    })
+    
   }
 })
 
@@ -134,6 +150,7 @@ router.get('/bai-viet-dang-cho',auth_index, (req, res, next) => {
      css: '/stylesheets/admin.css', 
      style: '/stylesheets/sb-admin.css' ,
       post:r,
+      mesg:req.flash('mesg')
     });
   })
   .catch(next);
@@ -146,8 +163,12 @@ router.post('/duyet-bai-viet',(req,res,next)=>{
   }
   var IDpost=req.body.IDpost;
   console.log(IDuser,IDpost);
-  adminmodel.ApprovePost(IDpost,IDuser);
-  res.redirect('/admin/bai-viet-dang-cho');
+  adminmodel.ApprovePost(IDpost,IDuser)
+  .then(r=>{
+    req.flash('mesg','Duyệt bài thành công');
+    res.redirect('/admin/bai-viet-dang-cho');
+  })
+  
   
 });
 //Page bai viet dang cho xuat ban
@@ -158,7 +179,8 @@ router.get('/bai-viet-cho-xuat-ban',auth_index, (req, res, next) => {
     res.render('adminLayout/PageWaitRelease', { 
       css: '/stylesheets/admin.css',
        style: '/stylesheets/sb-admin.css',
-       post:r
+       post:r,
+       mesg:req.flash('mesg')
       });
   })
   .catch(next);
@@ -168,8 +190,11 @@ router.get('/bai-viet-cho-xuat-ban',auth_index, (req, res, next) => {
 router.post('/xuat-ban-bai-viet/:IDpost',(req,res,next)=>{
   var IDpost=req.params.IDpost;
   console.log(IDpost);
-  adminmodel.PublishPost(IDpost);
-  res.redirect('/admin/bai-viet-cho-xuat-ban')
+  adminmodel.PublishPost(IDpost)
+  .then(r=>{
+    res.redirect('/admin/bai-da-xuat-ban')
+  })
+  
 })
 //Page bai viet da xuat ban
 router.get('/bai-viet-da-xuat-ban',auth_index, (req, res, next) => {
@@ -180,11 +205,32 @@ router.get('/bai-viet-da-xuat-ban',auth_index, (req, res, next) => {
     { 
       css: '/stylesheets/admin.css',
        style: '/stylesheets/sb-admin.css' ,
-       post:r
+       post:r,
+       mesg:req.flash('mesg')
       });
+      req.session.current_url='/admin/bai-viet-da-xuat-ban';
   })
   .catch(next)
  
+});
+//Chọn làm bài viết nổi bật
+router.post('/bai-viet-da-xuat-ban/chon-bai-viet-noi-bat/:IDBaiViet',(req,res,next)=>{
+  var ID=req.params.IDBaiViet;
+  console.log(ID);
+  adminmodel.SetHightLightPost(ID,1)
+  .then(r=>{
+    req.flash('mesg','Chọn bài viết nổi bậc thành công');
+    res.redirect('/admin/bai-viet-da-xuat-ban');
+  })
+});
+//Bo chon lam bai viet noi bat
+router.post('/bai-viet-da-xuat-ban/bo-chon-bai-viet-noi-bat/:IDBaiViet',(req,res,next)=>{
+  var ID=req.params.IDBaiViet;
+  adminmodel.SetHightLightPost(ID,0)
+  .then(r=>{
+    req.flash('mesg','Bỏ chọn bài viết nổi bật thành công');
+    res.redirect('/admin/bai-viet-da-xuat-ban');
+  })
 });
 //Page bai viet bi tu choi
 router.get('/bai-viet-bi-tu-choi',auth_index, (req, res, next) => {
@@ -194,26 +240,46 @@ router.get('/bai-viet-bi-tu-choi',auth_index, (req, res, next) => {
     res.render('adminLayout/PageDecline', { 
       css: '/stylesheets/admin.css', 
       style: '/stylesheets/sb-admin.css',
-      post:r
+      post:r,
+      mesg:req.flash('mesg')
      });
+     req.session.current_url='/admin/bai-viet-bi-tu-choi';
   })
   .catch(next);
 });
 //Post tu choi bai viet
-router.post('/tu-choi-bai-viet',(req,res,next)=>{
-var IDpost=req.body.IDpost;
+router.post('/tu-choi-bai-viet/:IDBaiViet',(req,res,next)=>{
+var IDpost=req.params.IDBaiViet;
 var reason=req.body.reasonDecline;
 var IDuser
 if(req.user){
    IDuser=req.user.ID;
 }
 adminmodel.DeclinePost(IDpost,IDuser,reason)
-res.redirect('/admin/bai-viet-dang-cho');
+.then(r=>{
+  req.flash('mesg','Từ chối bài viết thành công')
+  res.redirect('/admin/bai-viet-dang-cho');
+})
+
 });
-//Page quan ly tai khoan
-router.get('/quan-ly-tai-khoan',auth_admin, (req, res, next) => {
-  adminmodel.Getlistuser()
+//Post xoa bai viet
+router.post('/xoa-bai-viet/:IDBaiViet',(req,res,next)=>{
+  var ID=req.params.IDBaiViet;
+  adminmodel.DeletePost(ID)
   .then(r=>{
+    req.flash('mesg','xóa bài viết thành công');
+    res.redirect(req.session.current_url);
+  })
+  
+})
+//Page quan ly tai khoan
+router.get('/quan-ly-tai-khoan',auth_admin, async (req, res, next) =>{
+  try{
+  var allRole=await adminmodel.Getlistuser();
+  var EditorRole= await adminmodel.GetlistuserwithRole('PH3');
+  var Writter=await adminmodel.GetlistuserwithRole('PH2');
+  var normalReader= await adminmodel.GetlistuserwithRole('PH5');
+  var premiumReader= await adminmodel.GetlistuserwithRole('PH4');
     var handlebar=require('handlebars');
     handlebar.registerHelper('ifE',function(arg1,arg2,options){
       return (arg1!=arg2) ? options.fn(this): options.inverse(this);
@@ -222,12 +288,27 @@ router.get('/quan-ly-tai-khoan',auth_admin, (req, res, next) => {
   {
      css: '/stylesheets/admin.css', 
      style: '/stylesheets/sb-admin.css' ,
-     user:r
+     user:allRole,
+     EditorRole,
+     Writter,
+     normalReader,
+     premiumReader,
+     mesg:req.flash('mesg')
     });
-  })
-  .catch(next);
+  }
+  catch(err){
+    console.log(err);
+  }
+  
 });
-
+//Page Phân chuyên mục cho biên tập viên
+router.get('/quan-ly-tai-khoan/phan-chuyen-muc/:IDuser',(req,res,next)=>{
+  res.render('adminLayout/SeparateCatforEditor',
+  {
+    css: '/stylesheets/admin.css', 
+    style: '/stylesheets/sb-admin.css'
+  });
+})
 //Post chỉnh sửa quyền
 router.post('/quan-ly-tai-khoan/chinh-sua-quyen/:IDuser',(req,res,next)=>{
   var IDuser=req.params.IDuser;
@@ -246,6 +327,7 @@ router.post('/quan-ly-tai-khoan/chinh-sua-quyen/:IDuser',(req,res,next)=>{
   console.log(IDuser,PH);
   adminmodel.Updateuser(IDuser,PH)
   .then(r=>{
+    req.flash('mesg','Chỉnh sửa quyền thành công');
     res.redirect('/admin/quan-ly-tai-khoan');
   })
   .catch(next);
@@ -257,6 +339,7 @@ router.post('/quan-ly-tai-khoan/khoa-tai-khoan/:IDuser',(req,res,next)=>{
   console.log(IDuser);
   adminmodel.LockUser(IDuser)
   .then(r=>{
+    req.flash('mesg','Khóa tài khoản thành công');
     res.redirect('/admin/quan-ly-tai-khoan');
   })
 })
@@ -266,6 +349,7 @@ router.post('/quan-ly-tai-khoan/mo-tai-khoan/:IDuser',(req,res,next)=>{
  console.log(IDuser);
  adminmodel.UnLockUser(IDuser)
  .then(r=>{
+   req.flash('mesg','Mở khóa tài khoản thành công');
    res.redirect('/admin/quan-ly-tai-khoan');
  })
 })
@@ -277,14 +361,19 @@ router.get('/danh-sach-chuyen-muc',auth_admin, (rep, res, next) => {
         {
           css: '/stylesheets/admin.css',
           style: '/stylesheets/sb-admin.css',
-          ListCat: row
+          ListCat: row,
+          // mesg:req.flash('mesg')
         });
     }).catch(next);
 
 });
 //Page them chuyen muc
 router.get('/danh-sach-chuyen-muc/them-chuyen-muc',auth_admin, (req, res, next) => {
-  res.render('adminLayout/PageAddcat', { css: '/stylesheets/admin.css', style: '/stylesheets/sb-admin.css' });
+  res.render('adminLayout/PageAddcat', { 
+    css: '/stylesheets/admin.css', 
+    style: '/stylesheets/sb-admin.css',
+    mesg:req.flash('mesg')
+   });
 });
 //Page chinh sua chuyen muc
 router.get('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/:TenCM',auth_admin, async (req, res, next) => {
@@ -307,6 +396,7 @@ router.get('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/:TenCM',auth_admin, async
           style: '/stylesheets/sb-admin.css',
           Cat: Cat,
           error: false,
+          mesg:req.flash('mesg')
         });
     } else {
       res.render('adminLayout/PageEditCat',
@@ -314,6 +404,7 @@ router.get('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/:TenCM',auth_admin, async
           css: '/stylesheets/admin.css',
           style: '/stylesheets/sb-admin.css',
           error: true,
+          mesg:req.flash('mesg')
         });
     }
   }
@@ -339,6 +430,7 @@ router.post('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/xoa-cmcon/:IdSub', (req,
   var NameCat = req.body.NameNo;
   CategoriesModel.deleteSubCat(SubCatID)
     .then(r => {
+      req.flash('mesg','Xóa thành công');
       res.redirect(`/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/${NameCat}`);
     })
     .catch(next);
@@ -356,6 +448,7 @@ router.post('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/:TenCM/them-chuyen-muc-c
   console.log(IDMain, NewName, NewNoName);
   CategoriesModel.addSubCategories(IDMain, NewName, NewNoName)
     .then(r => {
+      req.flash('mesg','Thêm thành công');
       res.redirect(`/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/${NameCat}`);
     })
     .catch(next);
@@ -373,7 +466,8 @@ router.post('/danh-sach-chuyen-muc/them-chuyen-muc', (req, res, next) => {
   CategoriesModel.addMainCategoris(NewName, NewNoName)
     .then(c => {
       console.log(c);
-      res.redirect('/admin/danh-sach-chuyen-muc');
+      req.flash('mesg','Thêm chuyên mục thành công');
+      res.redirect('/admin/danh-sach-chuyen-muc/them-chuyen-muc');
     })
     .catch(next)
 });
@@ -421,7 +515,7 @@ router.post('/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/:TenCM', async (req, res
     }
   }
     await CategoriesModel.updateMainCat(IDMain, NewNameMain, NewNameMainNo);
-
+    req.flash('mesg','Chỉnh sửa thành công');
     res.redirect(`/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/${NewNameMainNo}`);
   }
   catch (err) {
@@ -437,7 +531,8 @@ router.get('/danh-sach-tag',auth_admin, (req, res, next) => {
         {
           css: '/stylesheets/admin.css',
           style: '/stylesheets/sb-admin.css',
-          ListTag: row
+          ListTag: row,
+          mesg:req.flash('mesg')
         });
     }).catch(next)
 
@@ -447,6 +542,7 @@ router.post('/danh-sach-tag/xoa-tag', (req, res, next) => {
   var IDtag=req.body.IDtag;
   Tagmodel.deleteTag(IDtag)
   .then(r=>{
+    req.flash('mesg','Xóa tag thành công');
     res.redirect('/admin/danh-sach-tag');
   })
   .catch(next);
@@ -462,7 +558,8 @@ router.get('/danh-sach-tag/chinh-sua-tag/:IDTag', auth_admin,(req, res, next) =>
     {
       css: '/stylesheets/admin.css',
       style: '/stylesheets/sb-admin.css',
-      tag:r
+      tag:r,
+      mesg:req.flash('mesg')
     });
   }
   else{
@@ -478,7 +575,8 @@ router.post('/danh-sach-tag/chinh-sua-tag',(req,res,next)=>{
   var newNameTag=req.body.TagName;
   Tagmodel.updateTag(IDtag,newNameTag)
   .then(r=>{
-    res.redirect('/admin/danh-sach-tag');
+    req.flash('mesg','Chỉnh sửa thành công');
+    res.redirect(`/admin/danh-sach-tag/chinh-sua-tag/${IDtag}`);
   })
   .catch(next);
 })
@@ -487,7 +585,8 @@ router.get('/danh-sach-tag/them-tag',auth_admin, (req, res, next) => {
   res.render('adminLayout/PageAddTag', 
   { 
     css: '/stylesheets/admin.css', 
-    style: '/stylesheets/sb-admin.css' 
+    style: '/stylesheets/sb-admin.css',
+    mesg:req.flash('mesg') 
   });
 });
 
@@ -497,7 +596,8 @@ router.post('/danh-sach-tag/them-tag',(req,res,next)=>{
   Tagmodel.addTag(NewNametag)
   .then(r=>{
     console.log(r);
-    res.redirect('/admin/danh-sach-tag');
+    req.flash('mesg','Thêm thành công');
+    res.redirect('/admin/danh-sach-tag/them-tag');
   })
   .catch(next);
 

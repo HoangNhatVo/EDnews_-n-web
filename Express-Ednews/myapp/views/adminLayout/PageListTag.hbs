@@ -1,59 +1,65 @@
 <link rel="stylesheet" href="/javascripts/datatable/dataTables.bootstrap4.css">
 {{>AdminNav}}
 <div id="wrapper">
-    {{>AdminSlidebar}}
-    <div id="content-wrapper">
+  {{>AdminSlidebar}}
+  <div id="content-wrapper">
 
-        <div class="container-fluid">
-            <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="/admin">Dashboard</a>
-          </li>
-          <li class="breadcrumb-item active">Danh sách Tag</li>
-        </ol>
-<div class="card mb-3 List-account">
-          <div class="card-header">
-            <button class="btn btn-outline-success"><a href="/admin/danh-sach-tag/them-tag"><i class="fas fa-plus">Thêm Tag</i></a></button>
-            </div>
-            
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Tên chuyên Tag</th>
-                    <th>Action</th>
-                    
-                  </tr>
-                </thead>
-                <tbody>
-                  {{#each ListTag}}
-                  <tr>
-                    <td >{{IDTag}}</td>
-                    <td>{{TenTag}}</td>
-                    <td class="action">
-                      <form method="POST">
+    <div class="container-fluid">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Danh sách Tag</li>
+      </ol>
+      {{#if mesg.length}}
+      <div class="alert alert-success" role="alert">
+        {{mesg}}
+      </div>
+      {{/if}}
+      <div class="card mb-3 List-account">
+        <div class="card-header">
+          <button class="btn btn-outline-success"><a href="/admin/danh-sach-tag/them-tag"><i class="fas fa-plus">Thêm
+                Tag</i></a></button>
+        </div>
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Tên chuyên Tag</th>
+                  <th>Action</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                {{#each ListTag}}
+                <tr>
+                  <td>{{IDTag}}</td>
+                  <td>{{TenTag}}</td>
+                  <td class="action">
+                    <form method="POST">
                       <a href="/admin/danh-sach-tag/chinh-sua-tag/{{IDTag}}" title="">Chỉnh sửa</a>
                       <button type="submit" formaction="/admin/danh-sach-tag/xoa-tag">Xóa</button>
                       <input type="text" name="IDtag" value="{{IDTag}}" class="d-none">
-                      </form>
-                    </td>
-                  </tr>
-                  {{/each}}
-                </tbody>
-              </table>
-            </div>
+                    </form>
+                  </td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
           </div>
         </div>
+      </div>
 
-
-        </div>
-        <!-- /.container-fluid -->
-
-        <!-- Sticky Footer -->
-        {{>AdminFooter}}
 
     </div>
+    <!-- /.container-fluid -->
+
+    <!-- Sticky Footer -->
+    {{>AdminFooter}}
+
+  </div>
 </div>
 {{>AdminLogoutmodal}}

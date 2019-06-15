@@ -32,8 +32,8 @@ router.get('/', async (req, res, next) => {
         css: '/stylesheets/index.css',
         style: '/stylesheets/style.css',
         Featurepost: Feature.slice(0, 8),
-        Newpost: New.slice(0, 6),
-        ToDaypost: Today,
+        Newpost: New.slice(0, 7),
+        ToDaypost: Today.slice(0,9),
         ChinhTriCat: ChinhTriCat,
         BongdaCat: BongdaCat,
         ThoiTrang: ThoiTrang,
@@ -433,7 +433,25 @@ router.post('/tim-kiem', (req, res, next) => {
   ])
     .then(([row, count_row]) => {
       if (count_row[0].Num != 0) {
-        var total = count_row[0].Num;
+        async function getTagPost(p) {
+          var post = [];
+          for (let t of p) {
+            try {
+              var Tag = await singlepostModel.getTagPost(t.IDBaiViet);
+              post.push({
+                Content: t,
+                Tag: Tag
+              });
+            }
+            catch (e) {
+              console.log(e);
+            }
+          }
+          return post;
+        }
+        getTagPost(row)
+        .then(r=>{
+          var total = count_row[0].Num;
         var nPages = Math.floor(total / limit);
         if (total % limit > 0) nPages++;
         var pages = [];
@@ -472,7 +490,7 @@ router.post('/tim-kiem', (req, res, next) => {
           css: '/stylesheets/index.css',
           style: '/stylesheets/style.css',
           count_row,
-          Post: row,
+          Post: r,
           pages: pages,
           checkPre: checkPre,
           checkNext: checkNext,
@@ -480,6 +498,8 @@ router.post('/tim-kiem', (req, res, next) => {
           pagination,
           user: req.user
         });
+        })
+        
       }
       else {
         res.render('SearchPage', {
@@ -513,7 +533,25 @@ router.get('/tag/:Tentag', async (req, res, next) => {
         singlepostModel.getPostwithTag(nametag, limit, offset),
         singlepostModel.getCountPostwithTag(nametag)
       ]).then(([rows, count_rows]) => {
-        var total = count_rows[0].SoLuongBaiViet;
+        async function getTagPost(p) {
+          var post = [];
+          for (let t of p) {
+            try {
+              var Tag = await singlepostModel.getTagPost(t.IDBaiViet);
+              post.push({
+                Content: t,
+                Tag: Tag
+              });
+            }
+            catch (e) {
+              console.log(e);
+            }
+          }
+          return post;
+        }
+        getTagPost(rows)
+        .then(r=>{
+          var total = count_rows[0].SoLuongBaiViet;
         var nPages = Math.floor(total / limit);
         if (total % limit > 0) nPages++;
         var pages = [];
@@ -545,16 +583,22 @@ router.get('/tag/:Tentag', async (req, res, next) => {
               value: pages[page - 1].value - 1
             }
         }
+        var pagination;
+        if (nPages == 1) pagination = false;
+        else pagination = true;
         res.render('List_Post_withTag', {
           css: '/stylesheets/index.css',
           style: '/stylesheets/style.css',
           Nametag: check,
-          Post: rows,
+          Post: r,
           pages: pages,
           checkPre: checkPre,
-          checkNext: checkNext
+          checkNext: checkNext,
           //user: req.user
+          pagination
         });
+        })
+        
       }).catch(next);
     }
     else {

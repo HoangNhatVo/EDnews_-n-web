@@ -59,10 +59,10 @@ module.exports ={
         return orm.selectAll(`call GetHighestViewPost()`);
     },
     SearchPost:(Keyword,limit,offset)=>{
-        return orm.selectAll(`call FindPost('${Keyword}',${limit},${offset})`);
+        return orm.selectAll(`call FindPost('"${Keyword}"',${limit},${offset})`);
     },
     CountSearchPost:Keyword=>{
-        return orm.selectAll(`call NumberOfFindPost('${Keyword}')`);
+        return orm.selectAll(`call NumberOfFindPost('"${Keyword}"')`);
     },
     GetPostWithState:IDstate=>{
         return orm.selectAll(`call GetPostWithState(${IDstate})`);

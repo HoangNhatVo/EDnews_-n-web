@@ -1,63 +1,74 @@
 {{>header}}
 
 <section class="bg-primary pt-0 pb-0">
-		<div class="container">
-			{{>botnav}}
-		
-		</div><!-- container -->
-	</section>
-	<!-- END OF MAIN SLIDER -->
-	
-	
-	<section class="ptb-30">
-		<div class="container">
-			<div class="row">
-			
-				<div class="col-md-12 col-lg-8">
-					{{#each Nametag}}
-					<div class="ptb-0"  >
-						<span class="text-uppercase">Tin về {{remove TenTag}}</span>
-						<h1 class="mtb-20" style="color: #E3493D"><b>{{remove TenTag}}</b></h1>
-					</div>
+	<div class="container">
+		{{>botnav}}
+
+	</div><!-- container -->
+</section>
+<!-- END OF MAIN SLIDER -->
+
+
+<section class="ptb-30">
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-12 col-lg-8">
+				{{#each Nametag}}
+				<div class="ptb-0">
+					<span class="text-uppercase">Tin về {{remove TenTag}}</span>
+					<h1 class="mtb-20" style="color: #E3493D;text-transform:uppercase"><b>{{remove TenTag}}</b></h1>
+				</div>
+				{{/each}}
+				{{#each Post}}
+				<div class="mb-30 sided-250x s-lg-height card-view">
+					<div class="s-left">
+						<a
+							href="/{{Content.KhongDauCha}}/{{Content.KhongDauCon}}/{{Content.IDBaiViet}}/{{Content.TieuDe_KhongDau}}"><img
+								src="../images/{{Content.urllinkHinh}}" alt=""></a>
+					</div><!-- left-area -->
+					<div class="s-right ptb-30 pt-sm-20 pb-xs-5 plr-30 plr-xs-0">
+						<h4><a
+								href="/{{Content.KhongDauCha}}/{{Content.KhongDauCon}}/{{Content.IDBaiViet}}/{{Content.TieuDe_KhongDau}}">{{Content.TieuDe}}</a>
+						</h4>
+						<ul class="mtb-10 list-li-mr-20 color-lite-black">
+							<li><i class="mr-5 font-12 ion-clock"></i>{{format Content.NgayDang}}</li>
+							<li><i class="mr-5 font-12 ion-android-person"></i>{{Content.ButDanh}}</li>
+							<li class="category"><a
+									href="/{{Content.KhongDauCha}}/{{Content.KhongDauCon}}">{{Content.TenChuyenMuc}}</a>
+							</li>
+						</ul>
+						<p class="mt-10">{{Content.NoiDungTomTat}}</p>
+						<ul class="tag">
+							{{#each Tag}}
+							<li><a href="/tag/{{remove TenTag}}">{{TenTag}}</a></li>
+							{{/each}}
+						</ul>
+					</div><!-- right-area -->
+				</div><!-- sided-250x -->
+				{{/each}}
+				{{#if pagination}}
+				<ul class="pagination mb-30">
+					{{!-- kiem tra neu khong phai la page cuoi cung --}}
+					{{#unless checkPre.check}}
+					<li><a href="?page={{ checkPre.value }}"><i class="ion-chevron-left"></i></a></li>
+					{{/unless}}
+					{{#each this.pages}}
+					{{#if active}}
+					<li class="active"><a href="javascript:;">{{value}}</a></li>
+					{{else}}
+					<li><a href="?page={{value}}">{{value}}</a></li>
+					{{/if}}
 					{{/each}}
-					{{#each Post}}
-					<div class="mb-30 sided-250x s-lg-height card-view">
-						<div class="s-left">
-							<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img src="../images/{{urllinkHinh}}" alt=""></a>
-						</div><!-- left-area -->
-						<div class="s-right ptb-30 pt-sm-20 pb-xs-5 plr-30 plr-xs-0">
-							<h4><a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}">{{TieuDe}}</a></h4>
-							<ul class="mtb-10 list-li-mr-20 color-lite-black">
-								<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
-								<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
-								<li class="category"><a href="/{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a></li>
-							</ul>
-							<p class="mt-10">{{NoiDungTomTat}}</p>
-						</div><!-- right-area -->
-					</div><!-- sided-250x -->
-					{{/each}}
-					
-					<ul class="pagination mb-30">
-						{{!-- kiem tra neu khong phai la page cuoi cung --}}
-						{{#unless checkPre.check}}
-						<li><a href="?page={{ checkPre.value }}"><i class="ion-chevron-left"></i></a></li>
-						{{/unless}}
-						{{#each this.pages}}
-						{{#if active}}
-						<li class="active"><a href="javascript:;">{{value}}</a></li>
-						{{else}}
-						<li ><a href="?page={{value}}">{{value}}</a></li>
-						{{/if}}
-						{{/each}}
-						{{#unless checkNext.check}}
-						<li><a href="?page={{ checkNext.value }}"><i class="ion-chevron-right"></i></a></li>
-						{{/unless}}
-					</ul>
-					
-				</div><!-- col-sm-8 -->
-				
-			</div><!-- row -->
-		</div><!-- container -->
-	</section>
-	
+					{{#unless checkNext.check}}
+					<li><a href="?page={{ checkNext.value }}"><i class="ion-chevron-right"></i></a></li>
+					{{/unless}}
+				</ul>
+				{{/if}}
+			</div><!-- col-sm-8 -->
+
+		</div><!-- row -->
+	</div><!-- container -->
+</section>
+
 {{>footer}}
