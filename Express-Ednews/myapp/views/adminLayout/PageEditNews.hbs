@@ -29,12 +29,12 @@
         },
         filename:{
           required: true,
-        },        
+        },
       },
-      messages: {        
+      messages: {
         TieuDe: {
           required: 'Bạn phải nhập tiêu đề bài viết.',
-        },        
+        },
         TomTat: {
           required: 'Bạn phải nhập nội dung tóm tắt.',
         },
@@ -43,7 +43,7 @@
         },
         filename:{
           required: 'Bạn phải chọn ảnh đại diện cho bài viết.',
-        },        
+        },
       },
       errorElement: 'small',
       errorClass: 'help-block text-danger',
@@ -73,31 +73,6 @@
 <script
   src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=wtnd3xbfybaxtd7216nf0no41mor1wo75hb96rr8fjhmwjrq"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.0.6/jquery.tinymce.min.js"></script>
-
-{{!-- <script>
-  $(function () {
-    tinymce.init({
-    selector: '#editor1',
-    height: 600,
-    plugins: [
-        'advlist autolink lists link image charmap preview hr anchor pagebreak',
-        'searchreplace wordcount visualblocks visualchars code',
-        'insertdatetime media nonbreaking table contextmenu directionality',
-        'emoticons template paste textcolor colorpicker textpattern imagetools media table'
-    ],
-    toolbar: 'code | bold italic underline strikethrough | formatselect sizeselect fontselect fontsizeselect | hr alignleft aligncenter alignright alignjustify outdent indent | bullist numlist | link image media table | insertfile undo redo | forecolor backcolor | emoticons',
-    fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
-    menubar: false,
-    images_upload_url: 'postAcceptor.php',
-    images_upload_handler: function (blobInfo, success, failure) {
-    setTimeout(function () {
-      success('http://moxiecode.cachefly.net/tinymce/v9/images/logo.png');
-      }, 2000);
-    }
-    })
-  });
-  </script> --}}
-
 <script>
   $(function () {
 
@@ -155,60 +130,67 @@
           </li>
           <li class="breadcrumb-item active">Đăng bài</li>
         </ol>
-
-    <form class="frmCreateNews" id="frmCreateNews" method="POST" action="/admin/dang-bai">
-        {{#if message_post.length}}
-              <div class="alert alert-success" role="alert">
-                {{message_post}}</a>
-              </div>
-				{{/if}}
-        <p id="title">Ảnh đại diện bài viết:</p>
-        <div class="">
-          <div class="file-loading">
-            <input id="fuMain" name="fuMain" type="file">
-          </div>
+    <form class="frmCreateNews" id="frmCreateNews" method="POST" action="/admin/bai-viet-dang-cho/chinh-sua/{{IDBaiViet}}">
+        
+        {{!-- <p id="title">Ảnh đại diện bài viết:</p> --}}
+        {{#each AvatarPost}}
+        <div class="imgAvatar">
+          <img class="avtPost" src="/images/{{urllinkHinh}}" width="400px">
+          {{!-- <div class="tt-avt">
+              <p>Ảnh đại diện bài viết</p>
+          </div> --}}
         </div>
-        <input type="text" id="fileName" name="filename" value="news_default.jpg" hidden>
+        {{/each}}
 
+           {{#each Post}}
           <div class="text-input" id="tt-top">
             <label class="frmCreateNews">Tiêu đề:</label>
-            <input type="text" id="TieuDe" name="TieuDe" autofocus="true"/>
+            <input type="text" id="TieuDe" name="TieuDe" autofocus="true" value="{{TieuDe}}"/>
           </div>
+          {{/each}}
 
           <p id="title" class="frmCreateNews ttCategory">Chuyên mục:</p>
           <div>
             <select name="category" id="sl-category">
+              {{#each Post}}
+              <option value="{{ChuyenMuc}}" selected>{{TenChuyenMuc}}</option>
+              {{/each}}
               {{#each ListCategory}}
               <option value="{{IDChuyenMuc}}">{{TenChuyenMuc}}</option>
               {{/each}}
             </select>
             <label class="lbl-category">Choose Category</label>
           </div>          
-
+         
           <p id="title">Danh sách Tags:</p>
-          <label for="tag-typer" class="frmCreateNews">
+           {{#if Tags}}
+              <input hidden value="{{Tags}}" name="ValueTags" id="valueTags">
+          {{/if}}
+          <label for="tag-typer" class="frmCreateNews">            
             <div id="tags">
-                <input id="tag-typer" type="text" placeholder="Add tag..."/>
+              <input id="tag-typer" type="text" placeholder="Add tag..."/>
             </div>
-          </label>
-          <input hidden name="ValueTags" id="valueTags">
-
+          </label>         
+         
+         {{#each Post}}
           <div class="text-input input-TomTat" id="text-input">
               <label class="frmCreateNews">Nội dung tóm tắt:</label><br>
-              <textarea rows="3" class="TomTat" id="TomTat" name="TomTat"></textarea>
+              <textarea rows="3" class="TomTat" id="TomTat" name="TomTat">{{NoiDungTomTat}}</textarea>
           </div>
-
+          {{/each}}
+          
+          {{#each Post}}
           <div class="text">
             <label>Nội dung bài báo:</label>
            </div>
            <div class="ckeditor">
-            <textarea class="form-control" id="editor1" name="FullDes"></textarea>
+            <textarea class="form-control" id="editor1" name="FullDes">
+              {{{NoiDung}}}
+            </textarea>
           </div>
-          {{!-- <div class="ckeditor">
-            <textarea id="editor1" name="editor1"></textarea>
-          </div> --}}
-          <button type="button" id="btnNews" class="btnSend">Gửi bài</button>
-
+          {{/each}}
+          <button type="button" id="btnNews" class="btnSend"><i class="fa fa-check"></i> Lưu</button>
+          
           <button type="button" class="" id="btnAlert" data-toggle="modal" data-target="#exampleModal" hidden></button>
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -223,6 +205,7 @@
                   </div>
               </div>
           </div>
+
     </form>
         <!-- End CreateNews -->      
 

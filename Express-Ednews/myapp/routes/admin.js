@@ -6,6 +6,7 @@ const Tagmodel=require('../Model/tag.model');
 const createnewModel = require('../Model/createnew.model');
 const adminmodel=require('../Model/admin.model');
 const loginmodel=require('../Model/login.model');
+const editnewsModel = require('../Model/editnews.model');
 var passport = require('passport');
 
 //  Phân quyền truy cập các router
@@ -38,6 +39,7 @@ router.get('/dang-bai',auth_createnew, (req, res, next) => {
 router.post('/dang-bai', (req,res,next)=>{
   var IDPhongVien = req.user.ID;
   var TieuDe = req.body.TieuDe;
+  TieuDe = TieuDe.replace(/'/g,"");
   var TieuDe_KhongDau = TieuDe.normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/đ/g, 'd').replace(/Đ/g, 'D')
@@ -45,25 +47,19 @@ router.post('/dang-bai', (req,res,next)=>{
     .toLowerCase();
   var IDChuyeMuc = req.body.category;
   var TomTat = req.body.TomTat;
+  TomTat = TomTat.replace(/'/g,"");
   var NoiDung = req.body.FullDes;
+  NoiDung = NoiDung.replace(/'/g,"");
   var NgayViet =  moment().format('YYYY-MM-DD');
   var tmp = req.body.ValueTags;
   var ListTag = tmp.split(",")    
   var link = req.body.filename;
-  // console.log('link',link);
-  // console.log('IDPhongVien',IDPhongVien);
-  // console.log('TieuDe',TieuDe);
-  // console.log('TieuDe_KhongDau',TieuDe_KhongDau);
-  // console.log('IDChuyeMuc',IDChuyeMuc);
-  // console.log('TomTat',TomTat);
-  // console.log('NoiDung',NoiDung);
-  // console.log('NgayViet',NgayViet);
-  // console.log('ListTag',ListTag);
 
   createnewModel.addPost(TieuDe,TieuDe_KhongDau,IDChuyeMuc,NoiDung,IDPhongVien,TomTat,NgayViet).then(IDBaiViet=>{
     var IDBV = IDBaiViet[0].PostID;
     console.log('IDBV',IDBV);
     for(var i=0; i<ListTag.length; i++){
+      ListTag[i] = ListTag[i].replace(/'/g,"");
       Tagmodel.addTag(ListTag[i]).then(ID=>{
         var IDTag = ID[0].IDTagAdd;
         console.log('IDTag',IDTag);
@@ -80,11 +76,75 @@ router.post('/dang-bai', (req,res,next)=>{
   }).catch(next);  
 });
 
+router.get('/bai-viet-dang-cho/chinh-sua/:IDBV', auth_createnew, async (req, res, next)=>{
+  var IDBaiViet = req.params.IDBV;
+  try{
+    var ListTag = await editnewsModel.getTagWithIDPost(IDBaiViet);
+    var PostEdit = await editnewsModel.getPostWithIDPost(IDBaiViet);
+    var ListCat = await editnewsModel.listCat(IDBaiViet);
+    var Avatar = await editnewsModel.getAvatarPost(IDBaiViet);
+    var listTags="";
+    for(var i = 0; i < ListTag.length - 1; i++){
+      listTags = listTags+ ListTag[i].TenTag.replace(/#/g,"")+",";
+    }
+    listTags = listTags+ ListTag[ListTag.length-1].TenTag.replace(/#/g,"")
+    console.log(Avatar);
+    res.render('adminLayout/PageEditNews',
+          {
+            css: '/stylesheets/admin.css',
+            style: '/stylesheets/sb-admin.css',
+            Tags: listTags,
+            Post: PostEdit,
+            ListCategory: ListCat,
+            AvatarPost: Avatar,
+            IDBaiViet
+          });
+  }catch (err) {
+    console.log(err);
+  }  
+})
 
+router.post('/bai-viet-dang-cho/chinh-sua/:IDBV', (req, res, next)=>{
+  var IDBaiViet = req.params.IDBV;
+  var TieuDe = req.body.TieuDe;
+  TieuDe = TieuDe.replace(/'/g,"");
+  var TieuDe_KhongDau = TieuDe.normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+    .replace(/\s/g, "")
+    .toLowerCase();
+  var IDChuyeMuc = req.body.category;
+  var TomTat = req.body.TomTat;
+  TomTat = TomTat.replace(/'/g,"");
+  var NoiDung = req.body.FullDes;
+  NoiDung = NoiDung.replace(/'/g,"");
+  var NgayViet =  moment().format('YYYY-MM-DD');
+  var tmp = req.body.ValueTags;
+  var ListTag = tmp.split(",")    
 
+  // console.log('IDBaiViet',IDBaiViet);
+  // console.log('TieuDe',TieuDe);
+  // console.log('TieuDe_KhongDau',TieuDe_KhongDau);
+  // console.log('IDChuyeMuc',IDChuyeMuc);
+  // console.log('TomTat',TomTat);
+  // console.log('NoiDung',NoiDung);
+  // console.log('NgayViet',NgayViet);
+  // console.log('ListTag',ListTag);
 
-
-
+  editnewsModel.updatePost(IDBaiViet,TieuDe,TieuDe_KhongDau,IDChuyeMuc,NoiDung,TomTat,NgayViet);
+  editnewsModel.deleteAllTagPost(IDBaiViet);
+  for(var i=0; i<ListTag.length; i++){
+    ListTag[i] = ListTag[i].replace(/'/g,"");
+    Tagmodel.addTag(ListTag[i]).then(ID=>{
+      var IDTag = ID[0].IDTagAdd;
+      console.log('IDTag',IDTag);
+      createnewModel.addTagPost(IDBaiViet,IDTag);
+      // editnewsModel.deleteTagNotUse();
+    }).catch(next);
+  }
+  // editnewsModel.deleteTagNotUse();
+  res.redirect('/admin/bai-viet-dang-cho');
+})
 
 
 //Page thong tin tai khoan

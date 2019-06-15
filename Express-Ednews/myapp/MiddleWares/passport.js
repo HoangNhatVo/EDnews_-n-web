@@ -32,6 +32,10 @@ module.exports = function(passport) {
             // if(pass != user[0].Password){
             //     return done(null, false, req.flash('loginMessage', 'Mật khẩu không đúng'));
             // }
+
+            if(user[0].TinhTrang != 'Còn sử dụng'){
+                return done(null, false, req.flash('loginMessage', 'Tài khoản đã bị khóa'));
+            }
            
             if(!bCrypt.compareSync(pass, user[0].Password)){
                 return done(null, false, req.flash('loginMessage', 'Mật khẩu không đúng'));
