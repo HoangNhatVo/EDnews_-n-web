@@ -33,14 +33,8 @@ $(document).ready(function() {
     filename = filename.replace('[','_');
     filename = filename.replace(']','_');
     $('#fileName').val(filename);
-
-    // if($('#fuMain').val()==""){
-    //   $('.imgAvatar').append("<img id='/images/"+$('#fileName').val()+" width='300px'>");
-    // }
   });
 });
-
-
  
 $(document).on("click",".btnSend",function(){
   var n = $('#tag').size();
@@ -52,12 +46,9 @@ $(document).on("click",".btnSend",function(){
   }  
 });
 
-///////////////////////// CHỈNH SỬA BÀI VIẾT
-
+////----------------------- CHỈNH SỬA BÀI VIẾT --------------------------------////
 $(document).ready(function() { 
   $(window).load(function() { 
-  // $('#valueTags').change(function() {
-    // alert('abc');
     if($('#valueTags').val() != ""){
     arrTag = $('#valueTags').val().split(",") 
     for(var i =0; i < arrTag.length; i++){

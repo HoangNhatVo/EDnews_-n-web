@@ -139,7 +139,6 @@ router.post('/bai-viet-dang-cho/chinh-sua/:IDBV', (req, res, next)=>{
       var IDTag = ID[0].IDTagAdd;
       console.log('IDTag',IDTag);
       createnewModel.addTagPost(IDBaiViet,IDTag);
-      // editnewsModel.deleteTagNotUse();
     }).catch(next);
   }
   // editnewsModel.deleteTagNotUse();
