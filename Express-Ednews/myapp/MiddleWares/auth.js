@@ -1,7 +1,7 @@
 module.exports = {
     'facebookAuth': {
-        'clientID': '595446160953037', // App ID của bản
-        'clientSecret': '3281e779bf8dd5b142b388d54c0224da', // App Secret của bạn
+        'clientID': '314301129463804', // App ID của bản
+        'clientSecret': '07b223462c7016e0fd2dd1c30c9137be', // App Secret của bạn
         'callbackURL': 'http://localhost:8081/auth/facebook/callback'
     },
 
