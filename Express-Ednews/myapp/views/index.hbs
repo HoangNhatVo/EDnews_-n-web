@@ -10,7 +10,7 @@
 			<div class="plr-50 h-600x h-md-800x h-xs-1000x oflow-hidden">
 				
 				<div class="w-60 w-md-100 float-left float-md-none h-100 h-md-40 h-xs-50">
-				{{#each Featurepost}}
+				{{#with Featurepost.[0]}}
 					<div class="w-50 w-xs-100 float-left float-xs-none pos-relative h-100 h-xs-50">
 						<!-- Image as bg-1 -->
 						<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><div class="img-bg bg-1 bg-grad-layer-6 mr-10" style="background:url(../images/{{urllinkHinh}}) no-repeat top; background-size: cover"></div></a>
@@ -26,11 +26,27 @@
 							</ul>
 						</div><!--abs-blr -->
 					</div><!-- w-50 -->
-					{{/each}}
-					
+					{{/with}}
+					{{#with Featurepost.[1]}}
+					<div class="w-50 w-xs-100 float-left float-xs-none pos-relative h-100 h-xs-50">
+						<!-- Image as bg-1 -->
+						<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><div class="img-bg bg-1 bg-grad-layer-6 mr-10" style="background:url(../images/{{urllinkHinh}}) no-repeat top; background-size: cover"></div></a>
+						
+						<div class="abs-blr color-white p-20">
+							<h3 class="mb-10 mb-sm-5 t-upper">
+								<a class="hover-grey" href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><b>{{TieuDe}}</b></a></h3>
+							<ul class="list-li-mr-10 color-grey">
+								<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang }}</li>
+								<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
+								<li class="category"><a href="/{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a></li>
+								
+							</ul>
+						</div><!--abs-blr -->
+					</div><!-- w-50 -->
+					{{/with}}
 				</div><!-- w-60 -->
 				<div class="w-40 w-md-100 float-left float-md-none h-100 h-md-60 h-xs-50">
-				{{#each Featurepost}}
+				{{#with Featurepost.[2]}}
 					<div class="h-50 mb-10 pt-md-10">
 						<div class="h-100 pos-relative">
 							<!-- Image as bg-3 -->
@@ -48,34 +64,8 @@
 							</div><!--abs-blr -->
 						</div><!-- h-50 -->
 					</div><!-- h-50 -->
-					{{/each}}
-					
-				</div><!-- w-40 -->
-			</div>
-			<div class="plr-50 h-600x h-md-800x h-xs-1000x oflow-hidden">
-				
-				<div class="w-60 w-md-100 float-left float-md-none h-100 h-md-40 h-xs-50">
-				{{#each Featurepost}}
-					<div class="w-50 w-xs-100 float-left float-xs-none pos-relative h-100 h-xs-50">
-						<!-- Image as bg-1 -->
-						<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><div class="img-bg bg-1 bg-grad-layer-6 mr-10" style="background:url(../images/{{urllinkHinh}}) no-repeat top; background-size: cover"></div></a>
-						
-						<div class="abs-blr color-white p-20">
-							<h3 class="mb-10 mb-sm-5 t-upper">
-								<a class="hover-grey" href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><b>{{TieuDe}}</b></a></h3>
-							<ul class="list-li-mr-10 color-grey">
-								<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
-								<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
-								<li class="category"><a href="/{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a></li>
-								
-							</ul>
-						</div><!--abs-blr -->
-					</div><!-- w-50 -->
-					{{/each}}
-					
-				</div><!-- w-60 -->
-				<div class="w-40 w-md-100 float-left float-md-none h-100 h-md-60 h-xs-50">
-				{{#each Featurepost}}
+					{{/with}}
+					{{#with Featurepost.[3]}}
 					<div class="h-50 mb-10 pt-md-10">
 						<div class="h-100 pos-relative">
 							<!-- Image as bg-3 -->
@@ -85,7 +75,7 @@
 								<h3 class="mb-10 mb-sm-5 t-upper">
 									<a class="hover-grey" href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><b>{{TieuDe}}</b></a></h3>
 								<ul class="list-li-mr-10 color-grey">
-									<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang }}</li>
+									<li><i class="mr-5 font-12 ion-clock"></i>{{ format NgayDang }}</li>
 									<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
 									<li class="category"><a href="{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a></li>
 									
@@ -93,7 +83,87 @@
 							</div><!--abs-blr -->
 						</div><!-- h-50 -->
 					</div><!-- h-50 -->
-					{{/each}}
+					{{/with}}
+					
+				</div><!-- w-40 -->
+			</div>
+			<div class="plr-50 h-600x h-md-800x h-xs-1000x oflow-hidden">
+				
+				<div class="w-60 w-md-100 float-left float-md-none h-100 h-md-40 h-xs-50">
+				{{#with Featurepost.[4]}}
+					<div class="w-50 w-xs-100 float-left float-xs-none pos-relative h-100 h-xs-50">
+						<!-- Image as bg-1 -->
+						<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><div class="img-bg bg-1 bg-grad-layer-6 mr-10" style="background:url(../images/{{urllinkHinh}}) no-repeat top; background-size: cover"></div></a>
+						
+						<div class="abs-blr color-white p-20">
+							<h3 class="mb-10 mb-sm-5 t-upper">
+								<a class="hover-grey" href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><b>{{TieuDe}}</b></a></h3>
+							<ul class="list-li-mr-10 color-grey">
+								<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang }}</li>
+								<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
+								<li class="category"><a href="/{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a></li>
+								
+							</ul>
+						</div><!--abs-blr -->
+					</div><!-- w-50 -->
+					{{/with}}
+					{{#with Featurepost.[5]}}
+					<div class="w-50 w-xs-100 float-left float-xs-none pos-relative h-100 h-xs-50">
+						<!-- Image as bg-1 -->
+						<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><div class="img-bg bg-1 bg-grad-layer-6 mr-10" style="background:url(../images/{{urllinkHinh}}) no-repeat top; background-size: cover"></div></a>
+						
+						<div class="abs-blr color-white p-20">
+							<h3 class="mb-10 mb-sm-5 t-upper">
+								<a class="hover-grey" href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><b>{{TieuDe}}</b></a></h3>
+							<ul class="list-li-mr-10 color-grey">
+								<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang }}</li>
+								<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
+								<li class="category"><a href="/{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a></li>
+								
+							</ul>
+						</div><!--abs-blr -->
+					</div><!-- w-50 -->
+					{{/with}}
+				</div><!-- w-60 -->
+				<div class="w-40 w-md-100 float-left float-md-none h-100 h-md-60 h-xs-50">
+				{{#with Featurepost.[6]}}
+					<div class="h-50 mb-10 pt-md-10">
+						<div class="h-100 pos-relative">
+							<!-- Image as bg-3 -->
+							<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><div class="img-bg bg-3 bg-grad-layer-6" style="background:url(../images/{{urllinkHinh}}) no-repeat top; background-size: cover"></div></a>
+							
+							<div class="abs-blr color-white p-20">
+								<h3 class="mb-10 mb-sm-5 t-upper">
+									<a class="hover-grey" href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><b>{{TieuDe}}</b></a></h3>
+								<ul class="list-li-mr-10 color-grey">
+									<li><i class="mr-5 font-12 ion-clock"></i>{{ format NgayDang }}</li>
+									<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
+									<li class="category"><a href="{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a></li>
+									
+								</ul>
+							</div><!--abs-blr -->
+						</div><!-- h-50 -->
+					</div><!-- h-50 -->
+					{{/with}}
+					{{#with Featurepost.[7]}}
+					<div class="h-50 mb-10 pt-md-10">
+						<div class="h-100 pos-relative">
+							<!-- Image as bg-3 -->
+							<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><div class="img-bg bg-3 bg-grad-layer-6" style="background:url(../images/{{urllinkHinh}}) no-repeat top; background-size: cover"></div></a>
+							
+							<div class="abs-blr color-white p-20">
+								<h3 class="mb-10 mb-sm-5 t-upper">
+									<a class="hover-grey" href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><b>{{TieuDe}}</b></a></h3>
+								<ul class="list-li-mr-10 color-grey">
+									<li><i class="mr-5 font-12 ion-clock"></i>{{ format NgayDang }}</li>
+									<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
+									<li class="category"><a href="{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a></li>
+									
+								</ul>
+							</div><!--abs-blr -->
+						</div><!-- h-50 -->
+					</div><!-- h-50 -->
+					{{/with}}
 					
 				</div><!-- w-40 -->
 			</div>
@@ -108,10 +178,10 @@
 			<div class="row">
 			
 				<div class="col-md-12 col-lg-8">
-					<div class="mb-30 p-30 ptb-sm-25 plr-sm-15 card-view">
+					<div class="mb-20 p-30 ptb-sm-25 plr-sm-15 card-view">
 						<h4 class="p-title"><b>BÀI VIẾT MỚI</b></h4>
 						{{#with Newpost.[0] }}
-						<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img style="height: 300px;width: 600px;object-fit: cover;" src="images/{{urllinkHinh}}" alt=""></a>
+						<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img style="height: 300px;width: 600px;object-fit: fill;" src="images/{{urllinkHinh}}" alt=""></a>
 						<h3 class="mt-30"><a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}">{{TieuDe}}</a></h3>
 						<ul class="mtb-10 list-li-mr-20 color-lite-black">
 							<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
@@ -123,7 +193,7 @@
 						{{/with}}
 					</div><!-- bg-white -->
 					{{#each Newpost}}
-					<div class="mb-30 sided-250x card-view">
+					<div class="mb-20 sided-250x card-view">
 						<div class="s-left">
 							<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img src="images/{{urllinkHinh}}" alt=""></a>
 						</div><!-- left-area -->
@@ -157,7 +227,7 @@
 						{{#each ToDaypost}}
 						<div class="sided-80x mb-20">
 							<div class="s-left">
-								<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img src="images/{{urllinkHinh}}" alt=""></a>
+								<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img src="images/{{urllinkHinh}}" alt="" style="height:80px"></a>
 							</div><!-- s-left -->
 							
 							<div class="s-right">
@@ -193,7 +263,7 @@
 		</div><!-- container -->
 	</section>
 	
-	<section class="pb-20">
+	<section style="padding:20px 0" >
 		<div class="container">
 			<div class="row">
 				
@@ -206,7 +276,7 @@
 						<div class="row">
 							
 							<div class="col-sm-6">
-								<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img src="images/{{urllinkHinh}}" alt=""></a>
+								<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img src="images/{{urllinkHinh}}" alt="" style="height: 243px"></a>
 							</div><!-- col-sm-6 -->
 							
 							<div class="col-sm-6">
@@ -219,7 +289,7 @@
 								<p>{{NoiDungTomTat}}</p>
 							</div><!-- col-sm-6 -->
 						</div><!-- row -->
-						<div class="mtb-30 brdr-grey-1"></div>
+						<div class="mtb-30 brdr-grey-1"style="height: 2px"></div>
 						{{else}}
 						<div class="row">
 							
@@ -249,13 +319,13 @@
 					
 					<!-- START OF SPORT -->
 					<div class="p-30 card-view mtb-30">
-						<h4 class="p-title"><b>BÓNG ĐÁ</b></h4>
+						<h4 class="p-title" style="border-bottom: 1px solid #ccc;"><b>BÓNG ĐÁ</b></h4>
 						{{#each BongdaCat}}
 						{{#if @first}}
 						<div class="row">
 							
 							<div class="col-sm-6">
-								<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img src="images/{{urllinkHinh}}" alt=""></a>
+								<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img src="images/{{urllinkHinh}}" alt="" style="height: 243px"></a>
 							</div><!-- col-sm-6 -->
 							
 							<div class="col-sm-6">
@@ -268,7 +338,7 @@
 								<p>{{NoiDungTomTat}}</p>
 							</div><!-- col-sm-6 -->
 						</div><!-- row -->
-						<div class="mtb-30 brdr-grey-1"></div>
+						<div class="mtb-30 brdr-grey-1" ></div>
 						{{else}}
 						<div class="row">
 							

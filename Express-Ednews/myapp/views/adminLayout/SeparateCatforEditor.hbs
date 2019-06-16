@@ -1,0 +1,31 @@
+{{>AdminNav}}
+<div id="wrapper">
+  {{>AdminSlidebar}}
+  <div id="content-wrapper">
+
+    <div class="container-fluid">
+
+      <div class="card shadow">
+        <h4 class="card-header">
+          Phân quyền chuyên mục
+        </h4>
+        {{#if mesg.length}}
+        <div class="alert alert-success" role="alert">
+          {{mesg}}
+        </div>
+        {{/if}}
+        <div class="card-body">
+           <div class="form-group">
+              <label for="txtCatID" style="width:240px">Tên biên tập viên</label>
+              <input readonly type="text" class="form-control" id="txtCatID" name="IDTag" value="Hoàng Nhật">
+            </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+
+    <!-- Sticky Footer -->
+    {{>AdminFooter}}
+  </div>
+</div>
+{{>AdminLogoutmodal}}

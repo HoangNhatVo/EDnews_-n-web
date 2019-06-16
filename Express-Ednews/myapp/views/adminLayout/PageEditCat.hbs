@@ -7,6 +7,11 @@
         <h4 class="card-header">
           Chỉnh sửa chuyên mục
         </h4>
+        {{#if mesg.length}}
+        <div class="alert alert-success" role="alert">
+          {{mesg}}
+        </div>
+        {{/if}}
         {{#if this.error}}
         <div class="alert alert-danger" role="alert">
           Không tồn tại chuyên mục này
@@ -17,7 +22,7 @@
           <form method="POST" class="update"
             action="/admin/danh-sach-chuyen-muc/Chinh-sua-chuyen-muc/{{MainCat.TenChuyenMuc_KhongDau}}">
             <div class="form-group">
-              <label for="txtCatID" name ="IDMain"style="width:200px">ID chuyên mục</label>
+              <label for="txtCatID" name="IDMain" style="width:200px">ID chuyên mục</label>
               <input readonly type="text" class="form-control" id="txtCatID" name="CatID1"
                 value="{{MainCat.IDChuyenMuc}}">
             </div>

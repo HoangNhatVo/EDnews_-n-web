@@ -1,41 +1,47 @@
- {{>AdminNav}}
- <div id="wrapper">   
-   {{>AdminSlidebar}}
-    <div id="content-wrapper">
+{{>AdminNav}}
+<div id="wrapper">
+  {{>AdminSlidebar}}
+  <div id="content-wrapper">
 
-      <div class="container-fluid">
+    <div class="container-fluid">
 
-          <div class="card shadow">
-  <h4 class="card-header">
-    Thêm Tag mới
-  </h4>
-  <div class="card-body">
-    <form method="POST" action="/admin/danh-sach-tag/them-tag">
-      <div class="form-group">
-        <label for="txtCatName" style="width:240px">Tên Tag</label>
-        <input type="text" class="form-control" id="txtCatName" name="TagName" autofocus placeholder="Enter category name">
+      <div class="card shadow">
+        <h4 class="card-header">
+          Thêm Tag mới
+        </h4>
+        {{#if mesg.length}}
+        <div class="alert alert-success" role="alert">
+          {{mesg}}
+        </div>
+        {{/if}}
+        <div class="card-body">
+          <form method="POST" action="/admin/danh-sach-tag/them-tag">
+            <div class="form-group">
+              <label for="txtCatName" style="width:240px">Tên Tag</label>
+              <input type="text" class="form-control" id="txtCatName" name="TagName" autofocus
+                placeholder="Enter category name">
+            </div>
+            <a class="btn btn-primary" href="/admin/danh-sach-tag" role="button">
+              <i class="fa fa-backward" aria-hidden="true"></i>
+              Trở về
+            </a>
+            <button type="submit" class="btn btn-success">
+              <i class="fa fa-check" aria-hidden="true"></i>
+              Lưu
+            </button>
+          </form>
+        </div>
       </div>
-      <a class="btn btn-primary" href="/admin/danh-sach-tag" role="button">
-        <i class="fa fa-backward" aria-hidden="true"></i>
-        Trở về
-      </a>
-      <button type="submit" class="btn btn-success">
-        <i class="fa fa-check" aria-hidden="true"></i>
-        Lưu
-      </button>
-    </form>
+    </div>
+
+
+
   </div>
+  <!-- /.container-fluid -->
+
+  <!-- Sticky Footer -->
+  {{>AdminFooter}}
+
 </div>
 </div>
-
-        
-
-      </div>
-      <!-- /.container-fluid -->
-
-      <!-- Sticky Footer -->
-      {{>AdminFooter}}
-
-    </div>
-    </div>
-    {{>AdminLogoutmodal}}
+{{>AdminLogoutmodal}}

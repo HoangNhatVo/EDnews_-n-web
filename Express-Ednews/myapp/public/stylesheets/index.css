@@ -1447,6 +1447,15 @@ iframe {
   justify-content: center
   
 }
+.col-2
+{
+  border-radius: 5px;
+  /* width: 20px; */
+  height:50%;
+  /* margin: 20px 20px 5px 120px; */
+  padding-top: 2px;
+  padding-bottom: 4px;
+}
 .col-8
 {
   border-radius: 5px;
@@ -1596,4 +1605,13 @@ hr {
   border-radius:10px;
   color:#FFF;
   font-weight:bold;
+.list-group-item.active {
+  z-index: 2;
+  color: #fff;
+  background-color: #339266;
+  border-color: #339266;
+}
+
+#msgCenter{
+  text-align: center;
 }

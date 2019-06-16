@@ -11,13 +11,13 @@
       <i class="fas fa-user-circle"></i>
       <span>Thông tin tài khoản</span></a>
   </li>
-  {{#if isWriter}}
+  {{#unless isEditor}}
   <li class="nav-item">
     <a class="nav-link" href="/admin/dang-bai">
       <i class="far fa-fw fa-clipboard"></i>
       <span>Đăng bài</span></a>
   </li>
-  {{/if}}
+  {{/unless}}
   <li class="nav-item">
     <a class="nav-link" href="/admin/bai-viet-dang-cho">
       <i class="fas fa-fw fa-table"></i>

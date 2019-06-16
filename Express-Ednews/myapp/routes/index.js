@@ -46,9 +46,9 @@ router.get('/', async (req, res, next) => {
       {
         css: '/stylesheets/index.css',
         style: '/stylesheets/style.css',
-        Featurepost: Feature.slice(0, 2),
-        Newpost: New.slice(0, 6),
-        ToDaypost: Today,
+        Featurepost: Feature.slice(0, 8),
+        Newpost: New.slice(0, 7),
+        ToDaypost: Today.slice(0,9),
         ChinhTriCat: ChinhTriCat,
         BongdaCat: BongdaCat,
         ThoiTrang: ThoiTrang,
@@ -128,8 +128,8 @@ router.post('/thong-tin-ca-nhan/:ID', function (req, res, next) {
         loginModel.updateInfoUserWithID(ID, Info.HoTen, Info.NgaySinh, Info.Email).then(r => {
           req.logout();
           req.session.cookie.expires = false;
-          req.flash('signupMessage', 'Đã cập nhật thông tin, mời đăng nhập lại');
-          res.redirect('/dangnhap');
+          // req.flash('signupMessage', 'Đã cập nhật thông tin, mời đăng nhập lại');
+          res.redirect('/');
         }).catch(err => {
           req.flash('msg_info', 'Không cập nhật được thông tin');
           res.redirect('/thong-tin-ca-nhan');
@@ -184,8 +184,8 @@ router.post('/thong-tin-ca-nhan/:ID/doi-mat-khau', function (req, res, next) {
         loginModel.updatePasswordUserWithID(ID, newPass).then(r2 => {
           req.logout();
           req.session.cookie.expires = false;
-          req.flash('signupMessage', 'Đổi mật khẩu thành công, mời đăng nhập lại');
-          res.redirect('/dangnhap');
+          // req.flash('signupMessage', 'Đổi mật khẩu thành công, mời đăng nhập lại');
+          res.redirect('/');
         }).catch(err => {
           req.flash('changePasswordMessage', 'Đã xảy ra lỗi');
           res.redirect(`/thong-tin-ca-nhan/${ID}/doi-mat-khau`);
@@ -388,13 +388,11 @@ router.get('/nhap-ma-otp-xac-nhan/:email', function (req, res, next) {
 router.post('/nhap-ma-otp-xac-nhan/:email', function (req, res, next) {
   var email = req.params.email;
   var OTP = req.body.OTP;
-  var y = moment().unix();
   var x = (moment().unix() - 120).toString();
   console.log('OTP', OTP);
-  console.log('y', y);
   console.log('x', x);
 
-  if (OTP >= x) {
+  // if (OTP >= x) {
     loginModel.getUserWithEmail(email).then(r1 => {
       if (!r1.length) {
         req.flash('abc', 'abc');
@@ -408,6 +406,7 @@ router.post('/nhap-ma-otp-xac-nhan/:email', function (req, res, next) {
           res.redirect(`/nhap-ma-otp-xac-nhan/${email}`);
         }
         else {
+          if(OTP >= x){
           req.flash('opt_success', 'Mã OTP chính xác');
           req.flash('xyz', 'xyz');
           loginModel.addOTPUserWithEmail(email, '').then(r2 => {
@@ -417,28 +416,38 @@ router.post('/nhap-ma-otp-xac-nhan/:email', function (req, res, next) {
           })
           res.redirect(`/reset-password/${email}`);
         }
+        else{
+          req.flash('send_error', 'Mã OTP đã quá hạn');
+          loginModel.addOTPUserWithEmail(email, '').then(r => {
+            console.log(r);
+          }).catch(err => {
+            console.log(err);
+            req.flash('send_error', 'Đã xảy ra lỗi');
+          })
+          res.redirect('/quen-mat-khau');
+        }
       }
+    }
     }).catch(err => {
       req.flash('abc', 'abc');
       req.flash('input_error', 'Đã xảy ra lỗi');
       res.redirect(`/nhap-ma-otp-xac-nhan/${email}`);
-    })
-  }
-  else {
-    req.flash('send_error', 'Mã OTP đã quá hạn');
-    loginModel.addOTPUserWithEmail(email, '').then(r => {
-      console.log(r);
-    }).catch(err => {
-      console.log(err);
-      req.flash('send_error', 'Đã xảy ra lỗi');
-    })
-    res.redirect('/quen-mat-khau');
-  }
+  })
+  // }
+  // else {
+  //   req.flash('send_error', 'Mã OTP đã quá hạn');
+  //   loginModel.addOTPUserWithEmail(email, '').then(r => {
+  //     console.log(r);
+  //   }).catch(err => {
+  //     console.log(err);
+  //     req.flash('send_error', 'Đã xảy ra lỗi');
+  //   })
+  //   res.redirect('/quen-mat-khau');
+  // }
 });
 
 router.get('/reset-password/:email', function (req, res, next) {
   var email = req.params.email;
-  // if(!req.isAuthenticated()){
   if (!req.isAuthenticated() && (req.flash('xyz').length != 0)) {
     res.render('ResetPassword', {
       layout: false, css: '/stylesheets/index.css', style: '/stylesheets/style.css',
@@ -476,7 +485,25 @@ router.post('/tim-kiem', (req, res, next) => {
   ])
     .then(([row, count_row]) => {
       if (count_row[0].Num != 0) {
-        var total = count_row[0].Num;
+        async function getTagPost(p) {
+          var post = [];
+          for (let t of p) {
+            try {
+              var Tag = await singlepostModel.getTagPost(t.IDBaiViet);
+              post.push({
+                Content: t,
+                Tag: Tag
+              });
+            }
+            catch (e) {
+              console.log(e);
+            }
+          }
+          return post;
+        }
+        getTagPost(row)
+        .then(r=>{
+          var total = count_row[0].Num;
         var nPages = Math.floor(total / limit);
         if (total % limit > 0) nPages++;
         var pages = [];
@@ -515,7 +542,7 @@ router.post('/tim-kiem', (req, res, next) => {
           css: '/stylesheets/index.css',
           style: '/stylesheets/style.css',
           count_row,
-          Post: row,
+          Post: r,
           pages: pages,
           checkPre: checkPre,
           checkNext: checkNext,
@@ -523,6 +550,8 @@ router.post('/tim-kiem', (req, res, next) => {
           pagination,
           user: req.user
         });
+        })
+        
       }
       else {
         res.render('SearchPage', {
@@ -570,7 +599,25 @@ router.get('/tag/:Tentag', async (req, res, next) => {
         singlepostModel.getPostwithTag(nametag, limit, offset,Pre),
         singlepostModel.getCountPostwithTag(nametag,Pre)
       ]).then(([rows, count_rows]) => {
-        var total = count_rows[0].SoLuongBaiViet;
+        async function getTagPost(p) {
+          var post = [];
+          for (let t of p) {
+            try {
+              var Tag = await singlepostModel.getTagPost(t.IDBaiViet);
+              post.push({
+                Content: t,
+                Tag: Tag
+              });
+            }
+            catch (e) {
+              console.log(e);
+            }
+          }
+          return post;
+        }
+        getTagPost(rows)
+        .then(r=>{
+          var total = count_rows[0].SoLuongBaiViet;
         var nPages = Math.floor(total / limit);
         if (total % limit > 0) nPages++;
         var pages = [];
@@ -602,16 +649,22 @@ router.get('/tag/:Tentag', async (req, res, next) => {
               value: pages[page - 1].value - 1
             }
         }
+        var pagination;
+        if (nPages == 1) pagination = false;
+        else pagination = true;
         res.render('List_Post_withTag', {
           css: '/stylesheets/index.css',
           style: '/stylesheets/style.css',
           Nametag: check,
-          Post: rows,
+          Post: r,
           pages: pages,
           checkPre: checkPre,
-          checkNext: checkNext
+          checkNext: checkNext,
           //user: req.user
+          pagination
         });
+        })
+        
       }).catch(next);
     }
     else {
@@ -631,9 +684,10 @@ router.post('/comment/:IDBaiViet', async (req, res, next) => {
   var Cat = req.params.KhongDauCha;
   var SubCat = req.params.KhongDauCon;
   var Title = req.params.TieuDe_KhongDau;
-  console.log(IDPost, Comment, IDUser);
+ 
   if (req.user) {
     var IDUser = req.user.ID;
+    console.log(IDPost, Comment, IDUser);
     singlepostModel.AddComment(IDPost, IDUser, Comment);
     res.redirect(`/${Cat}/${SubCat}/${IDPost}/${Title}`);
   }
@@ -958,6 +1012,7 @@ router.get('/:TenCm/:TensubCm/:id/:Tenbaiviet', async (req, res) => {
     if (DetailPost.length > 0) {
       var TagPost = await singlepostModel.getTagPost(Id);
       var CommentPost = await singlepostModel.getCommentPost(Id);
+      var Relatepost= await singlepostModel.GetRelatePost(Id);
       singlepostModel.IncreaseViewPost(Id);
 
       // console.log(CommentPost);
@@ -966,8 +1021,9 @@ router.get('/:TenCm/:TensubCm/:id/:Tenbaiviet', async (req, res) => {
         style: '/stylesheets/style.css',
         DetailPost: DetailPost,
         TagPost: TagPost,
-        CommentPost: CommentPost
+        CommentPost: CommentPost,
         //user: req.user
+        Relatepost:Relatepost
       })
 
 

@@ -1,69 +1,75 @@
- <link rel="stylesheet" href="/javascripts/datatable/dataTables.bootstrap4.css">
- {{>AdminNav}}
- <div id="wrapper">   
-   {{>AdminSlidebar}}
-    <div id="content-wrapper">
+<link rel="stylesheet" href="/javascripts/datatable/dataTables.bootstrap4.css">
+{{>AdminNav}}
+<div id="wrapper">
+  {{>AdminSlidebar}}
+  <div id="content-wrapper">
 
-      <div class="container-fluid">
+    <div class="container-fluid">
 
-       <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="/admin">Dashboard</a>
-          </li>
-          <li class="breadcrumb-item active">Bài viết bị từ chối</li>
-        </ol>
-
-        <!-- DataTables Example -->
-        <div class="card mb-3 List-Decline">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
-            Danh sách bài viết</div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>STT</th>
-                    <th>Tiêu đề</th>
-                    <th>Chuyên mục</th>
-                    <th>Người từ chối</th>
-                    <th>Nguyên nhân từ chối</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                   {{#each post}}
-                  <tr>
-                   
-                    <td>{{IDBaiViet}}</td>
-                    <td>{{TieuDe}}</td>
-                    <td>{{TenChuyenMuc}}</td>
-                    <td>{{ButDanh}}</td>
-                    <td >
-                      {{NguyenNhanTuChoi}}
-                    </td>
-                    <td class="action">
-                      <a href="#" title="">Chỉnh sửa</a>
-                      <button type="button">Xóa</button>
-                    </td>
-                  </tr>
-                  {{/each}}
-                 
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>        
-
-        
-
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="/admin">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Bài viết bị từ chối</li>
+      </ol>
+      {{#if mesg.length}}
+      <div class="alert alert-success" role="alert">
+        {{mesg}}
       </div>
-      <!-- /.container-fluid -->
+      {{/if}}
+      <!-- DataTables Example -->
+      <div class="card mb-3 List-Decline">
+        <div class="card-header">
+          <i class="fas fa-table"></i>
+          Danh sách bài viết</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tiêu đề</th>
+                  <th>Chuyên mục</th>
+                  <th>Người từ chối</th>
+                  <th>Nguyên nhân từ chối</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each post}}
+                <tr>
 
-      <!-- Sticky Footer -->
-      {{>AdminFooter}}
+                  <td>{{IDBaiViet}}</td>
+                  <td>{{TieuDe}}</td>
+                  <td>{{TenChuyenMuc}}</td>
+                  <td>{{ButDanh}}</td>
+                  <td>
+                    {{NguyenNhanTuChoi}}
+                  </td>
+                  <td class="action" style="width:150px">
+                    <form action="/admin/xoa-bai-viet/{{IDBaiViet}}" method="POST">
+                      <a href="./bai-viet-dang-cho/chinh-sua/{{IDBaiViet}}" title="">Chỉnh sửa</a>
+
+                      <button type="submit">Xóa</button>
+                    </form>
+                  </td>
+                </tr>
+                {{/each}}
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
 
     </div>
-    </div>
-    {{>AdminLogoutmodal}}
- 
+    <!-- /.container-fluid -->
+
+    <!-- Sticky Footer -->
+    {{>AdminFooter}}
+
+  </div>
+</div>
+{{>AdminLogoutmodal}}

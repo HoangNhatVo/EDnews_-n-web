@@ -16,10 +16,14 @@
           <button class="btn btn-outline-success"><a href="/admin/danh-sach-chuyen-muc/them-chuyen-muc"><i
                 class="fas fa-plus">Thêm chuyên mục</i></a></button>
         </div>
-
+        {{#if mesg.length}}
+        <div class="alert alert-success" role="alert">
+          {{mesg}}
+        </div>
+        {{/if}}
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
                   <th>ID</th>

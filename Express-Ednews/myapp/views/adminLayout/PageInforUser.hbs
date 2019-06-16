@@ -1,64 +1,64 @@
 {{#section 'css'}}
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 {{/section}}
 
 {{#section 'js'}}
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script>
-	$(function () {
-		$('#editinforUser').validate({
-			rules: {
-				fullname: {
-					required: true,
-				},
-        ButDanh:{
+  $(function () {
+    $('#editinforUser').validate({
+      rules: {
+        fullname: {
           required: true,
         },
-				Birthdate: {
-					required: true,
-				},
-        Email:{
+        ButDanh: {
+          required: true,
+        },
+        Birthdate: {
+          required: true,
+        },
+        Email: {
           required: true,
           email: true
         },
-			},
-			messages: {
-				fullname: {
-					required: 'Bắt buộc.',
-				},
-        ButDanh:{
+      },
+      messages: {
+        fullname: {
           required: 'Bắt buộc.',
         },
-				Birthdate: {
-					required: 'Bắt buộc.',
-				},
-        Email:{
+        ButDanh: {
+          required: 'Bắt buộc.',
+        },
+        Birthdate: {
+          required: 'Bắt buộc.',
+        },
+        Email: {
           required: 'Bắt buộc.',
           email: 'Chưa đúng định dạng email.'
         },
-			},
-			errorElement: 'small',
-			errorClass: 'help-block text-danger',
-			highlight: function (e) {
-				$(e).removeClass('is-valid').addClass('is-invalid');
-			},
-			unhighlight: function (e) {
-				$(e).removeClass('is-invalid').addClass('is-valid');
-			}
-		});
-	})
+      },
+      errorElement: 'small',
+      errorClass: 'help-block text-danger',
+      highlight: function (e) {
+        $(e).removeClass('is-valid').addClass('is-invalid');
+      },
+      unhighlight: function (e) {
+        $(e).removeClass('is-invalid').addClass('is-valid');
+      }
+    });
+  })
 </script>
 <script type="text/javascript">
-            $(function () {
-                $('#txtBirthdate').datetimepicker({
-                  format: 'm/d/Y',
-                  timepicker: false,
-                  mask: true,
-                });
-            });
+  $(function () {
+    $('#txtBirthdate').datetimepicker({
+      format: 'm/d/Y',
+      timepicker: false,
+      mask: true,
+    });
+  });
 </script>
 {{/section}}
 
@@ -77,16 +77,21 @@
           Thông tin tài khoản
         </li>
       </ol>
-
+      {{#if mesg.length}}
+      <div class="alert alert-success" role="alert">
+        {{mesg}}
+      </div>
+      {{/if}}
       <!-- Icon Cards-->
       <div class="row">
         <div class="container" style="
          display: flex;">
           <div class="col-6">
+            {{#each user}}
             <div class="ava">
-              <img src="https://topsao.vn/wp-content/uploads/2018/05/12/5a2a258f05c14-buianhtuan25-970x546.jpg">
+              <img src="/images/{{AnhDaiDien}}">
             </div>
-
+            {{/each}}
 
             <div class="inforUser">
               {{#each user}}
@@ -100,7 +105,6 @@
               <div class="form-group">
                 <label>Bút danh:</label>
                 <span>{{ButDanh}}</span>
-
               </div>
               <div class="form-group">
                 <label>Ngày sinh:</label>
@@ -130,10 +134,12 @@
                 </div>
 
               </div>
+              {{#ifE PhanHe 'PH3'}}
               <div class="form-group">
                 <label>Bút danh</label>
                 <input type="text" name="ButDanh" value="{{ButDanh}}"><br>
               </div>
+              {{/ifE}}
               <div class="form-group">
                 <label>Ngày sinh:</label>
                 <input type="text " name="Birthdate" id="txtBirthdate" value="{{format NgaySinh}}">
