@@ -2,7 +2,7 @@
 	<!-- START OF SIDEBAR MOST READ -->
 	<div class="mb-30 p-30 card-view">
 		<h4 class="p-title"><b>ĐỌC NHIỀU NHẤT</b></h4>
-{{#each lcNewPost}}
+		{{#each lcNewPost}}
 		<div class="sided-80x mb-20" style="border-bottom: 1px solid #ccc;">
 			<div class="s-left">
 				<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img
@@ -84,19 +84,32 @@
 	</div><!-- banner-area -->
 	<!-- END OF SIDEBAR BANNER-->
 
-	<!-- START OF SIDEBAR NEWSLETTER -->
-	<div class="mt-30 p-30 plr-40 card-view text-center">
-		<h4><b>BẢN TIN</b></h4>
-		<p>Tạp chí bán chạy nhất</p>
-		<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img class="mtb-20 max-w-100x mlr-auto"
-				src="/images/sidebar-profile-5-100x150.jpg" alt=""></a>
-
-		<form class="form-sm max-w-400x mlr-auto">
-			<input type="email" placeholder="Nhập Email để nhận ưu đãi ">
-			<h6><button class="mt-15 plr-20 btn-b-sm btn-primary dplay-block" type="submit"><b>ĐĂNG KÝ NGAY</b></button>
-			</h6>
-		</form>
-	</div><!-- card-view -->
-	<!-- END OF SIDEBAR NEWSLETTER -->
+	<!-- START OF SIDEBAR NEWSLETTER /images/News-Papers.jpg-->
+	<div class="mt-30 p-30 plr-40 card-view text-center" style="padding: 0!important;height:200px">
+		{{!-- <a style="width:100%;height:100%"> --}}
+			<div class="premium-ad" style="background-image: url(/images/News-Papers.jpg);height:100%">
+				<h4><label class="premiumPack"
+						style="margin:10px 0 2px 0;font-weight:550;width:100%;border-radius: 0px;">PREMIUM</label></h4>
+				{{!-- <a href="/Mua-tai-khoan"><img src="/images/News-Papers.jpg" alt=""></a> --}}
+				<div class="form-sm max-w-400x mlr-auto" style="margin: 100px !important;display: block;">
+					{{#if user.ID}}
+					<a  href="/Mua-tai-khoan" style="cursor:pointer">
+						<button type="submit"
+							style="font-weight:600;border-radius:10px; margin:auto;width:150px;background-color:rgb(1, 1, 85);color:White">ĐĂNG
+							KÝ NGAY</button>
+					</a>
+					{{else}}
+					<a  href="/dangnhap" style="cursor:pointer">
+						<button type="submit"
+							style="font-weight:600;border-radius:10px; margin:auto;width:150px;background-color:rgb(1, 1, 85);color:White">ĐĂNG
+							KÝ NGAY</button>
+					</a>
+					{{/if}}
+				</div>
+			</div>
+		{{!-- </a> --}}
+	</div>
+</div><!-- card-view -->
+<!-- END OF SIDEBAR NEWSLETTER -->
 
 </div><!-- col-sm-4 -->

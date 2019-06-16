@@ -272,3 +272,10 @@ call AddTagPost('BV25','tag46');
 call AddTagPost('BV26','tag47');
 call AddTagPost('BV26','tag48');
 call AddTagPost('BV27','tag49');
+#------------14/6 
+set sql_safe_updates=0;
+update baiviet set NgayViet ='2019-06-10';
+update baiviet set NgayDang ='2019-06-14 00:00:00';
+alter table baiviet
+add fulltext(TieuDe,NoiDungTomTat,NoiDung)
+

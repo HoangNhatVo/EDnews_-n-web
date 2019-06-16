@@ -52,7 +52,6 @@ begin
 	elseif (hieu>=0)
 	then
 		update taikhoanthe set SoDu=SoDu-20000 where SKT=SoTK;
-        update nguoidung set PhanHe='PH4' where ID=IDUser;
 		if(HanDung is null)
         then
         update nguoidung set NgayHetHan= date_add(now(),interval 7 day) where ID=IDUser;
@@ -65,3 +64,22 @@ begin
 end;$$
 DELIMITER ;
 call BuyPremiumPack(10);
+#--------------------
+#-------------------------Lay thong tin tai khoan
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure LienKetTaiKhoanThe(in IDUser int,in SoTaiKhoan varchar(15))
+begin
+	if exists (select * from taikhoanthe where ChuSoHuu=IDUser)
+    then
+    select 0 as temp;
+    elseif not exists (select * from taikhoanthe where ChuSoHuu=IDUser)
+    then
+    insert into taikhoanthe values(SoTaiKhoan,IDUser,0);
+     update nguoidung set PhanHe='PH4' where ID=IDUser;
+    select 1 as temp;
+    end if;
+end;$$
+DELIMITER ;
+call LienKetTaiKhoanThe('22','aaaaaa5');
+   
