@@ -1,32 +1,32 @@
 var orm = require('../config/orm');
 module.exports ={
     // lay bai viet noi bat
-    getFeaturePost: ()=>{
-        return orm.selectAll('call GetSinglePost');
+    getFeaturePost: (Pre)=>{
+        return orm.selectAll(`call GetSinglePost(${Pre})`);
     },
     // lay bai viet moi
-    getNewPost:()=>{
-        return orm.selectAll('call GetNewPost');
+    getNewPost:(Pre)=>{
+        return orm.selectAll(`call GetNewPost(${Pre})`);
     },
     // lay bai viet hom nay
-    getToDayPost:()=>{
-        return orm.selectAll('call GetTodayPost');
+    getToDayPost:(Pre)=>{
+        return orm.selectAll(`call GetTodayPost(${Pre})`);
     },
     // lay bai viet subcategories
-    getPostfromCategories: (NameSubCategories,limit,offset) =>{
-        return orm.selectAll(`call GetNewPostsWithCategory('${NameSubCategories}',${limit},${offset})`);
+    getPostfromCategories: (NameSubCategories,limit,offset,Pre) =>{
+        return orm.selectAll(`call GetNewPostsWithCategory('${NameSubCategories}',${limit},${offset},${Pre})`);
     },
     //lay bai viet tu mainCategories
-    getPostfromMainCategories: (NameCategories,limit,offset)=>{
-        return orm.selectAll(`call GetNewPostsWithMainCategory('${NameCategories}',${limit},${offset})`);
+    getPostfromMainCategories: (NameCategories,limit,offset,Pre)=>{
+        return orm.selectAll(`call GetNewPostsWithMainCategory('${NameCategories}',${limit},${offset},${Pre})`);
     },
     //Lay so bai viet cua chuyen muc cha
-    getCountPostfromMainCat:NameCat=>{
-        return orm.selectAll(`call CountPostwithMainCat('${NameCat}')`);
+    getCountPostfromMainCat:(NameCat,Pre)=>{
+        return orm.selectAll(`call CountPostwithMainCat('${NameCat}',${Pre})`);
     },
     //lay so bai viet cua chuyen muc con
-    getCountPostCat:NameCat=>{
-        return orm.selectAll(`call CountPostwithCat('${NameCat}')`);
+    getCountPostCat:(NameCat,Pre)=>{
+        return orm.selectAll(`call CountPostwithCat('${NameCat}',${Pre})`);
     },
     //lay bai viet doc nhiều nhất
     getPostReadMost: ()=>{
@@ -45,12 +45,12 @@ module.exports ={
         return orm.selectAll(`call getcommentspost('${idPost}')`);
     },
     //lay danh sach bai viet theo tag
-    getPostwithTag:(TenTag,limit,offset)=>{
-        return orm.selectAll(`call GetPostsWithTag('#${TenTag}',${limit},${offset})`);
+    getPostwithTag:(TenTag,limit,offset,Pre)=>{
+        return orm.selectAll(`call GetPostsWithTag('#${TenTag}',${limit},${offset},${Pre})`);
     },
     //dem so luong bai viet theo tag
-    getCountPostwithTag:TenTag=>{
-        return orm.selectAll(`call CountPostsWithTag('#${TenTag}')`);
+    getCountPostwithTag:(TenTag,Pre)=>{
+        return orm.selectAll(`call CountPostsWithTag('#${TenTag}',${Pre})`);
     },
     IncreaseViewPost:IDPost=>{
         return orm.selectAll(`call IncreaseView('${IDPost}')`);
@@ -58,11 +58,11 @@ module.exports ={
     GetMostViewPost:()=>{
         return orm.selectAll(`call GetHighestViewPost()`);
     },
-    SearchPost:(Keyword,limit,offset)=>{
-        return orm.selectAll(`call FindPost('${Keyword}',${limit},${offset})`);
+    SearchPost:(Keyword,limit,offset,Pre)=>{
+        return orm.selectAll(`call FindPost('${Keyword}',${limit},${offset},${Pre})`);
     },
-    CountSearchPost:Keyword=>{
-        return orm.selectAll(`call NumberOfFindPost('${Keyword}')`);
+    CountSearchPost:(Keyword,Pre)=>{
+        return orm.selectAll(`call NumberOfFindPost('${Keyword}',${Pre})`);
     },
     GetPostWithState:IDstate=>{
         return orm.selectAll(`call GetPostWithState(${IDstate})`);

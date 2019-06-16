@@ -261,7 +261,7 @@ begin
     end if;
 end;$$
 DELIMITER ; 
-call CheckTag('#a');
+call CheckTag('#dalat');
 #-------------------TANG VIEW BAI VIET
 DELIMITER $$
 USE `baodientu3n`$$
@@ -292,18 +292,20 @@ DELIMITER $$
 USE `baodientu3n`$$
 create procedure FindPost(in temp varchar(50), in limi int, in offse int)
 begin
-	select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat
+	select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,nd.ButDanh,
+    cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,
+    url.urllinkHinh,BV.NoiDungTomTat,match(BV.TieuDe,BV.NoiDung,BV.NoiDungTomTat) against( temp IN BOOLEAN MODE) as score
     from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
 						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
                         join urlhinhanh as url on url.IDHinh=HA.IDHinh
 						join nguoidung as nd on nd.ID=BV.PhongVien
                         join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
                         join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
-   where match(BV.TieuDe) against( temp)  and BV.SuDung=1
+   where  BV.SuDung=1 and (match(BV.TieuDe,BV.NoiDung,BV.NoiDungTomTat) against( temp IN BOOLEAN MODE)  )
    limit limi offset offse;
 end;$$
 DELIMITER ; 
-call FindPost('nghi',1,0);
+call FindPost('chi pu',1,0);
 #-----------------------------So luong bai viet dc tim thay theo tu khoa
 DELIMITER $$
 USE `baodientu3n`$$
@@ -311,10 +313,10 @@ create procedure NumberOfFindPost(in temp varchar(50))
 begin
 	select count(*) as Num
     from baiviet as BV
-   where match(BV.TieuDe) against( temp)  and BV.SuDung=1;
+   where match(BV.TieuDe,BV.NoiDung,BV.NoiDungTomTat) against( temp)  and BV.SuDung=1;
 end;$$
 DELIMITER ; 
-call NumberOfFindPost('nghi duong');
+call NumberOfFindPost('"chi pu"');
 #---------------------------Them binh luan
 DELIMITER $$
 USE `baodientu3n`$$
@@ -343,7 +345,7 @@ DELIMITER $$
 USE `baodientu3n`$$
 create procedure GetCommentsPost(in IDBaiViet varchar(15))
 begin
-	select  BV.TieuDe_KhongDau as TieuDe_KhongDau,con.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cmt.IDBinhLuan,BV.IDBaiViet,docgia.HoTen,docgia.AnhDaiDien,cmt.NgayBinhLuan,cmt.NoiDung,LikesOfComment(cmt.IDBinhLuan) as LuotLike
+	select  BV.TieuDe_KhongDau as TieuDe_KhongDau,con.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cmt.IDBinhLuan,BV.IDBaiViet,docgia.HoTen,docgia.AnhDaiDien,cmt.NgayBinhLuan,cmt.NoiDung
     from baiviet as BV join binhluan as cmt on cmt.BaiViet =BV.IDBaiViet
 					   join nguoidung as docgia on docgia.ID=cmt.DocGia
                        join chuyenmuc as con on con.IDChuyenMuc=BV.ChuyenMuc
@@ -366,4 +368,29 @@ begin
 end;$$
 DELIMITER ;
 call CheckLike(10,2);
-
+#------------------------Khoa nguoi dung
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure LockUser(in IDUser int)
+begin
+	update nguoidung set TinhTrang=N'Khóa' where ID=IDUser;
+end;$$
+DELIMITER ;
+#------------------------Bai viet lien quan
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure GetRelatedPosts(in IDPost varchar(15))
+begin
+	declare Cat varchar(10);
+    set Cat=(select ChuyenMuc from baiviet where IDBaiViet=IDPost);
+	select BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,nd.ButDanh,BV.ChuyenMuc,CMCha.TenChuyenMuc_KhongDau as KhongDauCha,CMCon.TenChuyenMuc_KhongDau as KhongDauCon,url.urllinkHinh
+    from baiviet as BV join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+								join chuyenmuc as CMCon on CMCon.IDChuyenMuc= BV.ChuyenMuc
+                                join chuyenmuc as CMCha on CMCha.IDCHuyenMuc=CMCon.ChuyenMucCha
+								join urlhinhanh as url on url.IDHinh=HA.IDHinh
+                                join nguoidung as nd on nd.ID=BV.PhongVien
+	where BV.TinhTrang=2   and BV.SuDung=1 and BV.ChuyenMuc=Cat and BV.IDBaiViet!=IDPost
+    order by BV.NgayDang desc limit 5 ;
+end;$$
+DELIMITER ;
+call GetRelatedPosts('BV2');

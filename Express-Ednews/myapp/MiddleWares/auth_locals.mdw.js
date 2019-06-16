@@ -1,4 +1,6 @@
 module.exports = (req, res, next) => {
+  var d =new Date();
+  var n=d.getDate();
   if (req.user) {
     res.locals.isAuthenticated = true;
     res.locals.user = req.user;
@@ -14,7 +16,12 @@ module.exports = (req, res, next) => {
     if(req.user.PhanHe == 'PH3'){
       res.locals.isEditor = true;
     }
+    if(req.user.PhanHe=='PH5'){
+      res.locals.isGuest=true;
+    }
+    if((req.user.PhanHe=='PH4')&&(req.user.NgayHetHan>n) ){
+      res.locals.isPremium=true;
+    }
   }
-
   next();
 }

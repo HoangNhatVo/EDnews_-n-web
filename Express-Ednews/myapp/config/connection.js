@@ -11,6 +11,10 @@ else {
         password: '123456',
         database: 'baodientu3n'
     });
+    connection.connect(function(err) {
+        if (err) throw err;
+        console.log("Connected!");
+    });
 }
 
 module.exports = connection;

@@ -86,13 +86,8 @@ create table BaiViet_HinhAnh
   AnhDaiDien int,#--1 là ảnh đại diện,0 là ảnh thường
   primary key(IDBaiViet,IDHinh)
   );
-  
-----------------------------	KHOA NGOAI	
-alter table binhluan
-add constraint FK_BL_BL
-foreign key (BinhLuanGoc)
-references BinhLuan(IDBinhLuan);
 
+----------------------------	KHOA NGOAI	
 alter table baiviet
 add constraint FK_BV_PhanHang
 foreign key (PhanHang)
@@ -164,14 +159,37 @@ add constraint Fk_CMT_DocGia
 foreign key (DocGia)
 references NguoiDung(ID);
 
-
-
-
-
-
-
-
 select * from INFORMATION_SCHEMA.TABLE_CONSTRAINTS where CONSTRAINT_TYPE='FOREIGN KEY';
+  #-----------------------drop foreign key khoa ngoai
+alter table baiviet
+drop foreign key  FK_BV_PhanHang;
+alter table baiviet
+drop foreign key  FK_BV_TT;
+alter table ChuyenMuc
+drop foreign key Fk_CM_CM	;
+alter table NguoiDung
+drop foreign key Fk_user_PH	;
+alter table TaiKhoanThe
+drop foreign key Fk_The_user;
+alter table BaiViet
+drop foreign key Fk_BV_PV;
+alter table BaiViet
+drop foreign key Fk_BV_BTV;
+alter table BaiViet
+drop foreign key Fk_BV_CM;
+alter table Nhan_BaiViet
+drop foreign key Fk_BV_Nhan;
+alter table Nhan_BaiViet
+drop foreign key Fk_Nhan;
+alter table BaiViet_HinhAnh
+drop foreign key Fk_BV;
+alter table BaiViet_HinhAnh
+drop foreign key Fk_image;
+alter table BinhLuan
+drop foreign key Fk_CMT_BV;
+alter table BinhLuan
+drop foreign key Fk_CMT_DocGia;
+truncate table binhluan;
 #-------------------4/6
 alter table baiviet add NgayViet date;
 create table DuyetBai
@@ -215,3 +233,18 @@ create table LikeBinhLuan
 ( IDBinhLuan int,
   IDUserLike int,
   primary key(IDBinhLuan,IDUserLike));*/
+  #--------------16/6
+  create table BTV_ChuyenMuc
+  ( IDBienTapVien int,
+	ChuyenMuc varchar(10),
+    primary key(IDBienTapVien,ChuyenMuc));
+    
+    alter table BTV_ChuyenMuc
+    add constraint BTVCM_ND
+    foreign key (IDBienTapVien)
+    references nguoidung(ID);
+    
+	alter table BTV_ChuyenMuc
+    add constraint BTVCM_CM
+    foreign key (ChuyenMuc)
+    references chuyenmuc(IDChuyenMuc);

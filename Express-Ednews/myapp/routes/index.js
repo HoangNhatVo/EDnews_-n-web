@@ -11,21 +11,36 @@ var nodemailer = require('nodemailer');
 var xoauth2 = require('xoauth2');
 const configAuth = require('../MiddleWares/auth');
 const saltRounds = 10;
+const paymentModel = require('../Model/payment.model');
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
+  var now = moment().format('YYYY-MM-DD hh:mm:ss');
+  console.log(now);
+  if (req.user) {
+    var NgayHH = req.user.NgayHetHan;
+    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
+      var Pre = 1;
+    }
+    else {
+      var Pre = 0;
+    }
+  }
+  else {
+    var Pre = 0;
+  }
   let limit = 1;
   let offset = 0;
   try {
-    var Feature = await singlepostModel.getFeaturePost();
-    var New = await singlepostModel.getNewPost();
-    var Today = await singlepostModel.getToDayPost();
-    var ChinhTriCat = await singlepostModel.getPostfromCategories('chinhtri', 3, offset);
-    var BongdaCat = await singlepostModel.getPostfromCategories('bongda', 3, offset);
-    var ThoiTrang = await singlepostModel.getPostfromCategories('fashion', limit, offset);
-    var TaiChinh = await singlepostModel.getPostfromCategories('taichinh', limit, offset);
-    var Showbiz = await singlepostModel.getPostfromCategories('showbiz', limit, offset);
-    var Smartphone = await singlepostModel.getPostfromCategories('smartphone', limit, offset);
+    var Feature = await singlepostModel.getFeaturePost(Pre);
+    var New = await singlepostModel.getNewPost(Pre);
+    var Today = await singlepostModel.getToDayPost(Pre);
+    var ChinhTriCat = await singlepostModel.getPostfromCategories('chinhtri', 3, offset, Pre);
+    var BongdaCat = await singlepostModel.getPostfromCategories('bongda', 3, offset, Pre);
+    var ThoiTrang = await singlepostModel.getPostfromCategories('fashion', limit, offset, Pre);
+    var TaiChinh = await singlepostModel.getPostfromCategories('taichinh', limit, offset, Pre);
+    var Showbiz = await singlepostModel.getPostfromCategories('showbiz', limit, offset, Pre);
+    var Smartphone = await singlepostModel.getPostfromCategories('smartphone', limit, offset, Pre);
     console.log(Showbiz);
     res.render('index',
       {
@@ -48,7 +63,21 @@ router.get('/', async (req, res, next) => {
 });
 //Page lien he
 router.get('/lien-he', async function (req, res, next) {
-  var Feature = await singlepostModel.getFeaturePost();
+  var now = moment().format('YYYY-MM-DD hh:mm:ss');
+  console.log(now);
+  if (req.user) {
+    var NgayHH = req.user.NgayHetHan;
+    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
+      var Pre = 1;
+    }
+    else {
+      var Pre = 0;
+    }
+  }
+  else {
+    var Pre = 0;
+  }
+  var Feature = await singlepostModel.getFeaturePost(Pre);
   res.render('Contact',
     {
       css: '/stylesheets/index.css',
@@ -58,7 +87,21 @@ router.get('/lien-he', async function (req, res, next) {
 
 //Page thong tin ca nhan
 router.get('/thong-tin-ca-nhan', async function (req, res, next) {
-  var Feature = await singlepostModel.getFeaturePost();
+  var now = moment().format('YYYY-MM-DD hh:mm:ss');
+  console.log(now);
+  if (req.user) {
+    var NgayHH = req.user.NgayHetHan;
+    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
+      var Pre = 1;
+    }
+    else {
+      var Pre = 0;
+    }
+  }
+  else {
+    var Pre = 0;
+  }
+  var Feature = await singlepostModel.getFeaturePost(Pre);
   //res.render('subcriber', { css: '/stylesheets/index.css', style: '/stylesheets/style.css', user: req.user });
   if (req.isAuthenticated()) {
     res.render('subcriber', {
@@ -497,6 +540,20 @@ router.post('/tim-kiem', (req, res, next) => {
 
 //page danh sach bai viet theo tag
 router.get('/tag/:Tentag', async (req, res, next) => {
+  var now = moment().format('YYYY-MM-DD hh:mm:ss');
+  console.log(now);
+  if (req.user) {
+    var NgayHH = req.user.NgayHetHan;
+    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
+      var Pre = 1;
+    }
+    else {
+      var Pre = 0;
+    }
+  }
+  else {
+    var Pre = 0;
+  }
   var nametag = req.params.Tentag;
   console.log(nametag);
   try {
@@ -510,8 +567,8 @@ router.get('/tag/:Tentag', async (req, res, next) => {
 
 
       Promise.all([
-        singlepostModel.getPostwithTag(nametag, limit, offset),
-        singlepostModel.getCountPostwithTag(nametag)
+        singlepostModel.getPostwithTag(nametag, limit, offset,Pre),
+        singlepostModel.getCountPostwithTag(nametag,Pre)
       ]).then(([rows, count_rows]) => {
         var total = count_rows[0].SoLuongBaiViet;
         var nPages = Math.floor(total / limit);
@@ -567,6 +624,7 @@ router.get('/tag/:Tentag', async (req, res, next) => {
   }
 });
 
+
 router.post('/comment/:IDBaiViet', async (req, res, next) => {
   var IDPost = req.params.IDBaiViet;
   var Comment = req.body.cmt;
@@ -579,21 +637,77 @@ router.post('/comment/:IDBaiViet', async (req, res, next) => {
     singlepostModel.AddComment(IDPost, IDUser, Comment);
     res.redirect(`/${Cat}/${SubCat}/${IDPost}/${Title}`);
   }
-  else 
-  {
+  else {
     res.redirect(`/${Cat}/${SubCat}/${IDPost}/${Title}`);
   }
 
 
 });
 
-//Mua tai khoan premium
-router.get('/Mua-tai-khoan',(req,res,next)=>{
-  res.render('PurchasePremium', {
-    css: '/stylesheets/index.css',
-    style: '/stylesheets/style.css',
-  });
+//Details Tai Khoan 
+router.get('/Mua-tai-khoan', (req, res, next) => {
+  var IDUser = req.user.ID;
+  var Cart;
+  paymentModel.getdetailcard(IDUser).then(temp => {
+    Cart = temp[0];
+    console.log(temp);
+    console.log(Cart);
+    res.render('PurchasePremium', {
+      cart: Cart,
+      css: '/stylesheets/index.css',
+      style: '/stylesheets/style.css',
+    });
+  }).catch(err => { });
+
 });
+//Nap Tien
+router.post('/Mua-tai-khoan/Money', (req, res, next) => {
+  var IDUser = req.user.ID;
+  var Money = req.body.money;
+  if (isNaN(Money) === false) {
+    paymentModel.addmoney(IDUser, Money).then(temp => {
+      res.redirect('/Mua-tai-khoan');
+    }).catch(err => {
+      res.redirect('/Mua-tai-khoan');
+    });
+  }
+  // if(isNaN(Money)===true)
+  // {
+  //     res.redirect('/Mua-tai-khoan');
+  // }
+});
+//Mua goi premium
+router.get('/Mua-tai-khoan/buyprepack', (req, res, next) => {
+  var IDUser = req.user.ID;
+  paymentModel.buypremiumpack(IDUser).then(temp => {
+    if (temp[0].Temp === 1) {
+      res.send('1');
+    }
+    if (temp[0].Temp === 0) {
+      res.send('0');
+    }
+  }).catch(err => {
+  });
+})
+//Tao the lien ket
+router.post('/Mua-tai-khoan/creditcard', (req, res, next) => {
+  var IDUser = req.user.ID;
+  var IDCard = req.body.cardid;
+  console.log(IDCard);
+  paymentModel.linkcreditcard(IDUser, IDCard).then(temp => {
+    console.log(temp[0]);
+    if (temp[0].temp === 1) {
+      console.log('1');
+      res.redirect('/Mua-tai-khoan');
+    }
+    if (temp[0].temp === 0) {
+      res.redirect('/Mua-tai-khoan');
+      console.log('2');
+    }
+  }).catch(err => {
+  });
+})
+
 // router.post('/:IDBaiViet/comment/:IDBinhLuan', async (req, res, next) => {
 //   var IDPost = req.params.IDBaiViet;
 //   var IDComment = req.params.IDBinhLuan;
@@ -616,9 +730,23 @@ router.get('/Mua-tai-khoan',(req,res,next)=>{
 
 //page danh sach bai viet cua chuyen muc cha
 router.get('/:TenCM', async (req, res, next) => {
+  var now = moment().format('YYYY-MM-DD hh:mm:ss');
+  console.log(now);
+  if (req.user) {
+    var NgayHH = req.user.NgayHetHan;
+    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
+      var Pre = 1;
+    }
+    else {
+      var Pre = 0;
+    }
+  }
+  else {
+    var Pre = 0;
+  }
   var NameCats = req.params.TenCM;
   try {
-    var Feature = await singlepostModel.getFeaturePost();
+    var Feature = await singlepostModel.getFeaturePost(Pre);
     var NameCat = await CategoriesModel.getNameCategory(NameCats);
     if (NameCat.length > 0) {
       var page = req.query.page || 1;
@@ -628,8 +756,8 @@ router.get('/:TenCM', async (req, res, next) => {
       var offset = (page - 1) * limit;
 
       Promise.all([
-        singlepostModel.getPostfromMainCategories(NameCats, limit, offset),
-        singlepostModel.getCountPostfromMainCat(NameCats),
+        singlepostModel.getPostfromMainCategories(NameCats, limit, offset,Pre),
+        singlepostModel.getCountPostfromMainCat(NameCats,Pre),
       ]).then(([rows, count_rows]) => {
         async function getTagPost(p) {
           var post = [];
@@ -706,9 +834,23 @@ router.get('/:TenCM', async (req, res, next) => {
 });
 //Page danh sach bai viet cua chuyen muc con
 router.get('/:TenCm/:TensubCm', async (req, res) => {
+  var now = moment().format('YYYY-MM-DD hh:mm:ss');
+  console.log(now);
+  if (req.user) {
+    var NgayHH = req.user.NgayHetHan;
+    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
+      var Pre = 1;
+    }
+    else {
+      var Pre = 0;
+    }
+  }
+  else {
+    var Pre = 0;
+  }
   var TensubCm = req.params.TensubCm;
   try {
-    var Feature = await singlepostModel.getFeaturePost();
+    var Feature = await singlepostModel.getFeaturePost(Pre);
     var NameCat = await CategoriesModel.getNameCategory(TensubCm);
     if (NameCat.length > 0) {
       // var Post= await singlepostModel.getPostfromCategories(TensubCm);
@@ -720,8 +862,8 @@ router.get('/:TenCm/:TensubCm', async (req, res) => {
 
 
       Promise.all([
-        singlepostModel.getPostfromCategories(TensubCm, limit, offset),
-        singlepostModel.getCountPostCat(TensubCm),
+        singlepostModel.getPostfromCategories(TensubCm, limit, offset,Pre),
+        singlepostModel.getCountPostCat(TensubCm,Pre),
       ]).then(([rows, count_rows]) => {
         async function getTagPost(p) {
           var post = [];
@@ -844,5 +986,3 @@ router.get('/:TenCm/:TensubCm/:id/:Tenbaiviet', async (req, res) => {
 
 
 module.exports = router;
-
-

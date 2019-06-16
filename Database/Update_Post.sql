@@ -863,3 +863,7 @@ set NoiDung =N'<p class="mt-30">Ngày 9/6, Đồn Biên phòng Vĩnh Ngươn (An
                      '
                   
 where IDBaiVIet ='BV27';
+#---------13/6
+insert into urlhinhanh values(null,'default-avatar.png');
+set sql_safe_updates=0;
+update nguoidung set AnhDaiDien = 'default-avatar.png' ;

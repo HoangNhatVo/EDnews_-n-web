@@ -1,21 +1,154 @@
 {{>header}}
 <div class="payment-container">
     <div class="payment-row">
-        <div class="col-2">
-            <div class="list-group" id="list-tab" role="tablist">
-                <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list"
-                    href="#list-home" role="tab" aria-controls="home">Tài khoản liên kết</a>
-                <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
-                    href="#list-profile" role="tab" aria-controls="profile">Số dư</a>
-                <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
-                    href="#list-messages" role="tab" aria-controls="messages">PREMIUM</a>
-            </div>
-        </div>
         <div class="col-8">
-            <div>Ngân hàng</div>
-            <div>Số thẻ/ tài khoản</div>
-            <div>Chủ sở hữu</div>
+            <div class="row-premium">
+                {{#if isSubscriber }}
+                <div class="col-one-premium">
+                    <label style="color:rgb(3, 66, 3);font-size:20px;margin-left:90px">TÀI KHOẢN LIÊN KẾT</label>
+                    {{!-- {{#each DetailPost}} --}}
+                    <div class="info">
+                        <label class="lb-premium">Số tài khoản</label>
+                        <div class="col-input-pre">
+                            <input class="output-premium" type="text" id="Ho" name="fullname" autofocus
+                                value="{{cart.SoTaiKhoan}}">
+                        </div>
+                    </div>
+                    <div class="info">
+                        <label class="lb-premium">Chủ sở hữu</label>
+                        <div class="22">
+                            <input class="output-premium" type="text" id="Ho" name="fullname" autofocus
+                                value="{{cart.HoTen}}">
+                        </div>
+                    </div>
+                    <div class="info">
+                        <label class="lb-premium">Số dư</label>
+                        <div class="col-input-pre">
+                            <input class="output-premium" type="text" id="Ho" name="fullname" autofocus
+                                value="{{cart.SoDu}}">
+                        </div>
+                    </div>
+                    {{!-- {{#each}} --}}
+                    <hr>
+                    </hr>
+                    <div class="payment-box">
+                        <label style="color:rgb(15, 3, 66);font-size:20px;font-weight:bold;margin:5px 0 0 120px ">NẠP
+                            TÀI KHOẢN</label>
+                        <hr style=" margin-top: 3px;">
+                        </hr>
+                        <label class="lb-premium" style="color:black;margin-left:5px">Số tiền nạp</label>
+                        <form id="addmoney" method="POST" action="/Mua-tai-khoan/Money">
+                            <input class="output-premium" style="margin-left: 20px;width: 90%;height:30px;" type="text"
+                                name="money" id="moneybox" /required> <button type="submit" class="btnPay">NẠP</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-two-premium">
+                    <a><label class="premiumPack">GÓI PREMIUM</label></a>
+                    <a style="font-size: 15px">Chỉ 20.000 VNĐ cho 7 ngày </a>
+                    <hr style=" margin:5px 0 10px 0;">
+                    </hr>
+                    <img style="height:270px;width:380px;border-radius:20px;margin-left:0px;"
+                        src="/images/News-Papers1.jpg">
+                    <form method="GET" action="">
+                        <button type="button" id="BuyPrePack1" class="btnPremium">MUA GÓI</button>
+                    </form>
+                    <div class="background-popup" id="popup-back">
+                        <div class="popup-success" id="popup-v">
+                            <i class="far fa-check-circle"
+                                style="color:rgb(12, 168, 82);font-size:70px;margin:20px 0 5px 0"
+                                aria-hidden="true"></i>
+                            <div id="2-alert" style="color:black;font-weight:bold;font-size:22px">THÀNH CÔNG</div>
+                            <div id="2-alert" style="color:black;font-size:15px">Bạn có thêm 7 ngày ưu đãi</div>
+                            <button class="close-popup">ĐÓNG</button>
+                        </div>
+                        <div class="popup-fail" id="popup-x">
+                            <i class="far fa-times-circle"
+                                style="color:rgb(202, 7, 7);font-size:70px;margin:20px 0 5px 0" aria-hidden="true"></i>
+                            <div id="2-alert" style="color:black;font-weight:bold;font-size:22px">THẤT BẠI</div>
+                            <div id="2-alert" style="color:black;font-size:15px">Không đủ số dư</div>
+                            <button class="close-popup">ĐÓNG</button>
+                        </div>
+
+                    </div>
+                    {{!-- <p><button formaction="" style="height: 40px;width:40px; margin:15px 0 0 180px"><img
+                                src="/images/premium.png"></button></p> --}}
+                </div>
+                {{/if}}
+                {{#if isGuest}}
+                <div class="col-one-premium">
+                    <label style="color:rgb(3, 66, 3);font-size:20px;margin-left:90px">TÀI KHOẢN LIÊN KẾT</label>
+                    {{!-- {{#each DetailPost}} --}}
+                    <div class="info">
+                        <label class="lb-premium">Số tài khoản</label>
+
+                    </div>
+                    <hr style=" margin-top: 3px;">
+                    </hr>
+                    <form id="addmoney" method="POST" action="/Mua-tai-khoan/creditcard">
+                        <div class="col-input-pre">
+                            <input class="output-premium" type="text" name="cardid">
+                        </div>
+                        <button type="submit" class="btnPay">TẠO LIÊN KẾT</button>
+                    </form>
+                </div>
+                <div class="col-two-premium">
+                    <a><label class="premiumPack">GÓI PREMIUM</label></a>
+                    <a style="font-size: 15px">Chỉ 20.000 VNĐ cho 7 ngày </a>
+                    <hr style=" margin:5px 0 10px 0;">
+                    </hr>
+                    <img style="height:270px;width:380px;border-radius:20px;margin-left:0px;"
+                        src="/images/News-Papers1.jpg">
+                </div>
+            </div>
+            {{/if}}
+
         </div>
     </div>
 </div>
+</div>
 {{>footer}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function PrePack() {
+            console.log('a');
+            $.get('/Mua-tai-khoan/buyprepack', {}, function (result) {
+                if (result === '1') {
+                    $('#popup-back').show();
+                    $('#popup-v').show();
+                }
+                if (result === '0' || result === '2') {
+                    $('#popup-back').show();
+                    $('#popup-x').show();
+                }
+            })
+        }
+        $('#BuyPrePack1').click(function () {
+            console.log('1');
+            PrePack();
+        })
+    });
+    $('.close-popup').click(function () {
+        window.location.reload();
+    });
+    $('#addmoney').validate({
+        rules: {
+            money: {
+                required: true,
+                number: true
+            },
+        },
+        messages: {
+            money: {
+                required: 'Vui lòng nhập số tiền cần nạp',
+                number: 'Định dạng không đúng'
+            },
+        },
+        errorElement: 'small',
+        errorClass: 'help-block text-danger',
+
+
+    });
+</script>
