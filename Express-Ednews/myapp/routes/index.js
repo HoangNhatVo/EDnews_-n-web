@@ -152,7 +152,7 @@ router.post('/thong-tin-ca-nhan/:ID', function (req, res, next) {
 
 //page doi mat khau
 router.get('/thong-tin-ca-nhan/:ID/doi-mat-khau', async function (req, res, next) {
-  var Feature = await singlepostModel.getFeaturePost();
+  var Feature = await singlepostModel.getFeaturePost(1);
   var ID = req.params.ID;
   if (req.isAuthenticated() && ID != 0) {
     res.render('ChangePassword', {

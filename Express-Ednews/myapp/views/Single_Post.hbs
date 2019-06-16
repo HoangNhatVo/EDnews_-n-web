@@ -55,18 +55,20 @@
 
 				<div class="p-30 mb-30 card-view">
 					<h4 class="p-title"><b>BÀI VIẾT LIÊN QUAN</b></h4>
-					{{#each Relatepost}}
+					
 					<div class="row">
+						{{#each Relatepost}}
 						<div class="col-sm-4 mb-sm-20">
-							<img src="/images/{{urllinkHinh}}" alt="">
+							<img src="/images/{{urllinkHinh}}" alt="" style="height: 150px">
 							<h5 class="mt-20"><a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><b>{{TieuDe}}</b></a></h5>
 							<ul class="mtb-5 list-li-mr-20 color-lite-black">
 								<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
 								<li class="category"><a href="/{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a></li>
 							</ul>
 						</div><!-- col-sm-4 -->
+						{{/each}}
 					</div><!-- row -->
-					{{/each}}
+					
 				</div><!-- card-view -->
 				<div class="p-30 mb-30 card-view">
 					<h4 class="p-title"><b>BÌNH LUẬN</b></h4>
@@ -75,7 +77,7 @@
 					
 					<form method="POST" action="/comment/{{IDBaiViet}}">
 						<input name="cmt" class="boxCmt" placeholder="Viết bình luận..." ;>
-						<button type="submit" class="btnCmt" style="margin-top:10px">GỬI BÌNH LUẬN</button>
+						<button type="submit" class="btnCmt" style="margin-top:10px">BÌNH LUẬN</button>
 					</form>
 					{{/each}}
 					{{/if}}
