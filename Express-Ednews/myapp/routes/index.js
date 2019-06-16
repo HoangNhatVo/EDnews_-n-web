@@ -473,6 +473,20 @@ router.post('/reset-password/:email', function (req, res, next) {
 });
 //post tim kiem
 router.post('/tim-kiem', (req, res, next) => {
+  var now = moment().format('YYYY-MM-DD hh:mm:ss');
+  console.log(now);
+  if (req.user) {
+    var NgayHH = req.user.NgayHetHan;
+    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
+      var Pre = 1;
+    }
+    else {
+      var Pre = 0;
+    }
+  }
+  else {
+    var Pre = 0;
+  }
   var key = req.body.search;
   var page = req.query.page || 1;
   if (page < 1) page = 1;
@@ -480,7 +494,7 @@ router.post('/tim-kiem', (req, res, next) => {
   var limit = 10;
   var offset = (page - 1) * limit;
   Promise.all([
-    singlepostModel.SearchPost(key, limit, offset),
+    singlepostModel.SearchPost(key, limit, offset,Pre),
     singlepostModel.CountSearchPost(key)
   ])
     .then(([row, count_row]) => {

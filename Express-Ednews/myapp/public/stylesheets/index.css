@@ -1605,6 +1605,8 @@ hr {
   border-radius:10px;
   color:#FFF;
   font-weight:bold;
+}
+
 .list-group-item.active {
   z-index: 2;
   color: #fff;
