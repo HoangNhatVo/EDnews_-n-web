@@ -1,5 +1,16 @@
 DELIMITER $$
 USE `baodientu3n`$$
+CREATE PROCEDURE CommentPost(in IDBV varchar(10))
+BEGIN
+	select cmcha.TenChuyenMuc_KhongDau as Cat, cm.TenChuyenMuc_KhongDau as SubCat, bv.TieuDe_KhongDau as Title
+    from baiviet bv, chuyenmuc cm, chuyenmuc cmcha
+    where bv.IDBaiViet = IDBV and bv.ChuyenMuc = cm.IDChuyenMuc and cm.ChuyenMucCha = cmcha.IDChuyenMuc;
+END;$$
+DELIMITER ;
+
+
+DELIMITER $$
+USE `baodientu3n`$$
 CREATE PROCEDURE DeleteTagNotUse()
 BEGIN
 	declare CheckTagNotUse bool default true;

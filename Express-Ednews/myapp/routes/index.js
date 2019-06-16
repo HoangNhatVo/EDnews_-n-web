@@ -12,6 +12,7 @@ var xoauth2 = require('xoauth2');
 const configAuth = require('../MiddleWares/auth');
 const saltRounds = 10;
 const paymentModel = require('../Model/payment.model');
+const commentModel = require('../Model/comment.model');
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
@@ -692,24 +693,30 @@ router.get('/tag/:Tentag', async (req, res, next) => {
 });
 
 
+
 router.post('/comment/:IDBaiViet', async (req, res, next) => {
   var IDPost = req.params.IDBaiViet;
   var Comment = req.body.cmt;
-  var Cat = req.params.KhongDauCha;
-  var SubCat = req.params.KhongDauCon;
-  var Title = req.params.TieuDe_KhongDau;
- 
+  // var Cat = req.params.KhongDauCha;
+  // var SubCat = req.params.KhongDauCon;
+  // var Title = req.params.TieuDe_KhongDau;
+  
   if (req.user) {
     var IDUser = req.user.ID;
     console.log(IDPost, Comment, IDUser);
-    singlepostModel.AddComment(IDPost, IDUser, Comment);
-    res.redirect(`/${Cat}/${SubCat}/${IDPost}/${Title}`);
+    commentModel.commentPost(IDPost).then(r=>{
+      var Cat = r[0].Cat;
+      var SubCat = r[0].SubCat;
+      var Title = r[0].Title;
+      singlepostModel.AddComment(IDPost, IDUser, Comment);
+      res.redirect(`/${Cat}/${SubCat}/${IDPost}/${Title}`);
+    }).catch(next);
+    // singlepostModel.AddComment(IDPost, IDUser, Comment);
+    // res.redirect(`/${Cat}/${SubCat}/${IDPost}/${Title}`);
   }
   else {
     res.redirect(`/${Cat}/${SubCat}/${IDPost}/${Title}`);
   }
-
-
 });
 
 //Details Tai Khoan 
