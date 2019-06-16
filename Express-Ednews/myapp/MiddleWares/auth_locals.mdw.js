@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
     if(req.user.PhanHe=='PH5'){
       res.locals.isGuest=true;
     }
-    if(req.user.PhanHe='PH4')
+    if(req.user.PhanHe=='PH4')
     {
       res.locals.isSubscriber=true;
     }

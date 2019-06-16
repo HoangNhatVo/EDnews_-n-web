@@ -16,7 +16,7 @@ const paymentModel = require('../Model/payment.model');
 /* GET home page. */
 router.get('/', async (req, res, next) => {
   var now = moment().format('YYYY-MM-DD hh:mm:ss');
-  console.log(now);
+  console.log(req.user);
   if (req.user) {
     var NgayHH = req.user.NgayHetHan;
     if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
@@ -495,7 +495,7 @@ router.post('/tim-kiem', (req, res, next) => {
   var offset = (page - 1) * limit;
   Promise.all([
     singlepostModel.SearchPost(key, limit, offset,Pre),
-    singlepostModel.CountSearchPost(key)
+    singlepostModel.CountSearchPost(key,Pre)
   ])
     .then(([row, count_row]) => {
       if (count_row[0].Num != 0) {
