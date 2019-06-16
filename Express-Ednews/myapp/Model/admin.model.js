@@ -32,13 +32,36 @@ module.exports ={
     LockUser:IDuser=>{
         return orm.selectAll(`call LockUser(${IDuser})`);
     },
+    //mo khoa tai khoan
     UnLockUser:IDuser=>{
         return orm.selectAll(`call UnLockUser(${IDuser})`);
     },
+    //chon lam bai viet noi bat
     SetHightLightPost:(IDBaiViet,Type)=>{
         return orm.selectAll(`call HightlightPost('${IDBaiViet}',${Type})`);
     },
+    //xoa bai viet
     DeletePost:(IDBaiViet)=>{
         return orm.selectAll(`call DeletePost('${IDBaiViet}')`);
+    },
+    // lay thong tin cua bien tap vien
+    GetinforEditor:IDeditor=>{
+        return orm.selectAll(`call InforEditor(${IDeditor})`);
+    },
+    //lay danh sach chuyen muc do bien tap vien quan ly
+    GetListCatOfEditor:IDeditor=>{
+        return orm.selectAll(`call ListCatOfEditor(${IDeditor})`);
+    },
+    //lay danh sach chuyen muc bien tap vien KHONG quan ly
+    GetlistnoCatOfEditor:IDeditor=>{
+        return orm.selectAll(`call NonListCatOfEditor(${IDeditor})`);
+    },
+    //them chuyen muc cho bien tap vien quan ly
+    AddCatforEditor:(IDeditor,IDCat)=>{
+        return orm.selectAll(`call AddCatForEditor(${IDeditor},'${IDCat}')`);
+    },
+    //xoa chuyen muc do bien tap vien quan ly
+    DeleteCatforEditor:(IDeditor,IDCat)=>{
+        return orm.selectAll(`call DelCatForEditor(${IDeditor},'${IDCat}')`);
     }
 }

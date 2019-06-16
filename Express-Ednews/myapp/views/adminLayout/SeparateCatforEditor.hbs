@@ -15,10 +15,63 @@
         </div>
         {{/if}}
         <div class="card-body">
-           <div class="form-group">
-              <label for="txtCatID" style="width:240px">Tên biên tập viên</label>
-              <input readonly type="text" class="form-control" id="txtCatID" name="IDTag" value="Hoàng Nhật">
+          {{#each InforEditor}}
+          <div class="form-group">
+            <label for="txtCatID" style="width:240px">Tên biên tập viên</label>
+            <input readonly type="text" class="form-control" id="txtCatID" name="IDTag" value="{{HoTen}}">
+          </div>
+          <div class="form-group">
+            <label for="txtCatID" style="width:240px">Bút danh</label>
+            <input readonly type="text" class="form-control" id="txtCatID" name="IDTag" value="{{ButDanh}}">
+          </div>
+          <div class="form-group">
+            <label for="txtCatID" style="width:240px">Số lượng chuyên mục quản lý</label>
+            <input readonly type="text" class="form-control" id="txtCatID" name="IDTag" value="{{soluong}}">
+          </div>
+          {{/each}}
+          <div class="form-group mb-5">
+            <label for="txtCatID" style="width:240px">Chuyên mục được quản lý</label>
+            <input readonly type="text" class="form-control" id="txtCatID" name="IDTag" value="{{strListCat}}">
+          </div>
+          <a class="btn btn-primary" href="/admin/quan-ly-tai-khoan" role="button">
+            <i class="fa fa-backward" aria-hidden="true"></i>
+            trở về
+          </a>
+          <button type="submit" class="btn btn-success CheckInvalid " data-toggle="collapse"
+            data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <i class="fa fa-check" aria-hidden="true"></i>
+            Thêm chuyên mục
+          </button>
+
+          <button type="button" class="btn btn-danger" data-toggle="collapse"
+            data-target="#navbarToggleExternalContent1" aria-controls="navbarToggleExternalContent"
+            aria-expanded="false" aria-label="Toggle navigation"><i class="far fa-times-circle mr-2"></i>Gỡ chuyên
+            mục</button>
+          <div class="collapse" id="navbarToggleExternalContent">
+            <div class=" p-4 position-relative">
+              {{#each Listnocat}}
+              <form action="/admin/quan-ly-tai-khoan/phan-chuyen-muc/them-chuyen-muc/{{IDChuyenMuc}}/{{Iduser}}"
+                style="display: inline-block" method="POST">
+                <button type="submit" class="btn btn-outline-success mb-2 btnadd"
+                  style="width: 200px;text-align:left"><i class="far fa-plus-square mr-2"></i>
+                  {{TenChuyenMuc}}</button>
+              </form>
+              {{/each}}
+
             </div>
+          </div>
+          <div class="collapse" id="navbarToggleExternalContent1">
+            <div class=" p-4 position-relative">
+              {{#each Listcat}}
+              <form action="/admin/quan-ly-tai-khoan/phan-chuyen-muc/xoa-chuyen-muc/{{IDChuyenMuc}}/{{Iduser}}"
+                style="display: inline-block" method="POST">
+              <button type="submit" class="btn btn-outline-danger mb-2"><i class="fas fa-minus-circle mr-2"></i>
+                {{TenChuyenMuc}}</button>
+                </form>
+              {{/each}}
+            </div>
+          </div>
         </div>
       </div>
     </div>

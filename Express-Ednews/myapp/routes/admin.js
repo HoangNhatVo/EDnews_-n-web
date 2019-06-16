@@ -361,12 +361,50 @@ router.get('/quan-ly-tai-khoan',auth_admin, async (req, res, next) =>{
   
 });
 //Page Phân chuyên mục cho biên tập viên
-router.get('/quan-ly-tai-khoan/phan-chuyen-muc/:IDuser',(req,res,next)=>{
+router.get('/quan-ly-tai-khoan/phan-chuyen-muc/:IDuser',auth_admin,async(req,res,next)=>{
+  var IDuser=req.params.IDuser;
+  var InforEditor=await adminmodel.GetinforEditor(IDuser);
+  var Listcat= await adminmodel.GetListCatOfEditor(IDuser);
+  var Listnocat= await adminmodel.GetlistnoCatOfEditor(IDuser);
+  var strListCat='';
+  Listcat.forEach(cat=>{
+    strListCat= strListCat+ cat.TenChuyenMuc+',';
+    cat.Iduser=IDuser;
+  })
+  Listnocat.forEach(cat=>{
+    cat.Iduser=IDuser;
+  })
   res.render('adminLayout/SeparateCatforEditor',
   {
     css: '/stylesheets/admin.css', 
-    style: '/stylesheets/sb-admin.css'
+    style: '/stylesheets/sb-admin.css',
+    InforEditor,
+    Listcat,
+    Listnocat,
+    strListCat,
+    mesg:req.flash('mesg')
   });
+})
+
+//Post them chuyen muc quan ly cho bien tap vien
+router.post('/quan-ly-tai-khoan/phan-chuyen-muc/them-chuyen-muc/:IDCM/:IDuser',(req,res,next)=>{
+var IDCat=req.params.IDCM;
+var IDuser=req.params.IDuser;
+adminmodel.AddCatforEditor(IDuser,IDCat)
+.then(r=>{
+  req.flash('mesg','Thêm thành công')
+  res.redirect(`/admin/quan-ly-tai-khoan/phan-chuyen-muc/${IDuser}`);
+});
+});
+// post xoa chuyen muc quan ly cho bien tap vien
+router.post('/quan-ly-tai-khoan/phan-chuyen-muc/xoa-chuyen-muc/:IDCM/:IDuser',(req,res,next)=>{
+  var IDCat=req.params.IDCM;
+var IDuser=req.params.IDuser;
+adminmodel.DeleteCatforEditor(IDuser,IDCat)
+.then(r=>{
+  req.flash('mesg','Gỡ thành công');
+  res.redirect(`/admin/quan-ly-tai-khoan/phan-chuyen-muc/${IDuser}`);
+})
 })
 //Post chỉnh sửa quyền
 router.post('/quan-ly-tai-khoan/chinh-sua-quyen/:IDuser',(req,res,next)=>{
