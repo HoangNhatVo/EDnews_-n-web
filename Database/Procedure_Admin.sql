@@ -1,3 +1,119 @@
+#-------------------------------------Lay bai viet theo trang thai cho bien tap vien
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure GetPostWithStateForEditor(in State int,in IDBTV int)
+begin
+	if(State =1)
+    then
+	select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,D.NgayDuyet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,btv.HoTen as NguoiDuyet,BV.TinNoiBat
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+                        join duyetbai as D on D.IDBaiViet = BV.IDBaiViet
+                        join nguoidung as btv on btv.ID =D.IDBTV
+                        join btv_chuyenmuc as bc on bc.ChuyenMuc=cm.IDChuyenMuc
+   where BV.TinhTrang=State and BV.SuDung=1 and bc.IDBienTapVien=IDBTV;
+   end if;
+   if(State =3)
+    then
+	select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,D.NgayTuChoi,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,btv.HoTen as NguoiDuyet,D.NguyenNhanTuChoi,BV.TinNoiBat
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+                        join tuchoibai as D on D.IDBaiViet = BV.IDBaiViet
+                        join nguoidung as btv on btv.ID =D.IDBTV
+                        join btv_chuyenmuc as bc on bc.ChuyenMuc=cm.IDChuyenMuc
+   where BV.TinhTrang=State and BV.SuDung=1 and bc.IDBienTapVien=IDBTV;
+   end if;
+   if( State = 2 )
+   then
+   select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,date(BV.NgayViet) as NgayViet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,BV.TinNoiBat
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+                        join btv_chuyenmuc as bc on bc.ChuyenMuc=cm.IDChuyenMuc
+   where BV.TinhTrang=State and BV.SuDung=1 and bc.IDBienTapVien=IDBTV;
+   end if;
+   if(State = 4)
+   then
+   select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,BV.TinNoiBat
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+                        join btv_chuyenmuc as bc on bc.ChuyenMuc=cm.IDChuyenMuc
+   where BV.TinhTrang=State and BV.SuDung=1 and bc.IDBienTapVien=IDBTV;
+   end if;
+end;$$
+DELIMITER ; 
+
+#-------------------------------------Lay bai viet theo trang thai của Phóng Viên
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure GetPostWithStateForWriter(in State int, in IDPhongVien int)
+begin
+	if(State =1)
+    then
+	select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,D.NgayDuyet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,btv.HoTen as NguoiDuyet,BV.TinNoiBat
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+                        join duyetbai as D on D.IDBaiViet = BV.IDBaiViet
+                        join nguoidung as btv on btv.ID =D.IDBTV
+   where BV.TinhTrang=State and BV.SuDung=1 and BV.PhongVien = IDPhongVien;
+   end if;
+   if(State =3)
+    then
+	select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,D.NgayTuChoi,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,btv.HoTen as NguoiDuyet,D.NguyenNhanTuChoi,BV.TinNoiBat
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+                        join tuchoibai as D on D.IDBaiViet = BV.IDBaiViet
+                        join nguoidung as btv on btv.ID =D.IDBTV
+   where BV.TinhTrang=State and BV.SuDung=1 and BV.PhongVien = IDPhongVien;
+   end if;
+   if( State = 2 )
+   then
+   select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,date(BV.NgayViet) as NgayViet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,BV.TinNoiBat
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+   where BV.TinhTrang=State and BV.SuDung=1 and BV.PhongVien = IDPhongVien;
+   end if;
+   if(State = 4)
+   then
+   select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,BV.TinNoiBat
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+   where BV.TinhTrang=State and BV.SuDung=1 and BV.PhongVien = IDPhongVien;
+   end if;
+end;$$
+DELIMITER ; 
+
 
 #---------------------------------------------QUAN LY CHUYEN MUC
 #----------------------Xoa chuyen muc cha 
