@@ -7,6 +7,7 @@ const createnewModel = require('../Model/createnew.model');
 const adminmodel=require('../Model/admin.model');
 const loginmodel=require('../Model/login.model');
 const editnewsModel = require('../Model/editnews.model');
+const statepostModel = require('../Model/statepost.model');
 var passport = require('passport');
 
 //  Phân quyền truy cập các router
@@ -201,19 +202,41 @@ router.post('/thong-tin-tai-khoan/chinh-sua',(req,res,next)=>{
 
 //Page bai viet dang cho duyet
 router.get('/bai-viet-dang-cho',auth_index, (req, res, next) => {
-  var state=4;
-  singlepostModel.GetPostWithState(state)
-  .then(r=>{
-    res.render('adminLayout/PageDraft',
-   { 
-     css: '/stylesheets/admin.css', 
-     style: '/stylesheets/sb-admin.css' ,
-      post:r,
-      mesg:req.flash('mesg')
-    });
-  })
-  .catch(next);
-  
+  var state = 4;
+  if(req.user.PhanHe == 'PH1'){
+    singlepostModel.GetPostWithState(state)
+    .then(r=>{
+      res.render('adminLayout/PageDraft',
+      { 
+      css: '/stylesheets/admin.css', 
+      style: '/stylesheets/sb-admin.css' ,
+        post:r,
+        mesg:req.flash('mesg')
+      });
+    }).catch(next);
+  }
+  else if(req.user.PhanHe == 'PH2'){
+    statepostModel.getPostWithStateForWriter(state,req.user.ID).then(r=>{
+      res.render('adminLayout/PageDraft',
+      { 
+      css: '/stylesheets/admin.css', 
+      style: '/stylesheets/sb-admin.css' ,
+        post:r,
+        mesg:req.flash('mesg')
+      });
+    }).catch(next);
+  }
+  else if(req.user.PhanHe == 'PH3'){
+    statepostModel.getPostWithStateForEditor(state,req.user.ID).then(r=>{
+      res.render('adminLayout/PageDraft',
+      { 
+      css: '/stylesheets/admin.css', 
+      style: '/stylesheets/sb-admin.css' ,
+        post:r,
+        mesg:req.flash('mesg')
+      });
+    }).catch(next);
+  }  
 });
 //Post duyet bai viet
 router.post('/duyet-bai-viet',(req,res,next)=>{
@@ -232,17 +255,41 @@ router.post('/duyet-bai-viet',(req,res,next)=>{
 });
 //Page bai viet dang cho xuat ban
 router.get('/bai-viet-cho-xuat-ban',auth_index, (req, res, next) => {
-  var state=1;
-  singlepostModel.GetPostWithState(state)
-  .then(r=>{
-    res.render('adminLayout/PageWaitRelease', { 
-      css: '/stylesheets/admin.css',
-       style: '/stylesheets/sb-admin.css',
-       post:r,
-       mesg:req.flash('mesg')
+  var state = 1;
+  if(req.user.PhanHe == 'PH1'){
+    singlepostModel.GetPostWithState(state)
+    .then(r=>{
+      res.render('adminLayout/PageWaitRelease', { 
+        css: '/stylesheets/admin.css',
+        style: '/stylesheets/sb-admin.css',
+        post:r,
+        mesg:req.flash('mesg')
+        });
+    })
+    .catch(next);
+  }
+  else if(req.user.PhanHe == 'PH2'){
+    statepostModel.getPostWithStateForWriter(state,req.user.ID).then(r=>{
+      res.render('adminLayout/PageWaitRelease',
+      { 
+      css: '/stylesheets/admin.css', 
+      style: '/stylesheets/sb-admin.css' ,
+        post:r,
+        mesg:req.flash('mesg')
       });
-  })
-  .catch(next);
+    }).catch(next);
+  }
+  else if(req.user.PhanHe == 'PH3'){
+    statepostModel.getPostWithStateForEditor(state,req.user.ID).then(r=>{
+      res.render('adminLayout/PageWaitRelease',
+      { 
+      css: '/stylesheets/admin.css', 
+      style: '/stylesheets/sb-admin.css' ,
+        post:r,
+        mesg:req.flash('mesg')
+      });
+    }).catch(next);
+  }
 });
 
 //Post xuat ban bai viet
@@ -258,21 +305,47 @@ router.post('/xuat-ban-bai-viet/:IDpost',(req,res,next)=>{
 })
 //Page bai viet da xuat ban
 router.get('/bai-viet-da-xuat-ban',auth_index, (req, res, next) => {
-  var state=2;
-  singlepostModel.GetPostWithState(state)
-  .then(r=>{
-    res.render('adminLayout/PageRelease', 
-    { 
-      css: '/stylesheets/admin.css',
-       style: '/stylesheets/sb-admin.css' ,
-       post:r,
-       mesg:req.flash('mesg')
+  var state = 2;
+  if(req.user.PhanHe == 'PH1'){
+    singlepostModel.GetPostWithState(state)
+    .then(r=>{
+      res.render('adminLayout/PageRelease', 
+        { 
+        css: '/stylesheets/admin.css',
+        style: '/stylesheets/sb-admin.css' ,
+        post:r,
+        mesg:req.flash('mesg')
+        });
+        req.session.current_url='/admin/bai-viet-da-xuat-ban';
+    })
+    .catch(next)
+  }
+  else if(req.user.PhanHe == 'PH2'){
+    statepostModel.getPostWithStateForWriter(state,req.user.ID).then(r=>{
+      res.render('adminLayout/PageRelease',
+      { 
+      css: '/stylesheets/admin.css', 
+      style: '/stylesheets/sb-admin.css' ,
+        post:r,
+        mesg:req.flash('mesg')
       });
       req.session.current_url='/admin/bai-viet-da-xuat-ban';
-  })
-  .catch(next)
- 
+    }).catch(next);
+  }
+  else if(req.user.PhanHe == 'PH3'){
+    statepostModel.getPostWithStateForEditor(state,req.user.ID).then(r=>{
+      res.render('adminLayout/PageRelease',
+      { 
+      css: '/stylesheets/admin.css', 
+      style: '/stylesheets/sb-admin.css' ,
+        post:r,
+        mesg:req.flash('mesg')
+      });
+      req.session.current_url='/admin/bai-viet-da-xuat-ban';
+    }).catch(next);
+  }
 });
+
 //Chọn làm bài viết nổi bật
 router.post('/bai-viet-da-xuat-ban/chon-bai-viet-noi-bat/:IDBaiViet',(req,res,next)=>{
   var ID=req.params.IDBaiViet;
@@ -292,21 +365,49 @@ router.post('/bai-viet-da-xuat-ban/bo-chon-bai-viet-noi-bat/:IDBaiViet',(req,res
     res.redirect('/admin/bai-viet-da-xuat-ban');
   })
 });
+
 //Page bai viet bi tu choi
 router.get('/bai-viet-bi-tu-choi',auth_index, (req, res, next) => {
-  var state=3;
-  singlepostModel.GetPostWithState(3)
-  .then(r=>{
-    res.render('adminLayout/PageDecline', { 
+  var state = 3;
+  if(req.user.PhanHe == 'PH1'){
+    singlepostModel.GetPostWithState(3)
+    .then(r=>{
+      res.render('adminLayout/PageDecline', { 
+        css: '/stylesheets/admin.css', 
+        style: '/stylesheets/sb-admin.css',
+        post:r,
+        mesg:req.flash('mesg')
+      });
+      req.session.current_url='/admin/bai-viet-bi-tu-choi';
+    })
+    .catch(next);
+  }
+  else if(req.user.PhanHe == 'PH2'){
+    statepostModel.getPostWithStateForWriter(state,req.user.ID).then(r=>{
+      res.render('adminLayout/PageDecline',
+      { 
       css: '/stylesheets/admin.css', 
-      style: '/stylesheets/sb-admin.css',
-      post:r,
-      mesg:req.flash('mesg')
-     });
-     req.session.current_url='/admin/bai-viet-bi-tu-choi';
-  })
-  .catch(next);
+      style: '/stylesheets/sb-admin.css' ,
+        post:r,
+        mesg:req.flash('mesg')
+      });
+      req.session.current_url='/admin/bai-viet-bi-tu-choi';
+    }).catch(next);
+  }
+  else if(req.user.PhanHe == 'PH3'){
+    statepostModel.getPostWithStateForEditor(state,req.user.ID).then(r=>{
+      res.render('adminLayout/PageDecline',
+      { 
+      css: '/stylesheets/admin.css', 
+      style: '/stylesheets/sb-admin.css' ,
+        post:r,
+        mesg:req.flash('mesg')
+      });
+      req.session.current_url='/admin/bai-viet-bi-tu-choi';
+    }).catch(next);
+  }
 });
+
 //Post tu choi bai viet
 router.post('/tu-choi-bai-viet/:IDBaiViet',(req,res,next)=>{
 var IDpost=req.params.IDBaiViet;
