@@ -1,119 +1,3 @@
-#-------------------------------------Lay bai viet theo trang thai cho bien tap vien
-DELIMITER $$
-USE `baodientu3n`$$
-create procedure GetPostWithStateForEditor(in State int,in IDBTV int)
-begin
-	if(State =1)
-    then
-	select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,D.NgayDuyet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,btv.HoTen as NguoiDuyet,BV.TinNoiBat
-    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
-						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
-                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
-						join nguoidung as nd on nd.ID=BV.PhongVien
-                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
-                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
-                        join duyetbai as D on D.IDBaiViet = BV.IDBaiViet
-                        join nguoidung as btv on btv.ID =D.IDBTV
-                        join btv_chuyenmuc as bc on bc.ChuyenMuc=cm.IDChuyenMuc
-   where BV.TinhTrang=State and BV.SuDung=1 and bc.IDBienTapVien=IDBTV;
-   end if;
-   if(State =3)
-    then
-	select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,D.NgayTuChoi,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,btv.HoTen as NguoiDuyet,D.NguyenNhanTuChoi,BV.TinNoiBat
-    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
-						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
-                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
-						join nguoidung as nd on nd.ID=BV.PhongVien
-                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
-                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
-                        join tuchoibai as D on D.IDBaiViet = BV.IDBaiViet
-                        join nguoidung as btv on btv.ID =D.IDBTV
-                        join btv_chuyenmuc as bc on bc.ChuyenMuc=cm.IDChuyenMuc
-   where BV.TinhTrang=State and BV.SuDung=1 and bc.IDBienTapVien=IDBTV;
-   end if;
-   if( State = 2 )
-   then
-   select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,date(BV.NgayViet) as NgayViet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,BV.TinNoiBat
-    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
-						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
-                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
-						join nguoidung as nd on nd.ID=BV.PhongVien
-                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
-                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
-                        join btv_chuyenmuc as bc on bc.ChuyenMuc=cm.IDChuyenMuc
-   where BV.TinhTrang=State and BV.SuDung=1 and bc.IDBienTapVien=IDBTV;
-   end if;
-   if(State = 4)
-   then
-   select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,BV.TinNoiBat
-    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
-						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
-                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
-						join nguoidung as nd on nd.ID=BV.PhongVien
-                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
-                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
-                        join btv_chuyenmuc as bc on bc.ChuyenMuc=cm.IDChuyenMuc
-   where BV.TinhTrang=State and BV.SuDung=1 and bc.IDBienTapVien=IDBTV;
-   end if;
-end;$$
-DELIMITER ; 
-
-#-------------------------------------Lay bai viet theo trang thai của Phóng Viên
-DELIMITER $$
-USE `baodientu3n`$$
-create procedure GetPostWithStateForWriter(in State int, in IDPhongVien int)
-begin
-	if(State =1)
-    then
-	select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,D.NgayDuyet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,btv.HoTen as NguoiDuyet,BV.TinNoiBat
-    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
-						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
-                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
-						join nguoidung as nd on nd.ID=BV.PhongVien
-                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
-                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
-                        join duyetbai as D on D.IDBaiViet = BV.IDBaiViet
-                        join nguoidung as btv on btv.ID =D.IDBTV
-   where BV.TinhTrang=State and BV.SuDung=1 and BV.PhongVien = IDPhongVien;
-   end if;
-   if(State =3)
-    then
-	select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,D.NgayTuChoi,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,btv.HoTen as NguoiDuyet,D.NguyenNhanTuChoi,BV.TinNoiBat
-    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
-						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
-                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
-						join nguoidung as nd on nd.ID=BV.PhongVien
-                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
-                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
-                        join tuchoibai as D on D.IDBaiViet = BV.IDBaiViet
-                        join nguoidung as btv on btv.ID =D.IDBTV
-   where BV.TinhTrang=State and BV.SuDung=1 and BV.PhongVien = IDPhongVien;
-   end if;
-   if( State = 2 )
-   then
-   select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,date(BV.NgayViet) as NgayViet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,BV.TinNoiBat
-    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
-						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
-                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
-						join nguoidung as nd on nd.ID=BV.PhongVien
-                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
-                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
-   where BV.TinhTrang=State and BV.SuDung=1 and BV.PhongVien = IDPhongVien;
-   end if;
-   if(State = 4)
-   then
-   select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,BV.TinNoiBat
-    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
-						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
-                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
-						join nguoidung as nd on nd.ID=BV.PhongVien
-                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
-                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
-   where BV.TinhTrang=State and BV.SuDung=1 and BV.PhongVien = IDPhongVien;
-   end if;
-end;$$
-DELIMITER ; 
-
 
 #---------------------------------------------QUAN LY CHUYEN MUC
 #----------------------Xoa chuyen muc cha 
@@ -302,6 +186,7 @@ DELIMITER $$
 USE `baodientu3n`$$
 CREATE PROCEDURE DeleteTag(in IDTagDel varchar(10))
 BEGIN
+	delete from nhan_baiviet where IDTag=IDTagDel;
 	delete from nhan where IDTag=IDTagDel;
 END;$$
 DELIMITER ;
@@ -368,7 +253,69 @@ BEGIN
 select * from nguoidung where PhanHe=IDPhanHe;
 END;$$
 DELIMITER ;
+#-------------------GET POST WITH STATE CHO CAC PHAN HE
 #-------------------------------------Lay bai viet theo trang thai
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure GetPostWithStateForEditor(in State int,in IDBTV int)
+begin
+	if(State =1)
+    then
+	select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,D.NgayDuyet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,btv.HoTen as NguoiDuyet,BV.TinNoiBat
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+                        join duyetbai as D on D.IDBaiViet = BV.IDBaiViet
+                        join nguoidung as btv on btv.ID =D.IDBTV
+                        join btv_chuyenmuc as bc on bc.ChuyenMuc=cm.IDChuyenMuc
+   where BV.TinhTrang=State and BV.SuDung=1 and bc.IDBienTapVien=IDBTV;
+   end if;
+   if(State =3)
+    then
+	select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,D.NgayTuChoi,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,btv.HoTen as NguoiDuyet,D.NguyenNhanTuChoi,BV.TinNoiBat
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+                        join tuchoibai as D on D.IDBaiViet = BV.IDBaiViet
+                        join nguoidung as btv on btv.ID =D.IDBTV
+                        join btv_chuyenmuc as bc on bc.ChuyenMuc=cm.IDChuyenMuc
+   where BV.TinhTrang=State and BV.SuDung=1 and bc.IDBienTapVien=IDBTV;
+   end if;
+   if( State = 2 )
+   then
+   select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayDang) as NgayDang,date(BV.NgayViet) as NgayViet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,BV.TinNoiBat
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+                        join btv_chuyenmuc as bc on bc.ChuyenMuc=cm.IDChuyenMuc
+   where BV.TinhTrang=State and BV.SuDung=1 and bc.IDBienTapVien=IDBTV;
+   end if;
+   if(State = 4)
+   then
+   select distinct BV.IDBaiViet,BV.TieuDe,BV.TieuDe_KhongDau,date(BV.NgayViet) as NgayViet,nd.ButDanh,cm.TenChuyenMuc_KhongDau as KhongDauCon,cha.TenChuyenMuc_KhongDau as KhongDauCha,cm.TenChuyenMuc,url.urllinkHinh,BV.NoiDungTomTat,BV.TinNoiBat
+    from baiviet as BV join nhan_baiviet as n_bv on BV.IDBaiViet=n_bv.IDBaiViet
+						join baiviet_hinhanh as HA on BV.IDBaiViet =HA.IDBaiViet
+                        join urlhinhanh as url on url.IDHinh=HA.IDHinh
+						join nguoidung as nd on nd.ID=BV.PhongVien
+                        join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
+                        join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
+                        join btv_chuyenmuc as bc on bc.ChuyenMuc=cm.IDChuyenMuc
+   where BV.TinhTrang=State and BV.SuDung=1 and bc.IDBienTapVien=IDBTV;
+   end if;
+end;$$
+DELIMITER ; 
+call GetPostWithStateForEditor(4,3);
+
+#-------------------------------------Lay bai viet theo trang thai admin
 DELIMITER $$
 USE `baodientu3n`$$
 create procedure GetPostWithState(in State int)
@@ -419,11 +366,11 @@ begin
 						join nguoidung as nd on nd.ID=BV.PhongVien
                         join chuyenmuc as cm on cm.IDChuyenMuc=BV.ChuyenMuc
                         join chuyenmuc as cha on cha.IDChuyenMuc=cm.ChuyenMucCha
-   where BV.TinhTrang=State and BV.SuDung=1;
+   where BV.TinhTrang=4 and BV.SuDung=1;
    end if;
 end;$$
 DELIMITER ; 
-call GetPostWithState(2);
+call GetPostWithState(4);
 #----------------------------------SO LUONG BAI VIET
 DELIMITER $$
 USE `baodientu3n`$$
@@ -597,7 +544,7 @@ DELIMITER ;
 #---------------Phan chuyen muc cho bien tap vien
 DELIMITER $$
 USE `baodientu3n`$$
-CREATE PROCEDURE AddCatForEditor (in IDBVT int,in IDCM varchar(10))
+CREATE PROCEDURE AddCatForEditor (in IDBTV int,in IDCM varchar(10))
 BEGIN
     if exists (select * from btv_chuyenmuc where IDBienTapVien=IDBTV and ChuyenMuc= IDCM)
     then
@@ -612,7 +559,7 @@ DELIMITER ;
 #--------------Xoa chuyen muc cho  bien tap vien
 DELIMITER $$
 USE `baodientu3n`$$
-CREATE PROCEDURE DelCatForEditor (in IDBVT int,in IDCM varchar(10))
+CREATE PROCEDURE DelCatForEditor (in IDBTV int,in IDCM varchar(10))
 BEGIN
     if exists (select * from btv_chuyenmuc where IDBienTapVien=IDBTV and ChuyenMuc= IDCM)
     then
@@ -627,7 +574,7 @@ DELIMITER ;
 #--------------Danh sach chuyen muc cua bien tap vien
 DELIMITER $$
 USE `baodientu3n`$$
-CREATE PROCEDURE ListCatOfEditor (in IDBVT int)
+CREATE PROCEDURE ListCatOfEditor (in IDBTV int)
 BEGIN
     select bc.IDBienTapVien,cm.IDChuyenMuc,cm.TenChuyenMuc,cm.TenChuyenMuc_KhongDau
     from btv_chuyenmuc as bc join chuyenmuc as cm on cm.IDChuyenMuc=bc.ChuyenMuc
@@ -637,10 +584,66 @@ DELIMITER ;
 #--------------------Dem chuyen muc cua editor
 DELIMITER $$
 USE `baodientu3n`$$
-CREATE PROCEDURE CountCatForEditor (in IDBVT int)
+CREATE PROCEDURE CountCatForEditor (in IDBTV int)
 BEGIN
    select count(*) as soluong
     from btv_chuyenmuc as bc join chuyenmuc as cm on cm.IDChuyenMuc=bc.ChuyenMuc
     where bc.IDBienTapVien=IDBTV;
+END;$$
+DELIMITER ;
+#--------------Danh sach chuyen muc ko su dung cua bien tap vien
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE NonListCatOfEditor (in IDBTV int)
+BEGIN
+    select cm.IDChuyenMuc,cm.TenChuyenMuc,cm.TenChuyenMuc_KhongDau
+    from  chuyenmuc as cm 
+	where  cm.IDChuyenMuc not in(select ChuyenMuc from btv_chuyenmuc  where IDBienTapVien=IDBTV )
+     and cm.ChuyenMucCha is not null;
+END;$$
+DELIMITER ;
+call NonListCatOfEditor(3);
+#--------------------Lay thong tin bien tap vien
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE InforEditor (in IDBTV int)
+BEGIN
+   select nd.HoTen,nd.ButDanh,(select count(*) 
+    from btv_chuyenmuc as bc join chuyenmuc as cm on cm.IDChuyenMuc=bc.ChuyenMuc
+    where bc.IDBienTapVien=IDBTV) as soluong
+   from nguoidung as nd 
+   where nd.ID=IDBTV;
+END;$$
+DELIMITER ;
+#--------------------Admin gia han tai khoan
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE ReNewSubscriber (in IDSubscriber int)
+BEGIN
+   declare PH varchar(10);
+   declare NgayHH datetime;
+   set PH = (select Phanhe from nguoidung where ID=IDSubscriber);
+   set NgayHH = (select NgayHetHan from nguoidung where ID=IDSubscriber);
+   if(PH!='PH4')
+   then
+   select 0 as temp;
+   else
+		if(NgayHH is null)
+			then
+			update nguoidung set ngayhethan=date_add(now(),INTERVAL 7 DAY)  where id=IDSubscriber;
+		else
+			update nguoidung set NgayHetHan=date_add(NgayHetHan,INTERVAL 7 DAY) where id=IDSubscriber;
+		end if;
+   select 1 as temp;
+   end if;
+END;$$
+DELIMITER ;
+call ReNewSubscriber(22);
+#-----------------------------Set premium bai viet
+DELIMITER $$
+USE `baodientu3n`$$
+CREATE PROCEDURE SetPremiumPost (in IDBV varchar(15))
+BEGIN
+  update baiviet set PhanHang=2 where IDBaiViet=IDBV;
 END;$$
 DELIMITER ;
