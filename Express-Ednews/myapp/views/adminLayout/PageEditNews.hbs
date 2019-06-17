@@ -137,6 +137,8 @@
           <img class="avtPost" src="/images/{{urllinkHinh}}" style="max-height:330px;object-fit:fill">
         </div>
         {{/each}}
+         <input type="text" id="fileName" name="filename" value="abc" hidden>
+         <input type="text" id="fuMain" name="fuMain" value="" hidden>
 
            {{#each Post}}
           <div class="text-input" id="tt-top">
@@ -175,16 +177,18 @@
           </div>
           {{/each}}
           
-          {{#each Post}}
+          {{!-- {{#each Post}} --}}
           <div class="text">
             <label>Nội dung bài báo:</label>
            </div>
            <div class="ckeditor">
             <textarea class="form-control" id="editor1" name="FullDes">
+               {{#each Post}}
               {{{NoiDung}}}
+               {{/each}}
             </textarea>
           </div>
-          {{/each}}
+          {{!-- {{/each}} --}}
           <button type="button" id="btnNews" class="btnSend"><i class="fa fa-check"></i> Lưu</button>
           
           <button type="button" class="" id="btnAlert" data-toggle="modal" data-target="#exampleModal" hidden></button>

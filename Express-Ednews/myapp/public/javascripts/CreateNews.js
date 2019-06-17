@@ -38,7 +38,22 @@ $(document).ready(function() {
  
 $(document).on("click",".btnSend",function(){
   var n = $('#tag').size();
-  if(n == 0){
+  var Content = tinymce.get("editor1").getContent();
+  var tmp = $('#fuMain').val();
+  if($('#fileName').val().length == 0){
+    $('#exampleModalLabel').text('Bạn phải chọn ảnh đại diện cho bài viết!');
+    $('#btnAlert').click();
+  }
+  else if(tmp.length != 0){
+    $('#exampleModalLabel').text('Bạn chưa nhấn Upload ảnh đại diện bài viết!');
+    $('#btnAlert').click();
+  }
+  else if(n == 0){
+    $('#exampleModalLabel').text('Bạn phải nhập Tag cho bài viết!');
+    $('#btnAlert').click();
+  }
+  else if(Content.length == 0){
+    $('#exampleModalLabel').text('Bạn phải nhập đầy đủ nội dung bài viết!');
     $('#btnAlert').click();
   }
   else{
