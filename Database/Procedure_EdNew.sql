@@ -262,14 +262,6 @@ begin
 end;$$
 DELIMITER ; 
 call CheckTag('#dalat');
-#-------------------TANG VIEW BAI VIET
-DELIMITER $$
-USE `baodientu3n`$$
-create procedure IncreaseView(in IDBV varchar(15))
-begin
-	update baiviet set LuotXem = LuotXem +1 where IDBaiViet =	IDBV;	
-end;$$
-DELIMITER ; 
 #-------------------10 bai viet co VIEW cao nhat
 DELIMITER $$
 USE `baodientu3n`$$
@@ -394,3 +386,26 @@ begin
 end;$$
 DELIMITER ;
 call GetRelatedPosts('BV2');
+#-------------------TANG VIEW BAI VIET
+DELIMITER $$
+USE `baodientu3n`$$
+create procedure IncreaseView(in IDBV varchar(15),in IDNguoiDung int)
+begin
+	declare GioXem datetime;
+    set GioXem=(select ThoiGianXem from lichsuluotxem where IDUser=IDNguoiDung and IDBaiViet=IDBV);
+    if (GioXem is null)
+    then
+    insert into lichsuluotxem values(null,IDNguoiDung,IDBV,now());
+	update baiviet set LuotXem = LuotXem +1 where IDBaiViet =IDBV;
+    elseif(GioXem is not null)
+    then
+		if(datediff(now(),GioXem)>0)
+        then
+        update baiviet set LuotXem = LuotXem +1 where IDBaiViet =IDBV;
+        update lichsuluotxem set ThoiGianXem=GioXem where IDUser=IDNguoiDung and IDBaiViet=IDBV;
+        else
+        update lichsuluotxem set ThoiGianXem=GioXem where IDUser=IDNguoiDung and IDBaiViet=IDBV;
+        end if;
+	end if;
+end;$$ 
+DELIMITER ; 

@@ -248,3 +248,9 @@ create table LikeBinhLuan
     add constraint BTVCM_CM
     foreign key (ChuyenMuc)
     references chuyenmuc(IDChuyenMuc);
+#-------------------17/6
+create table LichSuLuotXem
+( IDLichSu int primary KEY auto_increment,
+  IDUser int,
+  IDBaiViet varchar(15),
+  ThoiGianXem datetime);
