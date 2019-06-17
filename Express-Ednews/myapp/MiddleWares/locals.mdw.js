@@ -1,5 +1,6 @@
 var categoryModel = require('../Model/categories.model');
 var singlepostModel = require('../Model/single_post.model');
+var moment = require('moment');
 module.exports = (req, res, next) => {
   res.locals.lcCategorie = [];
   categoryModel.allCat().then(rows => {
@@ -15,7 +16,22 @@ module.exports = (req, res, next) => {
         console.log(err);
       });
     });
-    singlepostModel.GetMostViewPost().then(result => {
+    var now = moment().format('YYYY-MM-DD hh:mm:ss');
+  console.log(req.user);
+  if (req.user) {
+    var NgayHH = req.user.NgayHetHan;
+    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
+      var Pre = 1;
+    }
+    else {
+      var Pre = 0;
+    }
+  }
+  else {
+    var Pre = 0;
+  }
+  console.log(Pre);
+    singlepostModel.GetMostViewPost(Pre).then(result => {
       res.locals.lcNewPost = result.slice(0,9);
     });
     next();

@@ -55,8 +55,8 @@ module.exports ={
     IncreaseViewPost:IDPost=>{
         return orm.selectAll(`call IncreaseView('${IDPost}')`);
     },
-    GetMostViewPost:()=>{
-        return orm.selectAll(`call GetHighestViewPost()`);
+    GetMostViewPost:(pre)=>{
+        return orm.selectAll(`call GetHighestViewPost(${pre})`);
     },
     SearchPost:(Keyword,limit,offset,Pre)=>{
         return orm.selectAll(`call FindPost('${Keyword}',${limit},${offset},${Pre})`);

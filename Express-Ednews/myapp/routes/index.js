@@ -13,6 +13,34 @@ const configAuth = require('../MiddleWares/auth');
 const saltRounds = 10;
 const paymentModel = require('../Model/payment.model');
 const commentModel = require('../Model/comment.model');
+var handlebar=require('handlebars');
+handlebar.registerHelper('ifCond', function (v1, operator, v2, options) {
+
+  switch (operator) {
+      case '==':
+          return (v1 == v2) ? options.fn(this) : options.inverse(this);
+      case '===':
+          return (v1 === v2) ? options.fn(this) : options.inverse(this);
+      case '!=':
+          return (v1 != v2) ? options.fn(this) : options.inverse(this);
+      case '!==':
+          return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+      case '<':
+          return (v1 < v2) ? options.fn(this) : options.inverse(this);
+      case '<=':
+          return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+      case '>':
+          return (v1 > v2) ? options.fn(this) : options.inverse(this);
+      case '>=':
+          return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+      case '&&':
+          return (v1 && v2) ? options.fn(this) : options.inverse(this);
+      case '||':
+          return (v1 || v2) ? options.fn(this) : options.inverse(this);
+      default:
+          return options.inverse(this);
+  }
+});
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
@@ -20,7 +48,7 @@ router.get('/', async (req, res, next) => {
   console.log(req.user);
   if (req.user) {
     var NgayHH = req.user.NgayHetHan;
-    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
+    if ((req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now)|| req.user.PhanHe=='PH1'|| req.user.PhanHe=='PH2'||req.user.PhanHe=='PH3')  {
       var Pre = 1;
     }
     else {
@@ -42,7 +70,6 @@ router.get('/', async (req, res, next) => {
     var TaiChinh = await singlepostModel.getPostfromCategories('taichinh', limit, offset, Pre);
     var Showbiz = await singlepostModel.getPostfromCategories('showbiz', limit, offset, Pre);
     var Smartphone = await singlepostModel.getPostfromCategories('smartphone', limit, offset, Pre);
-    console.log(Showbiz);
     res.render('index',
       {
         css: '/stylesheets/index.css',
@@ -473,7 +500,7 @@ router.post('/reset-password/:email', function (req, res, next) {
   })
 });
 //post tim kiem
-router.post('/tim-kiem', (req, res, next) => {
+router.post('/tim-kiem/:NoiDung', (req, res, next) => {
   var now = moment().format('YYYY-MM-DD hh:mm:ss');
   console.log(now);
   if (req.user) {
@@ -581,6 +608,114 @@ router.post('/tim-kiem', (req, res, next) => {
     .catch(next)
 });
 
+// page tim kiem
+router.get('/tim-kiem/:NoiDung', (req, res, next) => {
+  var content=req.params.NoiDung;
+  var now = moment().format('YYYY-MM-DD hh:mm:ss');
+  console.log(now);
+  if (req.user) {
+    var NgayHH = req.user.NgayHetHan;
+    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
+      var Pre = 1;
+    }
+    else {
+      var Pre = 0;
+    }
+  }
+  else {
+    var Pre = 0;
+  }
+  var page = req.query.page || 1;
+  if (page < 1) page = 1;
+
+  var limit = 10;
+  var offset = (page - 1) * limit;
+  Promise.all([
+    singlepostModel.SearchPost(content, limit, offset,Pre),
+    singlepostModel.CountSearchPost(content,Pre)
+  ])
+    .then(([row, count_row]) => {
+      if (count_row[0].Num != 0) {
+        async function getTagPost(p) {
+          var post = [];
+          for (let t of p) {
+            try {
+              var Tag = await singlepostModel.getTagPost(t.IDBaiViet);
+              post.push({
+                Content: t,
+                Tag: Tag
+              });
+            }
+            catch (e) {
+              console.log(e);
+            }
+          }
+          return post;
+        }
+        getTagPost(row)
+        .then(r=>{
+          var total = count_row[0].Num;
+        var nPages = Math.floor(total / limit);
+        if (total % limit > 0) nPages++;
+        var pages = [];
+        for (i = 1; i <= nPages; i++) {
+          var obj = { value: i, active: i === +page };
+          pages.push(obj);
+        }
+        var checkPre;
+        var checkNext;
+        //kiem tra neu la page dau tien
+        if (page == pages[0].value && pages[0].active == true) {
+          checkPre = {
+            check: true,
+            value: 0
+          },
+            checkNext = {
+              check: false,
+              value: pages[page - 1].value + 1
+            }
+        }
+        //kiem tra la page cuoi cung
+        if (page == pages[nPages - 1].value && pages[nPages - 1].active == true) {
+          checkNext = {
+            check: true,
+            value: 0
+          },
+            checkPre = {
+              check: false,
+              value: pages[page - 1].value - 1
+            }
+        }
+        var pagination;
+        if (nPages == 1) pagination = false;
+        else pagination = true;
+        res.render('SearchPage', {
+          css: '/stylesheets/index.css',
+          style: '/stylesheets/style.css',
+          count_row,
+          Post: r,
+          pages: pages,
+          checkPre: checkPre,
+          checkNext: checkNext,
+          check: true,
+          pagination,
+          user: req.user
+        });
+        })
+        
+      }
+      else {
+        res.render('SearchPage', {
+          css: '/stylesheets/index.css',
+          style: '/stylesheets/style.css',
+          check: false,
+          count_row,
+          user: req.user
+        });
+      }
+    })
+    .catch(next)
+});
 
 //page danh sach bai viet theo tag
 router.get('/tag/:Tentag', async (req, res, next) => {
@@ -806,7 +941,6 @@ router.post('/Mua-tai-khoan/creditcard', (req, res, next) => {
 //page danh sach bai viet cua chuyen muc cha
 router.get('/:TenCM', async (req, res, next) => {
   var now = moment().format('YYYY-MM-DD hh:mm:ss');
-  console.log(now);
   if (req.user) {
     var NgayHH = req.user.NgayHetHan;
     if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
