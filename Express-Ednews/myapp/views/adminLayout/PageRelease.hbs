@@ -63,13 +63,11 @@
                       <button type="submit">Xóa bài viết</button>
                     </form>
                   </td>
-
                 </tr>
                 {{/each}}
                 {{else}}
                 {{#each post}}
                 <tr>
-
                   <td>{{TieuDe}}</td>
                   <td>{{TenChuyenMuc}}</td>
                   <td>{{format NgayViet}}</td>
@@ -77,10 +75,10 @@
                   <td>
                     {{format NgayDang}}
                   </td>
-                  <td class="action">
-
+                  <td class="action" style="width:120px">
+                    <a href="/admin/xem-bai-viet/{{IDBaiViet}}" onclick="OpenPageCreateNewshtml(1)" title="">Xem bài
+                      viết</a>
                   </td>
-
                 </tr>
                 {{/each}}
                 {{/if}}

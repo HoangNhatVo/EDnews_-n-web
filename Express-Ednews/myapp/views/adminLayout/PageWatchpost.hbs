@@ -18,7 +18,7 @@
                             <li class="text-left p-3 mb-2 bg-success text-white" style="width: 300px"><i class="mr-2 font-12 ion-android-person"></i><span>Người đăng: {{ButDanh}}</span></li>
                             <li class="text-left p-3 mb-2 bg-success text-white" style="width: 300px"><i class="mr-2  fas fa-align-justify"></i><span>Tên chuyên mục: {{TenChuyenMucCon}}</span></li>
                         </ul>
-                        <div>
+                        <div style="border:1px solid #ccc;padding:10px">
                             {{{NoiDung}}}
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                     <div class="sided-half text-left shadow p-3 mb-5 bg-white rounded">
 						<ul class="s-left ptb-5 list-btn-semiwhite sided-sm-center d-flex">
 							{{#each tag}}
-							<li class="p-1 mb-2 bg-secondary text-white mr-2" style="width:100px;border-radius:5px"><i class="fas fa-tag"></i>{{TenTag}}</li>
+							<li class="p-1 mb-2 bg-secondary text-white mr-2" style="max-width:300px;border-radius:5px"><i class="fas fa-tag"></i>{{TenTag}}</li>
 							{{/each}}
 						</ul>
 					</div><!-- sided-half -->

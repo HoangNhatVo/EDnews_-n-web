@@ -124,7 +124,7 @@
               </div>
               {{#if isEditor}}
               <div class="form-group form-last">
-                <label>quản lý</label>
+                <label>Chuyên mục quản lý</label>
                 <span style="margin: 0">{{strListCat}}</span>
               </div>
               {{/if}}
@@ -149,9 +149,9 @@
                 <input type="text" name="Email" value="{{Email}}">
               </div>
               {{/each}}
-              {{#if isEditor}}
+              {{#if isWriter}}
               {{#each user}}
-              <div class="form-group">
+              <div class="form-group form-last">
                 <label>Bút danh</label>
                 <input type="text" name="ButDanh" value="{{ButDanh}}">
               </div>

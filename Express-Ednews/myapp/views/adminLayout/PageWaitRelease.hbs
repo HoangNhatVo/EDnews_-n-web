@@ -51,6 +51,7 @@
                       <input type="text" name="IDpost" value="{{IDBaiViet}}" class="d-none">
                       <button type="submit">Xóa</button>
                       <button type="submit" style="background-color: #0062cc">Xuất bản</button>
+                      <a href="/admin/xem-bai-viet/{{IDBaiViet}}" title="">Xem bài viết</a>
                     </form>
                   </td>
                 </tr>
@@ -64,7 +65,7 @@
                   <td>{{format NgayViet}}</td>
                   <td>{{format NgayDuyet}}</td>
                   <td>{{ButDanh}}</td>
-                  <td></td>
+                  <td class="action"><a href="/admin/xem-bai-viet/{{IDBaiViet}}" title="">Xem bài viết</a></td>
                 </tr>
                 {{/each}}
                 {{/if}}

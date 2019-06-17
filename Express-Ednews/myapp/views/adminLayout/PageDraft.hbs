@@ -86,9 +86,9 @@
                   <td>{{TieuDe}}</td>
                   <td>{{TenChuyenMuc}}</td>
                   <td>{{format NgayViet}}</td>
-                  <td class="action">
+                  <td class="action text-center">
                     <form action="/admin/duyet-bai-viet" method="POST">
-                      <a href="#" onclick="OpenPageCreateNewshtml(1)" title="">Xem bài viết</a>
+                      <a href="/admin/xem-bai-viet/{{IDBaiViet}}" onclick="OpenPageCreateNewshtml(1)" title="">Xem bài viết</a>
                       {{!-- <a href="./bai-viet-dang-cho/chinh-sua/{{IDBaiViet}}" title="">Chỉnh sửa</a> --}}
                       <input type="text" name="IDpost" value="{{IDBaiViet}}" class="d-none">
 
@@ -122,12 +122,12 @@
                 {{/if}}
                 {{#if isWriter}}
                 {{#each post}}
-                <tr>
+                <tr class="text-center">
                   <td>{{IDBaiViet}}</td>
                   <td>{{TieuDe}}</td>
                   <td>{{TenChuyenMuc}}</td>
                   <td>{{format NgayViet}}</td>
-                  <td class="action">
+                  <td class="action ">
                       <a href="./bai-viet-dang-cho/chinh-sua/{{IDBaiViet}}" title="">Chỉnh sửa</a>
                       <input type="text" name="IDpost" value="{{IDBaiViet}}" class="d-none">
                   </td>
