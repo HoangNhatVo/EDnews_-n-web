@@ -117,7 +117,6 @@
                 <label>Email</label>
                 <span>{{Email}}</span>
               </div>
-
               {{/each}}
               <div class="form-group form-last">
                 <label>Quyền</label>
@@ -133,19 +132,13 @@
           </div>
           <div class="col-6">
             <form class="editinforUser" id="editinforUser" method="POST" action="/admin/thong-tin-tai-khoan/chinh-sua">
-              <div class="form-group">
                 {{#each user}}
+                <div class="form-group">
                 <div class="infor">
                   <label>Họ tên:</label>
                   <input type="text" name="fullname" value="{{HoTen}}">
                 </div>
               </div>
-              {{#ifE PhanHe 'PH3'}}
-              <div class="form-group">
-                <label>Bút danh</label>
-                <input type="text" name="ButDanh" value="{{ButDanh}}"><br>
-              </div>
-              {{/ifE}}
               <div class="form-group">
                 <label>Ngày sinh:</label>
                 <input type="text " name="Birthdate" id="txtBirthdate" value="{{format NgaySinh}}">
@@ -156,8 +149,14 @@
                 <input type="text" name="Email" value="{{Email}}">
               </div>
               {{/each}}
-              
-
+              {{#if isEditor}}
+              {{#each user}}
+              <div class="form-group">
+                <label>Bút danh</label>
+                <input type="text" name="ButDanh" value="{{ButDanh}}">
+              </div>
+              {{/each}}
+              {{/if}}
               <div class="submit">
                 <button type="submit" class="btn">Lưu</button>
               </div>

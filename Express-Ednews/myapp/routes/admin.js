@@ -245,6 +245,19 @@ router.get('/bai-viet-dang-cho',auth_index, (req, res, next) => {
     }).catch(next);
   }  
 });
+
+//Page xem chi tiết bài viêt
+router.get('/xem-bai-viet/:IDbaiviet',async(req,res,next)=>{
+  var IDpost=req.params.IDbaiviet;
+  var Post=await singlepostModel.getDetailPost(IDpost);
+  var tag= await singlepostModel.getTagPost(IDpost);
+  res.render('adminLayout/PageWatchpost',{
+    css: '/stylesheets/admin.css', 
+      style: '/stylesheets/sb-admin.css' ,
+      Post,
+      tag
+  })
+})
 //Post duyet bai viet
 router.post('/duyet-bai-viet',(req,res,next)=>{
   if(req.user){

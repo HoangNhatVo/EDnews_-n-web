@@ -12,7 +12,7 @@
         </li>
         <li class="breadcrumb-item active">Quản lý tài khoản</li>
       </ol>
-      <div style="display:flex">
+      <div style="display:flex;justify-content: center;">
         <div class="card-header" id="headingOne">
           <h5 class="mb-0">
             <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
@@ -410,7 +410,7 @@
                           <th>Bút danh</th>
                           <th>Email</th>
                           <th>Action</th>
-
+                          <th>Quyền</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -419,10 +419,11 @@
                           <td>{{HoTen}}</td>
                           <td>{{ButDanh}}</td>
                           <td>{{Email}}</td>
+                          <td>{{TenPhanHe}}</td>
                           <td class="action">
-                            <button type="button" style="background-color: #35b335" data-toggle="modal"
-                              data-target="#{{ID}}">Chỉnh sửa quyền</button>
-                            <div class="modal fade" id="{{ID}}" tabindex="-1" role="dialog"
+                            <button  type="button" style="background-color: #35b335" data-toggle="modal"
+                              data-target="#u{{ID}}">Chỉnh sửa quyền</button>
+                            <div class="modal fade" id="u{{ID}}" tabindex="-1" role="dialog"
                               aria-labelledby="exampleModalLabel" aria-hidden="true">
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
