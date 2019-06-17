@@ -209,10 +209,10 @@ height: 180px;
   border-bottom: 1px solid #ccc; 
 }
 .text-input label, .text{
-	color: #676a6c;
+	/* color: #676a6c; */
   font-weight: 700;
-	font-size: 19px;
-	font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+	font-size: 17px;
+	/* font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif; */
 }
 .text-input input{
 	border: none;
@@ -235,11 +235,11 @@ height: 180px;
 }
 
 #title{
-  color: #676a6c;
+  /* color: #676a6c; */
   margin-bottom: 5px;
   font-weight: bold;
-  font-size: 19px;
-  font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  /* font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif; */
 }
 
 #tags{
@@ -284,9 +284,9 @@ height: 180px;
   content: "";
   position: absolute;
   width: 0;
-  background: inherit;
+  /* background: inherit; */
   height: 10px;
-  border: 10px solid #fafafa;
+  /* border: 10px solid #fafafa; */
   border-right-color: transparent;
   -webkit-border-radius: 10px 0 0 10px;
   -moz-border-radius:10px 0 0 10px;
@@ -550,6 +550,7 @@ margin-top: 20px;
 .TomTat{
   width: 100%;
   border-radius: 4px;
+  padding: 5px;
 }
 .input-TomTat{
   border-bottom: none;
@@ -590,7 +591,7 @@ background-color: #231f1f;
 #sl-category{
   margin: 10px 20px 20px 0px;
   padding: 7px 15px;
-  width: 50%;
+  width: 25%;
   border: 1px solid #ccc;
   border-radius: 50px;
   font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;

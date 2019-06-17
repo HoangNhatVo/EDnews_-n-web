@@ -155,14 +155,18 @@
           </li>
           <li class="breadcrumb-item active">Đăng bài</li>
         </ol>
-
+<div class="card mb-3 List-Draft">
+  <div class="card-header">
+          <i class="fas fa-pen-square"></i>
+          Đăng bài viết mới</div>
+          <div class="card-body">
     <form class="frmCreateNews" id="frmCreateNews" method="POST" action="/admin/dang-bai">
         {{#if message_post.length}}
               <div class="alert alert-success" role="alert">
                 {{message_post}}</a>
               </div>
 				{{/if}}
-        <p id="title">Ảnh đại diện bài viết:</p>
+        <p id="title">Ảnh đại diện</p>
         <div class="">
           <div class="file-loading">
             <input id="fuMain" name="fuMain" type="file">
@@ -171,11 +175,11 @@
         <input type="text" id="fileName" name="filename" value="" hidden>
 
           <div class="text-input" id="tt-top">
-            <label class="frmCreateNews">Tiêu đề:</label>
+            <label class="frmCreateNews">Tiêu đề</label>
             <input type="text" id="TieuDe" name="TieuDe" autofocus="true"/>
           </div>
 
-          <p id="title" class="frmCreateNews ttCategory">Chuyên mục:</p>
+          <p id="title" class="frmCreateNews ttCategory">Chuyên mục</p>
           <div>
             <select name="category" id="sl-category">
               {{#each ListCategory}}
@@ -185,7 +189,7 @@
             <label class="lbl-category">Choose Category</label>
           </div>          
 
-          <p id="title">Danh sách Tags:</p>
+          <p id="title">Danh sách Tags</p>
           <label for="tag-typer" class="frmCreateNews">
             <div id="tags">
                 <input id="tag-typer" type="text" placeholder="Add tag..."/>
@@ -194,12 +198,12 @@
           <input hidden name="ValueTags" id="valueTags">
 
           <div class="text-input input-TomTat" id="text-input">
-              <label class="frmCreateNews">Nội dung tóm tắt:</label><br>
+              <label class="frmCreateNews">Nội dung tóm tắt</label><br>
               <textarea rows="3" class="TomTat" id="TomTat" name="TomTat"></textarea>
           </div>
 
           <div class="text">
-            <label>Nội dung bài báo:</label>
+            <label>Nội dung bài báo</label>
            </div>
            <div class="ckeditor">
             <textarea class="form-control" id="editor1" name="FullDes"></textarea>
@@ -224,8 +228,9 @@
               </div>
           </div>
     </form>
-        <!-- End CreateNews -->      
-
+        <!-- End CreateNews -->  
+  </div>    
+</div>
         
 
       </div>

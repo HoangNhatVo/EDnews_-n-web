@@ -130,6 +130,11 @@
           </li>
           <li class="breadcrumb-item active">Đăng bài</li>
         </ol>
+  <div class="card mb-3">
+  <div class="card-header">
+          <i class="fas fa-tools"></i>
+          Chỉnh sửa bài viết</div>
+    <div class="card-body">
     <form class="frmCreateNews" id="frmCreateNews" method="POST" action="/admin/bai-viet-dang-cho/chinh-sua/{{IDBaiViet}}">
         
         {{#each AvatarPost}}
@@ -142,12 +147,12 @@
 
            {{#each Post}}
           <div class="text-input" id="tt-top">
-            <label class="frmCreateNews">Tiêu đề:</label>
+            <label class="frmCreateNews">Tiêu đề</label>
             <input type="text" id="TieuDe" name="TieuDe" autofocus="true" value="{{TieuDe}}"/>
           </div>
           {{/each}}
 
-          <p id="title" class="frmCreateNews ttCategory">Chuyên mục:</p>
+          <p id="title" class="frmCreateNews ttCategory">Chuyên mục</p>
           <div>
             <select name="category" id="sl-category">
               {{#each Post}}
@@ -160,7 +165,7 @@
             <label class="lbl-category">Choose Category</label>
           </div>          
          
-          <p id="title">Danh sách Tags:</p>
+          <p id="title">Danh sách Tags</p>
            {{#if Tags}}
               <input hidden value="{{Tags}}" name="ValueTags" id="valueTags">
           {{/if}}
@@ -172,7 +177,7 @@
          
          {{#each Post}}
           <div class="text-input input-TomTat" id="text-input">
-              <label class="frmCreateNews">Nội dung tóm tắt:</label><br>
+              <label class="frmCreateNews">Nội dung tóm tắt</label><br>
               <textarea rows="3" class="TomTat" id="TomTat" name="TomTat">{{NoiDungTomTat}}</textarea>
           </div>
           {{/each}}
@@ -207,6 +212,8 @@
           </div>
 
     </form>
+  </div>
+  </div>
         <!-- End CreateNews -->      
 
         
