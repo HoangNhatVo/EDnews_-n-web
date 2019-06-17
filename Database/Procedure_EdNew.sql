@@ -186,7 +186,7 @@ DELIMITER $$
 USE `baodientu3n`$$
 create procedure GetDetailsPost(in IDBaiViet varchar(15))
 begin
-	select  cha.TenChuyenMuc as TenCHuyenMucCha,cha.TenChuyenMuc_KhongDau as KhongDauCha,con.TenChuyenMuc as TenChuyenMucCon,con.TenChuyenMuc_KhongDau as KhongDauCon,
+	select  BV.LuotXem,cha.TenChuyenMuc as TenCHuyenMucCha,cha.TenChuyenMuc_KhongDau as KhongDauCha,con.TenChuyenMuc as TenChuyenMucCon,con.TenChuyenMuc_KhongDau as KhongDauCon,
 			BV.TieuDe,BV.TieuDe_KhongDau,BV.NgayDang,PV.ButDanh,BV.NoiDung,url.urllinkHinh,BV.IDBaiViet
     from baiviet as BV join baiviet_hinhanh as BV_HA on BV.IDbaiviet=BV_HA.IDBaiViet
 								join urlhinhanh as url on url.IDHinh=BV_HA.IDHinh
