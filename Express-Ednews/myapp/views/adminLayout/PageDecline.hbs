@@ -36,6 +36,7 @@
                 </tr>
               </thead>
               <tbody>
+                {{#unless isEditor}}
                 {{#each post}}
                 <tr>
 
@@ -49,12 +50,31 @@
                   <td class="action" style="width:150px">
                     <form action="/admin/xoa-bai-viet/{{IDBaiViet}}" method="POST">
                       <a href="./bai-viet-dang-cho/chinh-sua/{{IDBaiViet}}" title="">Chỉnh sửa</a>
-
                       <button type="submit">Xóa</button>
                     </form>
                   </td>
                 </tr>
                 {{/each}}
+                {{else}}
+                {{#each post}}
+                 <tr>
+
+                  <td>{{IDBaiViet}}</td>
+                  <td>{{TieuDe}}</td>
+                  <td>{{TenChuyenMuc}}</td>
+                  <td>{{ButDanh}}</td>
+                  <td>
+                    {{NguyenNhanTuChoi}}
+                  </td>
+                  <td class="action" style="width:150px">
+                    <form action="/admin/xoa-bai-viet/{{IDBaiViet}}" method="POST">
+                      <a href="#" title="">Xem bài viết</a>
+                      <button type="submit">Xóa</button>
+                    </form>
+                  </td>
+                </tr>
+                {{/each}}
+                {{/unless}}
 
               </tbody>
             </table>

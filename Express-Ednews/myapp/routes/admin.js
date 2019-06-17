@@ -148,7 +148,12 @@ router.post('/bai-viet-dang-cho/chinh-sua/:IDBV', (req, res, next)=>{
 
 
 //Page thong tin tai khoan
-router.get('/thong-tin-tai-khoan',auth_index, (req, res, next) => {
+router.get('/thong-tin-tai-khoan',auth_index,async (req, res, next) => {
+  var Listcat= await adminmodel.GetListCatOfEditor(req.user.ID);
+  var strListCat='';
+  Listcat.forEach(cat=>{
+    strListCat= strListCat+ cat.TenChuyenMuc+',';
+  })
   loginmodel.getUserWithID(req.user.ID)
   .then(result=>{
     var handlebar=require('handlebars');
@@ -159,15 +164,17 @@ router.get('/thong-tin-tai-khoan',auth_index, (req, res, next) => {
     if(result[0].PhanHe=='PH1')
     role="Quản trị viên";
     if(result[0].PhanHe=='PH2')
-    role="Phóng viên"
+    role="Phóng viên";
     if(result[0].PhanHe=='PH3')
-    role="Biên tập viên"
+    role="Biên tập viên";
+    
     res.render('adminLayout/PageInforUser', 
   { 
     css: '/stylesheets/admin.css', 
     style: '/stylesheets/sb-admin.css' ,
     user:result,
     role,
+    strListCat,
     mesg:req.flash('mesg')
   });
   })

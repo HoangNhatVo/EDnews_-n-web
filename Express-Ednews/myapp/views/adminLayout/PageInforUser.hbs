@@ -102,10 +102,13 @@
 
                 </div>
               </div>
+              {{#if isWriter}}
               <div class="form-group">
                 <label>Bút danh:</label>
                 <span>{{ButDanh}}</span>
               </div>
+              {{/if}}
+              
               <div class="form-group">
                 <label>Ngày sinh:</label>
                 <span>{{format NgaySinh}}</span>
@@ -120,7 +123,12 @@
                 <label>Quyền</label>
                 <span class="role">{{role}}</span>
               </div>
-
+              {{#if isEditor}}
+              <div class="form-group form-last">
+                <label>quản lý</label>
+                <span style="margin: 0">{{strListCat}}</span>
+              </div>
+              {{/if}}
             </div>
           </div>
           <div class="col-6">
@@ -130,9 +138,7 @@
                 <div class="infor">
                   <label>Họ tên:</label>
                   <input type="text" name="fullname" value="{{HoTen}}">
-
                 </div>
-
               </div>
               {{#ifE PhanHe 'PH3'}}
               <div class="form-group">
@@ -145,22 +151,12 @@
                 <input type="text " name="Birthdate" id="txtBirthdate" value="{{format NgaySinh}}">
 
               </div>
-              <div class="form-group">
+              <div class="form-group form-last">
                 <label>Email</label>
                 <input type="text" name="Email" value="{{Email}}">
-
               </div>
               {{/each}}
-              <div class="form-group form-last">
-                <label>Ảnh đại diện</label>
-                <label for="file" class="input-label"><i class="fa fa-upload mr-1 "></i>Thêm ảnh</label>
-                <input type="file" id="file" multiple="true" /><br>
-                <button type="button" class="close-image" id="close-image" aria-label="Close" hidden="true"
-                  data-toggle="tooltip" title="Close All Image">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-
-              </div>
+              
 
               <div class="submit">
                 <button type="submit" class="btn">Lưu</button>
