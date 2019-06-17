@@ -246,9 +246,10 @@
 							<i class="far fa-star" style="color: yellow"></i>
 							{{/ifCond}}
 						</a></h3>
-					<ul class="mtb-10 list-li-mr-20 color-lite-black">
+					<ul class="mtb-10 list-li-mr-20 color-lite-black" >
 						<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
 						<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
+						<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
 						<li class="category"><a href="/{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a></li>
 
 					</ul>
@@ -269,9 +270,10 @@
 								<i class="far fa-star" style="color: yellow"></i>
 								{{/ifCond}}
 							</a></h4>
-						<ul class="mtb-10 list-li-mr-20 color-lite-black">
+						<ul class="mtb-10 list-li-mr-20 color-lite-black" style="width: 500px">
 							<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
 							<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
+							<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
 							<li class="category"><a href="/{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a></li>
 
 						</ul>
@@ -320,6 +322,7 @@
 								</a></h5>
 							<ul class="mtb-5 list-li-mr-20 color-lite-black">
 								<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
+								<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
 								<li class="category"><a href="/{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a>
 								</li>
 							</ul>
@@ -338,6 +341,7 @@
 					<ul class="mtb-10 list-li-mr-5 color-lite-black">
 						<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
 						<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
+						<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
 						<li class="category"><a href="/{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a></li>
 
 					</ul>
@@ -353,7 +357,6 @@
 <section style="padding:20px 0">
 	<div class="container">
 		<div class="row">
-
 			<div class="col-md-12 col-lg-8">
 				<!-- END OF POLITICS -->
 				<div class="p-30 card-view ">
@@ -361,12 +364,10 @@
 					{{#each BongdaCat}}
 					{{#if @first}}
 					<div class="row">
-
 						<div class="col-sm-6">
 							<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img
 									src="images/{{urllinkHinh}}" alt="" style="height: 243px"></a>
 						</div><!-- col-sm-6 -->
-
 						<div class="col-sm-6">
 							<h4 class="mt-30"><a
 									href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}">
@@ -378,6 +379,7 @@
 							<ul class="mtb-10 list-li-mr-5 color-lite-black">
 								<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
 								<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
+								<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
 							</ul>
 							<p>{{NoiDungTomTat}}</p>
 						</div><!-- col-sm-6 -->
@@ -392,7 +394,7 @@
 								</h5>
 								<ul class="mtb-5 list-li-mr-20 color-lite-black">
 									<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
-
+									<li><i class="mr-5 far fa-eye"></i>{{Content.LuotXem}}</li>
 								</ul>
 							</div><!-- brdr-left-1 -->
 						</div><!-- col-sm-6 -->
@@ -403,7 +405,7 @@
 								</h5>
 								<ul class="mtb-5 list-li-mr-20 color-lite-black">
 									<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
-
+									<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
 								</ul>
 							</div><!-- brdr-left-1 -->
 						</div><!-- col-sm-6 -->
@@ -433,6 +435,7 @@
 							<ul class="mtb-10 list-li-mr-5 color-lite-black">
 								<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
 								<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
+								<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
 							</ul>
 							<p>{{NoiDungTomTat}}</p>
 						</div><!-- col-sm-6 -->
@@ -447,6 +450,7 @@
 								</h5>
 								<ul class="mtb-5 list-li-mr-20 color-lite-black">
 									<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
+									<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
 								</ul>
 							</div><!-- brdr-left-1 -->
 						</div><!-- col-sm-6 -->
@@ -457,6 +461,7 @@
 								</h5>
 								<ul class="mtb-5 list-li-mr-20 color-lite-black">
 									<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
+									<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
 								</ul>
 							</div><!-- brdr-left-1 -->
 						</div><!-- col-sm-6 -->
@@ -469,7 +474,7 @@
 					<!-- START OF LIFESTYLE -->
 					<div class="col-sm-12 col-md-6">
 						{{#with ThoiTrang.[0]}}
-						<div class="p-30 card-view mb-30">
+						<div class="p-30 card-view mb-30" style="height: 600px">
 							<h4 class="p-title"><b>FASHION</b></h4>
 							<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img
 									src="images/{{urllinkHinh}}" alt="" style="height: 200px"></a>
@@ -480,9 +485,10 @@
 									<i class="far fa-star" style="color: yellow"></i>
 									{{/ifCond}}
 								</a></h4>
-							<ul class="mtb-10 list-li-mr-5 color-lite-black">
+							<ul class="mtb-10 list-li-mr-10 color-lite-black">
 								<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
 								<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
+								<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
 							</ul>
 							<div class="mtb-15 brdr-grey-1"></div>
 							<p class="mb-10">{{NoiDungTomTat}}</p>
@@ -493,7 +499,7 @@
 					<!-- START OF BUSINESS -->
 					<div class="col-sm-12 col-md-6">
 						{{#with TaiChinh.[0]}}
-						<div class="p-30 card-view mb-30">
+						<div class="p-30 card-view mb-30" style="height: 600px">
 							<h4 class="p-title"><b>TÀI CHÍNH</b></h4>
 							<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img
 									src="images/{{urllinkHinh}}" alt="" style="height: 200px"></a>
@@ -504,9 +510,10 @@
 									<i class="far fa-star" style="color: yellow"></i>
 									{{/ifCond}}
 								</a></h4>
-							<ul class="mtb-10 list-li-mr-5 color-lite-black">
+							<ul class="mtb-10 list-li-mr-10 color-lite-black">
 								<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
 								<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
+								<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
 							</ul>
 							<div class="mtb-15 brdr-grey-1"></div>
 							<p class="mb-10">{{NoiDungTomTat}}</p>
@@ -518,7 +525,7 @@
 						<!-- START OF CULTURE -->
 						<div class="col-sm-12 col-md-6">
 							{{#with Showbiz.[0]}}
-							<div class="p-30 card-view mb-30">
+							<div class="p-30 card-view mb-30" style="height: 600px">
 								<h4 class="p-title"><b>SHOWBIZ</b></h4>
 								<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img
 										src="images/{{urllinkHinh}}" alt="" style="height: 200px"></a>
@@ -529,9 +536,10 @@
 										<i class="far fa-star" style="color: yellow"></i>
 										{{/ifCond}}
 									</a></h4>
-								<ul class="mtb-10 list-li-mr-5 color-lite-black">
+								<ul class="mtb-10 list-li-mr-10 color-lite-black">
 									<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
 									<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
+									<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
 								</ul>
 								<div class="mtb-15 brdr-grey-1"></div>
 								<p class="mb-10">{{NoiDungTomTat}}</p>
@@ -542,7 +550,7 @@
 						<!-- START OF TECH -->
 						<div class="col-sm-12 col-md-6">
 							{{#with Smartphone.[0]}}
-							<div class="p-30 card-view mb-30">
+							<div class="p-30 card-view mb-30" style="height: 600px">
 								<h4 class="p-title"><b>SMARTPHONE</b></h4>
 								<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img
 										src="images/{{urllinkHinh}}" alt="" style="height: 200px"></a>
@@ -553,9 +561,10 @@
 										<i class="far fa-star" style="color: yellow"></i>
 										{{/ifCond}}
 									</a></h4>
-								<ul class="mtb-10 list-li-mr-5 color-lite-black">
+								<ul class="mtb-10 list-li-mr-10 color-lite-black">
 									<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
 									<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
+									<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
 								</ul>
 								<div class="mtb-15 brdr-grey-1"></div>
 								<p class="mb-10">{{NoiDungTomTat}}</p>

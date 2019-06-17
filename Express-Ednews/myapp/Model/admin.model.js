@@ -63,5 +63,8 @@ module.exports ={
     //xoa chuyen muc do bien tap vien quan ly
     DeleteCatforEditor:(IDeditor,IDCat)=>{
         return orm.selectAll(`call DelCatForEditor(${IDeditor},'${IDCat}')`);
+    },
+    ReNewSubscriber:IDuser=>{
+        return orm.selectAll(`call ReNewSubscriber(${IDuser})`);
     }
 }

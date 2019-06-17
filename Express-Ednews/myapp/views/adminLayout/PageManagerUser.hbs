@@ -160,7 +160,6 @@
                           <th>Bút danh</th>
                           <th>Email</th>
                           <th>Action</th>
-
                         </tr>
                       </thead>
                       <tbody>
@@ -292,7 +291,9 @@
                               <button type="submit" style="background-color: #007bff">Mở khóa tài khoản</button>
                             </form>
                             {{/ifE}}
-                            <button type="submit">Gia hạn tài khoản</button>
+                            <form action="/admin/quan-ly-tai-khoan/gia-han-tai-khoan/{{ID}}" method="POST" style="display: inline-block">
+                            <button type="submit" class="bg-warning">Gia hạn tài khoản</button>
+                            </form>
                           </td>
                         </tr>
                         {{/each}}

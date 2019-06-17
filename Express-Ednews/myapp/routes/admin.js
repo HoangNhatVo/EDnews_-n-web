@@ -507,7 +507,15 @@ router.get('/quan-ly-tai-khoan/phan-chuyen-muc/:IDuser',auth_admin,async(req,res
     mesg:req.flash('mesg')
   });
 })
-
+//Post gia han tai khoan
+router.post('/quan-ly-tai-khoan/gia-han-tai-khoan/:IDUser',(req,res,next)=>{
+  var IDuser=req.params.IDUser;
+adminmodel.ReNewSubscriber(IDuser)
+.then(r=>{
+  req.flash('mesg','Gia hạn thành công');
+  res.redirect('/admin/quan-ly-tai-khoan');
+})
+})
 //Post them chuyen muc quan ly cho bien tap vien
 router.post('/quan-ly-tai-khoan/phan-chuyen-muc/them-chuyen-muc/:IDCM/:IDuser',(req,res,next)=>{
 var IDCat=req.params.IDCM;
