@@ -9,6 +9,8 @@ const loginmodel = require('../Model/login.model');
 const editnewsModel = require('../Model/editnews.model');
 const statepostModel = require('../Model/statepost.model');
 var passport = require('passport');
+var bCrypt = require('bcrypt');
+const saltRounds = 10;
 
 //  Phân quyền truy cập các router
 const auth_index = require('../MiddleWares/auth_index');
@@ -217,6 +219,43 @@ router.post('/thong-tin-tai-khoan/chinh-sua', (req, res, next) => {
 
   }
 })
+
+
+router.get('/thong-tin-tai-khoan/doi-mat-khau',auth_index, (req, res, next) => {
+  res.render('adminLayout/PageChangePassword',
+  {
+    css: '/stylesheets/admin.css',
+    style: '/stylesheets/sb-admin.css',
+    msg_password_fail: req.flash('msg_pass_fail')
+  });
+});
+
+router.post('/thong-tin-tai-khoan/doi-mat-khau', (req, res, next) => {
+  var ID = req.user.ID;
+  console.log('ID',ID);
+  var newPass = bCrypt.hashSync(req.body.newPass, bCrypt.genSaltSync(saltRounds));
+  console.log('newPass',newPass);
+  loginmodel.getUserWithID(ID).then(r=>{
+    if(r.length){
+      if (!bCrypt.compareSync(req.body.currentPass, r[0].Password)) {
+        req.flash('msg_pass_fail', 'Nhập mật khẩu hiện tại không đúng');
+        res.redirect(`./doi-mat-khau`);
+      }
+      else{
+        loginmodel.updatePasswordUserWithID(ID, newPass).then(r1=>{
+          req.logout();
+          req.session.cookie.expires = false;
+          res.redirect('/');
+        })
+      }
+    }
+    else{
+      req.flash('msg_pass_fail', 'Không tìm thấy tài khoản');
+        res.redirect(`./doi-mat-khau`);
+      }
+    })
+});
+
 
 //Page bai viet dang cho duyet
 router.get('/bai-viet-dang-cho', auth_index, (req, res, next) => {
