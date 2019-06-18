@@ -142,7 +142,8 @@ router.get('/thong-tin-ca-nhan', async function (req, res, next) {
     res.render('subcriber', {
       css: '/stylesheets/index.css', style: '/stylesheets/style.css',
       //user: req.user, 
-      msg_changeInfo: req.flash('msg_info')
+      msg_changeInfo: req.flash('msg_info'),
+      msg_changeInfo_success: req.flash('msg_info_succ')
     });
   }
   else {
@@ -161,10 +162,12 @@ router.post('/thong-tin-ca-nhan/:ID', function (req, res, next) {
     loginModel.getUserWithIDAndEmail(ID, Info.Email).then(r1 => {
       if (!r1.length) {
         loginModel.updateInfoUserWithID(ID, Info.HoTen, Info.NgaySinh, Info.Email).then(r => {
-          req.logout();
-          req.session.cookie.expires = false;
+          // req.logout();
+          // req.session.cookie.expires = false;
           // req.flash('signupMessage', 'Đã cập nhật thông tin, mời đăng nhập lại');
-          res.redirect('/');
+          req.flash('UpdateInfoSuccess','Cập nhật thành công');
+          req.flash('msg_info_succ', 'Cập nhật thông tin thành công');
+          res.redirect('/thong-tin-ca-nhan');
         }).catch(err => {
           req.flash('msg_info', 'Không cập nhật được thông tin');
           res.redirect('/thong-tin-ca-nhan');

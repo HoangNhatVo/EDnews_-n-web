@@ -183,15 +183,25 @@ router.get('/thong-tin-tai-khoan', auth_index, async (req, res, next) => {
 });
 router.post('/thong-tin-tai-khoan/chinh-sua', (req, res, next) => {
   var Name = req.body.fullname;
-  var othername = req.body.ButDanh;
+  // var othername = req.body.ButDanh;
   var date = req.body.Birthdate;
   date = moment(date, 'MM/DD/YYYY').format('YYYY-MM-DD');
   var email = req.body.Email;
+  var othername=req.body.ButDanh;
   console.log(Name, othername, date, email);
   console.log(req.user.PhanHe);
+
+  loginmodel.getUserWithIDAndEmail(req.user.ID, email).then(r1 =>{
+    if(r1.length){
+      req.flash('mesg','Email vừa cập nhật đã tồn tại');
+      res.redirect('/admin/thong-tin-tai-khoan');
+    }
+  })
+  
   if (req.user.PhanHe == "PH1" || req.user.PhanHe == "PH2") {
     adminmodel.UpdateInforUser(req.user.ID, Name, date, email, othername)
       .then(r => {
+        req.flash('UpdateInfoSuccess1','Cập nhật thành công');
         req.flash('mesg', 'Thay đổi thành công');
         res.redirect('/admin/thong-tin-tai-khoan');
       })
@@ -200,6 +210,7 @@ router.post('/thong-tin-tai-khoan/chinh-sua', (req, res, next) => {
   else {
     loginmodel.updateInfoUserWithID(req.user.ID, Name, date, email)
       .then(r => {
+        req.flash('UpdateInfoSuccess1','Cập nhật thành công');
         req.flash('mesg', 'Thay đổi thành công');
         res.redirect('/admin/thong-tin-tai-khoan');
       })
