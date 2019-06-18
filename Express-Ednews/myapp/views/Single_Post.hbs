@@ -79,6 +79,22 @@
 					<form method="POST" action="/comment/{{IDBaiViet}}">
 						<input name="cmt" class="boxCmt" placeholder="Viết bình luận..." id="cmt">
 						<button  type="submit" class="btnCmt" style="margin-top:10px" onclick="commnetpost(event)">BÌNH LUẬN</button>
+												
+          				<button type="button" class="" id="btnAlert" data-toggle="modal" data-target="#exampleModal" hidden></button>
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        	aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Bạn phải nhập nội dung bình luận!</h5>
+									</div>                        
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+									</div>                            
+								</div>
+							</div>
+						</div>
+
 					</form>
 					{{/each}}
 					{{/if}}
@@ -124,7 +140,8 @@
 	function commnetpost(event) {
 		var content = document.getElementById('cmt').value;
 		if (content == null || content == "") {
-			alert("Bạn phải nhập nội dung bình luận");
+			//alert("Bạn phải nhập nội dung bình luận");
+			$('#btnAlert').click();
 			event.preventDefault();
 		}
 		else
