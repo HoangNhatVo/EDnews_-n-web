@@ -69,6 +69,10 @@ router.get('/', async (req, res, next) => {
     var TaiChinh = await singlepostModel.getPostfromCategories('taichinh', limit, offset, Pre);
     var Showbiz = await singlepostModel.getPostfromCategories('showbiz', limit, offset, Pre);
     var Smartphone = await singlepostModel.getPostfromCategories('smartphone', limit, offset, Pre);
+    var SongXanh= await singlepostModel.getPostfromCategories('songxanh',limit,offset,Pre);
+    var DuLichVN=await singlepostModel.getPostfromCategories('dulichvietnam',limit,offset,Pre);
+    var Nhanvat= await singlepostModel.getPostfromCategories('nhanvat',limit,offset,Pre);
+    var VuAn = await singlepostModel.getPostfromCategories('vuan',limit,offset,Pre);
     res.render('index',
       {
         css: '/stylesheets/index.css',
@@ -81,7 +85,11 @@ router.get('/', async (req, res, next) => {
         ThoiTrang: ThoiTrang,
         TaiChinh: TaiChinh,
         Showbiz: Showbiz,
-        Smartphone: Smartphone
+        Smartphone: Smartphone,
+        SongXanh,
+        DuLichVN,
+        Nhanvat,
+        VuAn
         // user: req.user
       });
   } catch (err) {
@@ -94,7 +102,7 @@ router.get('/lien-he', async function (req, res, next) {
   console.log(now);
   if (req.user) {
     var NgayHH = req.user.NgayHetHan;
-    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
+    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now || req.user.PhanHe=='PH1'||req.user.PhanHe=='PH2'||req.user.PhanHe=='PH3') {
       var Pre = 1;
     }
     else {
@@ -118,7 +126,7 @@ router.get('/thong-tin-ca-nhan', async function (req, res, next) {
   console.log(now);
   if (req.user) {
     var NgayHH = req.user.NgayHetHan;
-    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
+    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now ) {
       var Pre = 1;
     }
     else {
@@ -504,7 +512,7 @@ router.post('/tim-kiem/:NoiDung', (req, res, next) => {
   console.log(now);
   if (req.user) {
     var NgayHH = req.user.NgayHetHan;
-    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
+    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now || req.user.PhanHe=='PH1'||req.user.PhanHe=='PH2'||req.user.PhanHe=='PH3') {
       var Pre = 1;
     }
     else {
@@ -614,7 +622,7 @@ router.get('/tim-kiem/:NoiDung', (req, res, next) => {
   console.log(now);
   if (req.user) {
     var NgayHH = req.user.NgayHetHan;
-    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
+    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now || req.user.PhanHe=='PH1'||req.user.PhanHe=='PH2'||req.user.PhanHe=='PH3') {
       var Pre = 1;
     }
     else {
@@ -722,7 +730,7 @@ router.get('/tag/:Tentag', async (req, res, next) => {
   console.log(now);
   if (req.user) {
     var NgayHH = req.user.NgayHetHan;
-    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
+    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now || req.user.PhanHe=='PH1'||req.user.PhanHe=='PH2'||req.user.PhanHe=='PH3') {
       var Pre = 1;
     }
     else {
