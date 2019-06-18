@@ -73,7 +73,6 @@
                       <thead>
                         <tr>
                           <th>Họ tên</th>
-                          <th>Bút danh</th>
                           <th>Email</th>
                           <th>Action</th>
                         </tr>
@@ -82,9 +81,8 @@
                         {{#each EditorRole}}
                         <tr>
                           <td>{{HoTen}}</td>
-                          <td>{{ButDanh}}</td>
                           <td>{{Email}}</td>
-                          <td class="action">
+                          <td class="action text-center">
                             <button type="button" style="background-color: #35b335" data-toggle="modal"
                               data-target="#{{ID}}">Chỉnh sửa quyền</button>
                             <div class="modal fade" id="{{ID}}" tabindex="-1" role="dialog"
@@ -239,7 +237,6 @@
                       <thead>
                         <tr>
                           <th>Họ tên</th>
-                          <th>Bút danh</th>
                           <th>Email</th>
                           <th>Action</th>
                         </tr>
@@ -248,9 +245,8 @@
                         {{#each premiumReader}}
                         <tr>
                           <td>{{HoTen}}</td>
-                          <td>{{ButDanh}}</td>
                           <td>{{Email}}</td>
-                          <td class="action">
+                          <td class="action text-center">
                             <button type="button" style="background-color: #35b335" data-toggle="modal"
                               data-target="#{{ID}}">Chỉnh sửa quyền</button>
                             <div class="modal fade" id="{{ID}}" tabindex="-1" role="dialog"
@@ -325,7 +321,6 @@
                       <thead>
                         <tr>
                           <th>Họ tên</th>
-                          <th>Bút danh</th>
                           <th>Email</th>
                           <th>Action</th>
 
@@ -335,9 +330,8 @@
                         {{#each normalReader}}
                         <tr>
                           <td>{{HoTen}}</td>
-                          <td>{{ButDanh}}</td>
                           <td>{{Email}}</td>
-                          <td class="action">
+                          <td class="action text-center">
                             <button type="button" style="background-color: #35b335" data-toggle="modal"
                               data-target="#{{ID}}">Chỉnh sửa quyền</button>
                             <div class="modal fade" id="{{ID}}" tabindex="-1" role="dialog"
