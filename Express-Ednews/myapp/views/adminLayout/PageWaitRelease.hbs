@@ -32,6 +32,7 @@
                   <th>Chuyên mục</th>
                   <th>Ngày viết</th>
                   <th>Ngày duyệt</th>
+                  <th>Ngày cần xuất bản</th>
                   <th>Người duyệt</th>
                   <th>Action</th>
                 </tr>
@@ -45,6 +46,7 @@
                   <td>{{TenChuyenMuc}}</td>
                   <td>{{format NgayViet}}</td>
                   <td>{{format NgayDuyet}}</td>
+                  <td>{{format NgayDang}}</td>
                   <td>{{ButDanh}}</td>
                   <td class="action">
                     <form action="/admin/xuat-ban-bai-viet/{{IDBaiViet}}" method="POST">
@@ -64,6 +66,7 @@
                   <td>{{TenChuyenMuc}}</td>
                   <td>{{format NgayViet}}</td>
                   <td>{{format NgayDuyet}}</td>
+                  <td>{{format NgayDang}}</td>
                   <td>{{ButDanh}}</td>
                   <td class="action"><a href="/admin/xem-bai-viet/{{IDBaiViet}}" title="">Xem bài viết</a></td>
                 </tr>

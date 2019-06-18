@@ -264,12 +264,19 @@ router.post('/duyet-bai-viet',(req,res,next)=>{
     IDuser=req.user.ID;
   }
   var IDpost=req.body.IDpost;
-  console.log(IDuser,IDpost);
-  adminmodel.ApprovePost(IDpost,IDuser)
-  .then(r=>{
-    req.flash('mesg','Duyệt bài thành công');
-    res.redirect('/admin/bai-viet-dang-cho');
-  })
+  var PrePublishDate=req.body.PrePubDate;
+  PrePublishDate=moment(PrePublishDate).format('YYYY-MM-DD');
+  console.log(IDuser,IDpost,PrePublishDate);
+adminmodel.ApprovePost(IDpost,IDuser,PrePublishDate)
+.then(r=>{
+  req.flash('mesg','Duyệt bài viết thành công');
+  res.redirect('/admin/bai-viet-cho-xuat-ban');
+})
+  // adminmodel.ApprovePost(IDpost,IDuser)
+  // .then(r=>{
+  //   req.flash('mesg','Duyệt bài thành công');
+  //   res.redirect('/admin/bai-viet-dang-cho');
+  // })
   
   
 });

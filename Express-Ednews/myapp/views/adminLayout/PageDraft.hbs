@@ -45,7 +45,8 @@
                   <td>{{format NgayViet}}</td>
                   <td class="action">
                     <form action="/admin/duyet-bai-viet" method="POST">
-                      <a href="/admin/xem-bai-viet/{{IDBaiViet}}" onclick="OpenPageCreateNewshtml(1)" title="">Xem bài viết</a>
+                      <a href="/admin/xem-bai-viet/{{IDBaiViet}}" onclick="OpenPageCreateNewshtml(1)" title="">Xem bài
+                        viết</a>
                       <a href="./bai-viet-dang-cho/chinh-sua/{{IDBaiViet}}" title="">Chỉnh sửa</a>
                       <input type="text" name="IDpost" value="{{IDBaiViet}}" class="d-none">
 
@@ -88,11 +89,31 @@
                   <td>{{format NgayViet}}</td>
                   <td class="action text-center">
                     <form action="/admin/duyet-bai-viet" method="POST">
-                      <a href="/admin/xem-bai-viet/{{IDBaiViet}}" onclick="OpenPageCreateNewshtml(1)" title="">Xem bài viết</a>
+                      <a href="/admin/xem-bai-viet/{{IDBaiViet}}" onclick="OpenPageCreateNewshtml(1)" title="">Xem bài
+                        viết</a>
                       {{!-- <a href="./bai-viet-dang-cho/chinh-sua/{{IDBaiViet}}" title="">Chỉnh sửa</a> --}}
                       <input type="text" name="IDpost" value="{{IDBaiViet}}" class="d-none">
+                      <button type="button" style="background-color: #007bff;" data-toggle="modal"
+                        data-target="#exampleModal1">Duyệt</button>
+                      <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Chọn ngày xuất bản</h5>
+                            </div>
 
-                      <button type="submit" style="background-color: #007bff;">Duyệt</button>
+                            <div class="modal-body">
+                              <input type="date" name="PrePubDate">
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                              <button type="submit" class="btn" style="background-color: #007bff">Duyệt</button>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
                       <button type="button" class=" btn-primary" data-toggle="modal" data-target="#exampleModal">Từ
                         chối</button>
                       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -128,8 +149,8 @@
                   <td>{{TenChuyenMuc}}</td>
                   <td>{{format NgayViet}}</td>
                   <td class="action ">
-                      <a href="./bai-viet-dang-cho/chinh-sua/{{IDBaiViet}}" title="">Chỉnh sửa</a>
-                      <input type="text" name="IDpost" value="{{IDBaiViet}}" class="d-none">
+                    <a href="./bai-viet-dang-cho/chinh-sua/{{IDBaiViet}}" title="">Chỉnh sửa</a>
+                    <input type="text" name="IDpost" value="{{IDBaiViet}}" class="d-none">
                   </td>
                 </tr>
                 {{/each}}

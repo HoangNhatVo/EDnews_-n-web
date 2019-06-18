@@ -1,8 +1,8 @@
 var orm = require('../config/orm');
 module.exports ={
     //Duyệt bài viết
-    ApprovePost:(IDPost,IDEditor)=>{
-        return orm.selectAll(`call ApprovePost('${IDPost}',${IDEditor})`);
+    ApprovePost:(IDPost,IDEditor,PrePublishDate)=>{
+        return orm.selectAll(`call ApprovePost('${IDPost}',${IDEditor},'${PrePublishDate}')`);
     },
     //từ chối bài viêt
     DeclinePost:(IDPost,IDEditor,ReasonDecline)=>{
