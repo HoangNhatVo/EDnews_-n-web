@@ -18,6 +18,11 @@
         {{mesg}}
       </div>
       {{/if}}
+      {{#if mesgerr.length}}
+      <div class="alert alert-danger" role="alert">
+        {{mesgerr}}
+      </div>
+      {{/if}}
       <!-- DataTables Example -->
       <div class="card mb-3 List-Draft">
         <div class="card-header">
@@ -32,7 +37,7 @@
                   <th>Tiêu đề</th>
                   <th>Chuyên mục</th>
                   <th>Ngày viết</th>
-                  <th>Action</th>
+                  <th style="width: 260px">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -87,7 +92,7 @@
                   <td>{{TieuDe}}</td>
                   <td>{{TenChuyenMuc}}</td>
                   <td>{{format NgayViet}}</td>
-                  <td class="action text-center">
+                  <td class="action">
                     <form action="/admin/duyet-bai-viet" method="POST">
                       <a href="/admin/xem-bai-viet/{{IDBaiViet}}" onclick="OpenPageCreateNewshtml(1)" title="">Xem bài
                         viết</a>
@@ -108,7 +113,7 @@
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                              <button type="submit" class="btn" style="background-color: #007bff">Duyệt</button>
+                              <button type="submit" class="btn btn-primary" style="background-color: #007bff">Duyệt</button>
                             </div>
 
                           </div>

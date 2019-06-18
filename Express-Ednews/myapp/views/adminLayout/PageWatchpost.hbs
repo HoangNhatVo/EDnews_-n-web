@@ -10,14 +10,16 @@
                 <div class="card-body" style="text-align: justify">
                     {{#each Post}}
                     <div class="p-30 card-view shadow p-3 bg-white rounded">
+                        <ul class="list-li-mr-10 color-lite-black d-flex justify-content-center">
+                            <li class="text-left p-3 mb-2 bg-success text-white mr-2" style="width: 300px"><i class="mr-2 font-12 ion-android-person"></i><span>Người đăng: {{ButDanh}}</span></li>
+                            <li class="text-left p-3 mb-2 bg-success text-white mr-2" style="width: 300px"><i class="mr-2 font-12 ion-android-person"></i><span>Ngày đăng: {{format NgayDang}}</span></li>
+                            <li class="text-left p-3 mb-2 bg-success text-white" style="width: 300px"><i class="mr-2  fas fa-align-justify"></i><span>Tên chuyên mục: {{TenChuyenMucCon}}</span></li>
+                        </ul>
                         <div class="text-center">
                         <img src="/images/{{urllinkHinh}}" style="max-height:330px;object-fit:fill">
                         </div >
-                        <h3 class="mt-2 mb-5 text-center"><b>{{TieuDe}}</b></h3>
-                        <ul class="list-li-mr-10 color-lite-black">
-                            <li class="text-left p-3 mb-2 bg-success text-white" style="width: 300px"><i class="mr-2 font-12 ion-android-person"></i><span>Người đăng: {{ButDanh}}</span></li>
-                            <li class="text-left p-3 mb-2 bg-success text-white" style="width: 300px"><i class="mr-2  fas fa-align-justify"></i><span>Tên chuyên mục: {{TenChuyenMucCon}}</span></li>
-                        </ul>
+                        <h3 class="mt-2 mb-5 text-center" style="font-family: 'Playfair Display', serif;font-weight:700"<b>{{TieuDe}}</b></h3>
+                        
                         <div style="border:1px solid #ccc;padding:10px">
                             {{{NoiDung}}}
                         </div>

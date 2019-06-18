@@ -1042,7 +1042,7 @@ router.get('/:TenCM', async (req, res, next) => {
   }
 });
 //Page danh sach bai viet cua chuyen muc con
-router.get('/:TenCm/:TensubCm', async (req, res) => {
+router.get('/:TenCm/:TensubCm', async (req, res,next) => {
   var now = moment().format('YYYY-MM-DD hh:mm:ss');
   console.log(now);
   if (req.user) {

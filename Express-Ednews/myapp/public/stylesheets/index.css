@@ -596,7 +596,7 @@ input {
   color: #525252;
   font-weight: 400;
  margin-bottom: 20px;
-  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
+ font-family: 'Playfair Display', serif;
 }
 
 /* ==========================================================================
@@ -801,12 +801,11 @@ iframe {
 
 .login100-form-title {
   display: block;
-  font-family: Poppins-Bold;
-  font-size: 39px;
+  font-size: 42px;
   color: #525252;
   line-height: 1.2;
   text-align: center;
-  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
+  font-family: 'Playfair Display', serif;
 }
 
 

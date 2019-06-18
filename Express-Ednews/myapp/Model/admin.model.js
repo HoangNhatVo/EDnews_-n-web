@@ -66,5 +66,9 @@ module.exports ={
     },
     ReNewSubscriber:IDuser=>{
         return orm.selectAll(`call ReNewSubscriber(${IDuser})`);
+    },
+    //check ngay dang bai viet
+    CheckDatePublish:IDPost=>{
+        return orm.selectAll(`call PublishPostwithEditor(${IDPost})`);
     }
 }
