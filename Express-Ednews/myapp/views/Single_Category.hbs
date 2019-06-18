@@ -138,7 +138,7 @@
 					</div><!-- right-area -->
 				</div><!-- sided-250x -->
 				{{/each}}
-
+				{{#if pagina}}
 				<ul class="pagination mb-30">
 					{{!-- kiem tra neu khong phai la page cuoi cung --}}
 					{{#unless checkPre.check}}
@@ -155,7 +155,7 @@
 					<li><a href="?page={{ checkNext.value }}"><i class="ion-chevron-right"></i></a></li>
 					{{/unless}}
 				</ul>
-
+				{{/if}}
 			</div><!-- col-sm-8 -->
 
 			{{> card-view}}

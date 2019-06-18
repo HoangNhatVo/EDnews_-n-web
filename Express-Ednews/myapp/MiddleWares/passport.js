@@ -129,7 +129,8 @@ module.exports = function(passport) {
         var user = {
             ID: 0,
             IDFB: profile._json.id,
-            HoTen: profile._json.name
+            HoTen: profile._json.name,
+            PhanHe:'PH5'
         }
         console.log(user);
         return done(null, user);

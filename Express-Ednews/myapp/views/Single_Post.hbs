@@ -55,13 +55,13 @@
 
 
 				<div class="p-30 mb-30 card-view">
-					<h4 class="p-title"><b>BÀI VIẾT LIÊN QUAN</b></h4>
+					<h4 class="p-title"><b>BÀI VIẾT CÙNG CHUYÊN MỤC</b></h4>
 					
 					<div class="row">
 						{{#each Relatepost}}
 						<div class="col-sm-4 mb-sm-20">
 							<img src="/images/{{urllinkHinh}}" alt="" style="height: 150px">
-							<h5 class="mt-20"><a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><b>{{TieuDe}}</b></a></h5>
+							<h5 class="mt-20"><a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}" style="max-height: 60px;overflow:hidden"><b>{{TieuDe}}</b></a></h5>
 							<ul class="mtb-5 list-li-mr-20 color-lite-black">
 								<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
 								<li class="category"><a href="/{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a></li>
@@ -77,8 +77,8 @@
 					{{#each DetailPost }}
 					
 					<form method="POST" action="/comment/{{IDBaiViet}}">
-						<input name="cmt" class="boxCmt" placeholder="Viết bình luận..." ;>
-						<button type="submit" class="btnCmt" style="margin-top:10px">BÌNH LUẬN</button>
+						<input name="cmt" class="boxCmt" placeholder="Viết bình luận..." id="cmt">
+						<button  type="submit" class="btnCmt" style="margin-top:10px" onclick="commnetpost(event)">BÌNH LUẬN</button>
 					</form>
 					{{/each}}
 					{{/if}}
@@ -120,3 +120,14 @@
 	</div><!-- container -->
 </section>
 {{>footer}}
+<script type="text/javascript">
+	function commnetpost(event) {
+		var content = document.getElementById('cmt').value;
+		if (content == null || content == "") {
+			alert("Bạn phải nhập nội dung bình luận");
+			event.preventDefault();
+		}
+		else
+			document.getElementById('formsearch').setAttribute("action", `/tim-kiem/${content}`);
+	}
+</script>

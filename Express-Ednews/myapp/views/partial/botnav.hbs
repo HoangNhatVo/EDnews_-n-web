@@ -7,13 +7,18 @@
 	<div class="col-md-4 col-lg-3">
 		<form id="formsearch" class="abs-form mtb-10" method="POST">
 			<input type="text" placeholder="Tìm kiếm" name="search" id="inputsearch">
-			<button onclick="searchfunc()" type="submit"><i class="ion-ios-search"></i></button>
+			<button onclick="searchfunc(event)" type="submit" id="btnsubmit"><i class="ion-ios-search"></i></button>
 		</form>
 	</div><!-- col-md-4 -->
 </div><!-- row -->
 <script type="text/javascript">
-function searchfunc(){
-var content=document.getElementById('inputsearch').value;
-document.getElementById('formsearch').setAttribute("action",`/tim-kiem/${content}`);
-}
+	function searchfunc(event) {
+		var content = document.getElementById('inputsearch').value;
+		if (content == null || content == "") {
+			alert("Bạn phải nhập nội dung tìm kiếm");
+			event.preventDefault();
+		}
+		else
+			document.getElementById('formsearch').setAttribute("action", `/tim-kiem/${content}`);
+	}
 </script>

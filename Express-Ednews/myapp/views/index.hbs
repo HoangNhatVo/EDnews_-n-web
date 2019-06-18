@@ -246,7 +246,7 @@
 							<i class="far fa-star" style="color: yellow"></i>
 							{{/ifCond}}
 						</a></h3>
-					<ul class="mtb-10 list-li-mr-20 color-lite-black" >
+					<ul class="mtb-10 list-li-mr-20 color-lite-black">
 						<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
 						<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
 						<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
@@ -258,6 +258,7 @@
 					{{/with}}
 				</div><!-- bg-white -->
 				{{#each Newpost}}
+				{{#unless @first}}
 				<div class="mb-20 sided-250x card-view">
 					<div class="s-left">
 						<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img
@@ -279,7 +280,7 @@
 						</ul>
 					</div><!-- right-area -->
 				</div><!-- sided-250x -->
-
+				{{/unless}}
 				{{/each}}
 			</div><!-- col-sm-8 -->
 
@@ -307,14 +308,14 @@
 				<div class="mb-30 p-30 card-view">
 					<h4 class="p-title"><b>HÔM NAY</b></h4>
 					{{#each ToDaypost}}
-					<div class="sided-80x mb-20">
+					<div class="sided-80x mb-20" style="border-bottom:1px solid #ccc;">
 						<div class="s-left">
 							<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img
 									src="images/{{urllinkHinh}}" alt="" style="height:80px"></a>
 						</div><!-- s-left -->
 
 						<div class="s-right">
-							<h5><a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}">
+							<h5><a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}" style="max-height: 60px;overflow:hidden">
 									<b>{{TieuDe}}</b>
 									{{#ifCond PhanHang '=='2}}
 									<i class="far fa-star" style="color: yellow"></i>
@@ -331,24 +332,6 @@
 					{{/each}}
 
 				</div><!-- card-view -->
-				{{#each ToDaypost}}
-				{{#if @last}}
-				<div class="mb-30 p-30 card-view">
-					<a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><img
-							src="images/{{urllinkHinh}}" alt=""></a>
-					<h4 class="mt-15"><a href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}">
-							<b>{{TieuDe}}</b></a></h4>
-					<ul class="mtb-10 list-li-mr-5 color-lite-black">
-						<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
-						<li><i class="mr-5 font-12 ion-android-person"></i>{{ButDanh}}</li>
-						<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
-						<li class="category"><a href="/{{KhongDauCha}}/{{KhongDauCon}}">{{TenChuyenMuc}}</a></li>
-
-					</ul>
-
-				</div><!-- card-view -->
-				{{/if}}
-				{{/each}}
 			</div><!-- col-sm-4 -->
 		</div><!-- row -->
 	</div><!-- container -->
@@ -361,7 +344,7 @@
 				<!-- END OF POLITICS -->
 				<div class="p-30 card-view ">
 					<h4 class="p-title"><b>CHÍNH TRỊ</b></h4>
-					{{#each BongdaCat}}
+					{{#each ChinhTriCat}}
 					{{#if @first}}
 					<div class="row">
 						<div class="col-sm-6">
@@ -385,23 +368,15 @@
 						</div><!-- col-sm-6 -->
 					</div><!-- row -->
 					<div class="mtb-30 brdr-grey-1" style="height: 2px"></div>
-					{{else}}
+					{{/if}}
+					{{/each}}
 					<div class="row">
+						{{#each ChinhTriCat}}
+						{{#unless @first}}
 						<div class="col-sm-6">
 							<div class="brdr-l-grey-2 pl-20 mb-30">
 								<h5><a
-										href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><b>{{TieuDe}}</b></a>
-								</h5>
-								<ul class="mtb-5 list-li-mr-20 color-lite-black">
-									<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
-									<li><i class="mr-5 far fa-eye"></i>{{Content.LuotXem}}</li>
-								</ul>
-							</div><!-- brdr-left-1 -->
-						</div><!-- col-sm-6 -->
-						<div class="col-sm-6">
-							<div class="brdr-l-grey-2 pl-20 mb-30">
-								<h5><a
-										href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><b>{{TieuDe}}</b></a>
+										href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}" style="height: 60px;overflow:hidden"><b>{{TieuDe}}</b></a>
 								</h5>
 								<ul class="mtb-5 list-li-mr-20 color-lite-black">
 									<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
@@ -409,9 +384,9 @@
 								</ul>
 							</div><!-- brdr-left-1 -->
 						</div><!-- col-sm-6 -->
-					</div><!-- row -->
-					{{/if}}
-					{{/each}}
+						{{/unless}}
+						{{/each}}
+					</div>
 				</div><!-- p-30 card-view -->
 				<!-- END OF POLITICS -->
 				<!-- START OF SPORT -->
@@ -426,7 +401,7 @@
 						</div><!-- col-sm-6 -->
 						<div class="col-sm-6">
 							<h4 class="mt-30"><a
-									href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}">
+									href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}" >
 									<b>{{TieuDe}}</b>
 									{{#ifCond PhanHang '=='2}}
 									<i class="far fa-star" style="color: yellow"></i>
@@ -440,34 +415,26 @@
 							<p>{{NoiDungTomTat}}</p>
 						</div><!-- col-sm-6 -->
 					</div><!-- row -->
-					<div class="mtb-30 brdr-grey-1"></div>
-					{{else}}
-					<div class="row">
-						<div class="col-sm-6">
-							<div class="brdr-l-grey-2 pl-20 mb-30">
-								<h5><a
-										href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><b>{{TieuDe}}</b></a>
-								</h5>
-								<ul class="mtb-5 list-li-mr-20 color-lite-black">
-									<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
-									<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
-								</ul>
-							</div><!-- brdr-left-1 -->
-						</div><!-- col-sm-6 -->
-						<div class="col-sm-6">
-							<div class="brdr-l-grey-2 pl-20 mb-30">
-								<h5><a
-										href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}"><b>{{TieuDe}}</b></a>
-								</h5>
-								<ul class="mtb-5 list-li-mr-20 color-lite-black">
-									<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
-									<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
-								</ul>
-							</div><!-- brdr-left-1 -->
-						</div><!-- col-sm-6 -->
-					</div><!-- row -->
+					<div class="mtb-30 brdr-grey-1" style="height: 2px"></div>
 					{{/if}}
 					{{/each}}
+					<div class="row">
+						{{#each BongdaCat}}
+						{{#unless @first}}
+						<div class="col-sm-6">
+							<div class="brdr-l-grey-2 pl-20 mb-30">
+								<h5><a
+										href="/{{KhongDauCha}}/{{KhongDauCon}}/{{IDBaiViet}}/{{TieuDe_KhongDau}}" style="height: 60px;overflow:hidden"><b>{{TieuDe}}</b></a>
+								</h5>
+								<ul class="mtb-5 list-li-mr-20 color-lite-black">
+									<li><i class="mr-5 font-12 ion-clock"></i>{{format NgayDang}}</li>
+									<li><i class="mr-5 far fa-eye"></i>{{LuotXem}}</li>
+								</ul>
+							</div><!-- brdr-left-1 -->
+						</div><!-- col-sm-6 -->
+						{{/unless}}
+						{{/each}}
+					</div>
 				</div><!-- p-30 card-view -->
 				<!-- END OF SPORT -->
 				<div class="row">

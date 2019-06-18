@@ -45,7 +45,6 @@ handlebar.registerHelper('ifCond', function (v1, operator, v2, options) {
 /* GET home page. */
 router.get('/', async (req, res, next) => {
   var now = moment().format('YYYY-MM-DD hh:mm:ss');
-  console.log(req.user);
   if (req.user) {
     var NgayHH = req.user.NgayHetHan;
     if ((req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now)|| req.user.PhanHe=='PH1'|| req.user.PhanHe=='PH2'||req.user.PhanHe=='PH3')  {
@@ -943,7 +942,7 @@ router.get('/:TenCM', async (req, res, next) => {
   var now = moment().format('YYYY-MM-DD hh:mm:ss');
   if (req.user) {
     var NgayHH = req.user.NgayHetHan;
-    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
+    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now || req.user.PhanHe=='PH1'||req.user.PhanHe=='PH2'||req.user.PhanHe=='PH3') {
       var Pre = 1;
     }
     else {
@@ -961,7 +960,7 @@ router.get('/:TenCM', async (req, res, next) => {
       var page = req.query.page || 1;
       if (page < 1) page = 1;
 
-      var limit = 2;
+      var limit = 5;
       var offset = (page - 1) * limit;
 
       Promise.all([
@@ -996,6 +995,11 @@ router.get('/:TenCM', async (req, res, next) => {
             }
             var checkPre;
             var checkNext;
+            var pagina=true
+            if (nPages == 1) {
+              pagina=false;
+            }
+            else{
             //kiem tra neu la page dau tien
             if (page == pages[0].value && pages[0].active == true) {
               checkPre = {
@@ -1018,6 +1022,7 @@ router.get('/:TenCM', async (req, res, next) => {
                   value: pages[page - 1].value - 1
                 }
             }
+          }
             res.render('Category', {
               css: '/stylesheets/index.css',
               style: '/stylesheets/style.css',
@@ -1027,7 +1032,8 @@ router.get('/:TenCM', async (req, res, next) => {
               // Post: rows,
               pages: pages,
               checkPre: checkPre,
-              checkNext: checkNext
+              checkNext: checkNext,
+              pagina
               //user: req.user,
             });
           })
@@ -1047,7 +1053,7 @@ router.get('/:TenCm/:TensubCm', async (req, res,next) => {
   console.log(now);
   if (req.user) {
     var NgayHH = req.user.NgayHetHan;
-    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now) {
+    if (req.user.PhanHe == 'PH4' && req.user.NgayHetHan > now || req.user.PhanHe=='PH1'||req.user.PhanHe=='PH2'||req.user.PhanHe=='PH3') {
       var Pre = 1;
     }
     else {
@@ -1066,7 +1072,7 @@ router.get('/:TenCm/:TensubCm', async (req, res,next) => {
       var page = req.query.page || 1;
       if (page < 1) page = 1;
 
-      var limit = 2;
+      var limit = 5;
       var offset = (page - 1) * limit;
 
 
@@ -1102,16 +1108,11 @@ router.get('/:TenCm/:TensubCm', async (req, res,next) => {
             }
             var checkPre;
             var checkNext;
+            var pagina=true
             if (nPages == 1) {
-              checkPre = {
-                check: true,
-                value: 1
-              },
-                checkNext = {
-                  check: true,
-                  value: 1
-                }
-            } else {
+              pagina=false;
+            }
+            else{
               //kiem tra neu la page dau tien
               if (page == pages[0].value && pages[0].active == true) {
                 checkPre = {
@@ -1136,6 +1137,7 @@ router.get('/:TenCm/:TensubCm', async (req, res,next) => {
                 }
               }
             }
+            console.log(pages);
             res.render('Single_Category', {
               css: '/stylesheets/index.css',
               style: '/stylesheets/style.css',
@@ -1143,7 +1145,9 @@ router.get('/:TenCm/:TensubCm', async (req, res,next) => {
               NameCat: NameCat,
               Post: r,
               checkPre,
-              checkNext
+              checkNext,
+              pages,
+              pagina
               //user: req.user
             });
           }).catch(next);
@@ -1180,11 +1184,6 @@ router.get('/:TenCm/:TensubCm/:id/:Tenbaiviet', async (req, res) => {
         //user: req.user
         Relatepost:Relatepost
       })
-
-
-
-
-
     }
     else {
       res.render('404', { layout: false });

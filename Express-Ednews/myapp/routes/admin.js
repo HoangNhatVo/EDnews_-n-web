@@ -335,7 +335,7 @@ router.post('/xuat-ban-bai-viet/:IDpost', (req, res, next) => {
   adminmodel.PublishPost(IDpost)
     .then(r => {
       req.flash('mesg', "Đã xuất bản bài viết thành công");
-      res.redirect('/admin/bai-viet-da-xuat-ban')
+      res.redirect('/admin/bai-viet-dang-cho');
     })
 
 })
